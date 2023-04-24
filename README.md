@@ -2,6 +2,7 @@
 <img src="/assets/images/Pay Mobile advert.png" alt="Employee data" title="Employee Data title">
 
 ### These are the instructions to successfully run this app
+#### Note: It's assumed that you already have a basic knowledge of the Flutter Framework
 ## Instructions
 1. Locate lib/constants/global_constants.dart and edit line 6 using an ip address that the mobile device is connected to. To get your ip(while connected to the internet, open your terminal and type "ipconflg/all" and locate your ipv4 address). Please note that this changes regularly, so it has to be updated if it changes. If you later decide to deploy the server, don't forget to update the "uri".
 ```dart
