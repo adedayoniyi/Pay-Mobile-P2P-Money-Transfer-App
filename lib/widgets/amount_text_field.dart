@@ -1,0 +1,79 @@
+// ignore_for_file: must_be_immutable
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:money_transfer_app/constants/global_constants.dart';
+
+class AmountTextField extends StatelessWidget {
+  String? labelText;
+  final String hintText;
+  final TextEditingController controller;
+  IconButton? icon;
+  bool obscureText;
+  int maxLines;
+  final TextInputType keyboardType;
+  AmountTextField({
+    Key? key,
+    this.labelText = "",
+    required this.hintText,
+    required this.controller,
+    this.icon,
+    this.obscureText = false,
+    this.maxLines = 1,
+    this.keyboardType = TextInputType.name,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(
+            labelText!,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        TextFormField(
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          keyboardType: keyboardType,
+          obscureText: obscureText,
+          controller: controller,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Color.fromARGB(255, 212, 211, 211),
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Color.fromARGB(255, 212, 211, 211),
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: defaultAppColor,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            hintText: hintText,
+            suffixIcon: icon,
+          ),
+          maxLines: 1,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return hintText;
+            }
+            return null;
+          },
+        ),
+      ],
+    );
+  }
+}
