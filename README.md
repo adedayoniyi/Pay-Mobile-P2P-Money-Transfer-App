@@ -3,10 +3,13 @@
 
 ### These are the instructions to successfully run this app
 #### Note: It's assumed that you already have a basic knowledge of the Flutter Framework
+#### Note Also: The server running this app has already been deployed to render.com, which means you can immediately clone this repo, run it and start using it (i.e The backend is already connected). But if you choose to run it on your own server, or local environment follow these steps below.
+#### The server code is located in /money_transfer_server
+
 ## Instructions
-1. Locate lib/constants/global_constants.dart and edit line 6 using an ip address that the mobile device is connected to. To get your ip(while connected to the internet, open your terminal and type "ipconflg/all" and locate your ipv4 address). Please note that this changes regularly, so it has to be updated if it changes. If you later decide to deploy the server, don't forget to update the "uri".
+1. Locate lib/constants/global_constants.dart and edit line 6 using an ip address that the mobile device is connected to and the port of the server. To get your ip(while connected to the internet, open your terminal and type "ipconflg/all" and locate your ipv4 address). Please note that this changes regularly, so it has to be updated if it changes. If you later decide to deploy the server, don't forget to update the "uri".
 ```dart
-6. const String uri = "your ip address:server port";
+6. const String uri = "https://transfer-dayo-niyi.onrender.com";
 ````
 e.g
 ```dart
@@ -14,7 +17,7 @@ e.g
 ````
 
 
-2. Locate /money_transfer_server/index.js and edit line 1 with your mongodb url.
+2. Locate /money_transfer_server/.env and edit line 1 with your mongodb url.
 ```
 1. DATABASE_URL =Enter your mongodb database url here 
 ````
