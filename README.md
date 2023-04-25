@@ -1,5 +1,15 @@
 # Pay Mobile- P2P Money Transfer App
-<img src="/assets/images/Pay Mobile advert.png" alt="Employee data" title="Employee Data title">
+<img src="/assets/images/Pay Mobile advert.png" alt="Pay Mobile" title="Pay Mobile">
+
+#Features
+#### 1. Pin feature used for authorizing transactions and user login
+<img src="/assets/images/confirm_pin_showcase.png" alt="In app image 1" title="In app image 1" width="320" height="700">
+
+##### 2. Custom in-app notifications
+<img src="/assets/images/transfer_nitification_image.png" alt="In app image 2" title="In app image 2" width="320" height="700">
+
+##### 3. Error messages includeded
+<img src="/assets/images/error_message_showcase.png" alt="In app image 3" title="In app image 3" width="320" height="700">
 
 ### Note: The server running this app has already been deployed to render.com, which means you can immediately clone this repo, run it and start using it (i.e The backend is already connected). But if you choose to run it on your own server, or local environment follow these steps below.
 
@@ -43,6 +53,11 @@ npm run dev
 
 Pull requests are welcome. For major changes, please open an issue first
 to discuss what you would like to change.
+
+## Upcoming Features
+1. App Notifications
+2. Admin Pannel with different levels of priviledges
+3. Email verification and many more
 
 ##### Note: As of now, no tests are available
 
