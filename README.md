@@ -1,19 +1,19 @@
 # Pay Mobile- P2P Money Transfer App
 <img src="/assets/images/Pay Mobile advert.png" alt="Pay Mobile" title="Pay Mobile">
 
-#Features
+# Features
 #### 1. Pin feature used for authorizing transactions and user login
 <img src="/assets/images/confirm_pin_showcase.png" alt="In app image 1" title="In app image 1" width="320" height="700">
 
 ##### 2. Custom in-app notifications
 <img src="/assets/images/transfer_nitification_image.png" alt="In app image 2" title="In app image 2" width="320" height="700">
 
-##### 3. Error messages includeded
+##### 3. Error messages included
 <img src="/assets/images/error_message_showcase.png" alt="In app image 3" title="In app image 3" width="320" height="700">
 
 ### Note: The server running this app has already been deployed to render.com, which means you can immediately clone this repo, run it and start using it (i.e The backend is already connected). But if you choose to run it on your own server, or local environment follow these steps below.
 
-### These are the instructions to successfully run this app
+### These are the instructions to successfully run this app on a local environment or your personal server
 #### Note Also: It's assumed that you already have a basic knowledge of the Flutter Framework
 
 ### The server code is located in /money_transfer_server
@@ -60,4 +60,5 @@ to discuss what you would like to change.
 3. Email verification and many more
 
 ##### Note: As of now, no tests are available
+##### Tutorials on how to build a quality software like this will be out soon
 
