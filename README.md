@@ -51,8 +51,7 @@ npm run dev
 
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
+Pull requests are welcome. If you encounter any problem with the app or server, you can open an issue.
 
 ## Upcoming Features
 1. App Notifications
@@ -61,4 +60,5 @@ to discuss what you would like to change.
 
 ##### Note: As of now, no tests are available
 ##### Tutorials on how to build a quality software like this will be out soon
+##### Please don't forget to give this project a star
 
