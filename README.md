@@ -58,6 +58,7 @@ Pull requests are welcome. If you encounter any problem with the app or server, 
 2. Admin Pannel with different levels of priviledges
 3. Email verification and many more
 
+##### If yo liked this project, don't forget to leave a star.
 ##### Note: As of now, no tests are available
 ##### Tutorials on how to build a quality software like this will be out soon
 ##### Please don't forget to give this project a star
