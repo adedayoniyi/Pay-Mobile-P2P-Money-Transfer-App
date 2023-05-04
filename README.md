@@ -3,15 +3,19 @@
 
 # Features
 #### 1. Pin feature used for authorizing transactions and user login
-<img src="/assets/images/confirm_pin_showcase.png" alt="In app image 1" title="In app image 1" width="330" height="680">
+<img src="/assets/images/confirm_pin_showcase.png" alt="In app image 1" title="In app image 1" width="330" height="700">
 
 ##### 2. Custom in-app notifications
-<img src="/assets/images/transfer_nitification_image.png" alt="In app image 2" title="In app image 2" width="330" height="680">
+<img src="/assets/images/transfer_nitification_image.png" alt="In app image 2" title="In app image 2" width="330" height="700">
 
 ##### 3. Error messages included
-<img src="/assets/images/error_message_showcase.png" alt="In app image 3" title="In app image 3" width="330" height="680">
+<img src="/assets/images/error_message_showcase.png" alt="In app image 3" title="In app image 3" width="330" height="700">
 
 ### Note: The server running this app has already been deployed to render.com, which means you can immediately clone this repo, run it and start using it (i.e The backend is already connected).
+#### After cloning don't forget to run:
+```bash
+flutter pub get
+```
 #### Here are some test login details if you don't want to create an account
 ```json
 {
@@ -70,10 +74,11 @@ Pull requests are welcome. If you encounter any problem with the app or server, 
 ## Upcoming Features
 1. App Notifications
 2. Admin Pannel with different levels of priviledges
-3. Email verification and many more
+3. Transaction details screen
+4. Download montly statements
+5. Email verification and many more
 
 ##### If yo liked this project, don't forget to leave a star.
 ##### Note: As of now, no tests are available
 ##### Tutorials on how to build a quality software like this will be out soon
-##### Please don't forget to give this project a star
 
