@@ -3,15 +3,29 @@
 
 # Features
 #### 1. Pin feature used for authorizing transactions and user login
-<img src="/assets/images/confirm_pin_showcase.png" alt="In app image 1" title="In app image 1" width="320" height="700">
+<img src="/assets/images/confirm_pin_showcase.png" alt="In app image 1" title="In app image 1" width="330" height="680">
 
 ##### 2. Custom in-app notifications
-<img src="/assets/images/transfer_nitification_image.png" alt="In app image 2" title="In app image 2" width="320" height="700">
+<img src="/assets/images/transfer_nitification_image.png" alt="In app image 2" title="In app image 2" width="330" height="680">
 
 ##### 3. Error messages included
-<img src="/assets/images/error_message_showcase.png" alt="In app image 3" title="In app image 3" width="320" height="700">
+<img src="/assets/images/error_message_showcase.png" alt="In app image 3" title="In app image 3" width="330" height="680">
 
-### Note: The server running this app has already been deployed to render.com, which means you can immediately clone this repo, run it and start using it (i.e The backend is already connected). But if you choose to run it on your own server, or local environment follow these steps below.
+### Note: The server running this app has already been deployed to render.com, which means you can immediately clone this repo, run it and start using it (i.e The backend is already connected).
+#### Here are some test login details if you don't want to create an account
+```json
+{
+"username":"dayo", 
+"email":"testemail@mail.com",
+"pin":"7272"
+}
+{
+"username":"lere", 
+"email":"testemail2@mail.com",
+"pin":"7171"
+}
+```
+### But if you choose to run it on your own server, or local environment follow these steps below.
 
 ### These are the instructions to successfully run this app on a local environment or your personal server
 #### Note Also: It's assumed that you already have a basic knowledge of the Flutter Framework
