@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:money_transfer_app/constants/color_constants.dart';
 import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/constants/textstyle_constants.dart';
 import 'package:money_transfer_app/features/auth/services/auth_service.dart';
 import 'package:money_transfer_app/features/home/screens/send_money_screen.dart';
 import 'package:money_transfer_app/features/home/services/home_service.dart';
 import 'package:money_transfer_app/features/home/widgets/payment_options_column.dart';
+import 'package:money_transfer_app/features/transactions/screens/transaction_details_screen.dart';
 import 'package:money_transfer_app/features/transactions/widgets/transactions_card.dart';
 import 'package:money_transfer_app/models/transactions.dart';
 import 'package:money_transfer_app/providers/user_provider.dart';
@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future _future;
 
   getUserBalance() async {
+    getCreditNotifications();
     getAllTransactions();
     final user = Provider.of<UserProvider>(context, listen: false).user;
     balance = await homeService.getUserBalance(
@@ -49,8 +50,23 @@ class _HomeScreenState extends State<HomeScreen> {
     homeService.checkIfUserHasSetPin(context);
   }
 
-  getUserData() async {
-    await authService.getUserData(context: context);
+  obtainTokenAndUserData() async {
+    await authService.obtainTokenAndUserData(context);
+  }
+
+  getCreditNotifications() {
+    homeService.creditNotification(
+        context: context,
+        onSuccess: () {
+          Future.delayed(const Duration(seconds: 7), () {
+            deleteNotification();
+            ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+          });
+        });
+  }
+
+  deleteNotification() {
+    homeService.deleteNotification(context: context);
   }
 
   @override
@@ -58,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _future = getUserBalance();
     checkIfUserHasPin();
-    getUserData();
+    obtainTokenAndUserData();
     Future.delayed(const Duration(seconds: 5), () {
       ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
     });
@@ -71,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: value20),
           child: Column(
             children: [
               RefreshIndicator(
@@ -85,10 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: heightValue15,
                       ),
                       Container(
-                        height: heightValue220,
+                        height: heightValue230,
                         width: screenWidth,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(value30),
+                          borderRadius: BorderRadius.circular(heightValue30),
                           color: defaultAppColor,
                         ),
                         child: Padding(
@@ -127,16 +143,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 "Hi, ${user.fullname}",
                                                 style: TextStyle(
                                                   color: whiteColor,
-                                                  fontSize: value18,
+                                                  fontSize: heightValue20,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                               Text(
-                                                "@${user.username}",
+                                                "@ ${user.username}",
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
-                                                    color: whiteColor,
-                                                    fontSize: value15),
+                                                  color: whiteColor,
+                                                  fontSize: heightValue18,
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -162,14 +179,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Text(
                                         "Total Balance",
                                         style: TextStyle(
-                                            color: greyScale400,
-                                            fontSize: value25),
+                                          color: greyScale400,
+                                          fontSize: heightValue25,
+                                        ),
                                       ),
                                       Text(
-                                        "₦ $balance",
+                                        "₦ ${amountFormatter.format(balance)}",
                                         style: TextStyle(
                                           color: whiteColor,
-                                          fontSize: value48,
+                                          fontSize: heightValue50,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -191,7 +209,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         "Transactions",
                         style: TextStyle(
-                            fontSize: value35, fontWeight: FontWeight.bold),
+                            fontSize: heightValue35,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -217,7 +236,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   Text(
                                     "Nothing to see here",
-                                    style: textRegularNormal,
+                                    style: TextStyle(
+                                      fontSize: heightValue18,
+                                    ),
                                   ),
                                   SizedBox(
                                     height: heightValue40,
@@ -242,26 +263,34 @@ class _HomeScreenState extends State<HomeScreen> {
                                 itemCount: transactions!.length,
                                 itemBuilder: (BuildContext context, int index) {
                                   final transactionData = transactions![index];
-                                  return TransactionsCard(
-                                    transactionTypeImage:
-                                        transactionData.trnxType == "Credit"
-                                            ? "assets/icons/credit_icon.png"
-                                            : "assets/icons/debit_icon.png",
-                                    transactionType: transactionData.trnxType,
-                                    trnxSummary: transactionData.trnxSummary,
-                                    amount: transactionData.amount,
-                                    amountColorBasedOnTransactionType:
-                                        transactionData.trnxType == "Credit"
-                                            ? Colors.green
-                                            : Colors.red,
+                                  return GestureDetector(
+                                    onTap: () => Navigator.pushNamed(
+                                      context,
+                                      TransactionDetailsScreen.route,
+                                      arguments: transactionData,
+                                    ),
+                                    child: TransactionsCard(
+                                      transactionTypeImage:
+                                          transactionData.trnxType == "Credit"
+                                              ? "assets/icons/credit_icon.png"
+                                              : "assets/icons/debit_icon.png",
+                                      transactionType: transactionData.trnxType,
+                                      trnxSummary:
+                                          "${transactionData.trnxType == "Credit" ? "From" : "To"} ${transactionData.fullNameTransactionEntity} Reference:${transactionData.reference}",
+                                      amount: transactionData.amount,
+                                      amountColorBasedOnTransactionType:
+                                          transactionData.trnxType == "Credit"
+                                              ? Colors.green
+                                              : Colors.red,
+                                    ),
                                   );
                                 },
                               ),
                             ),
                           );
                   }
-                  return Expanded(
-                      child: const Center(child: CircularProgressIndicator()));
+                  return const Expanded(
+                      child: Center(child: CircularProgressIndicator()));
                 },
               ),
             ],

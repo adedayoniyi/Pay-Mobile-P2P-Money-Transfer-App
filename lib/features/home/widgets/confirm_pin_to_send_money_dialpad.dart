@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/constants/textstyle_constants.dart';
 import 'package:money_transfer_app/features/home/services/home_service.dart';
 import 'package:money_transfer_app/providers/user_provider.dart';
 import 'package:money_transfer_app/widgets/custom_button.dart';
@@ -82,7 +81,7 @@ class _ConfirmPinToSendMoneyDialPadState
                 ),
                 Image.asset(
                   "assets/images/full_logo.png",
-                  height: value130,
+                  height: heightValue130,
                 ),
                 SizedBox(
                   height: heightValue20,
@@ -92,15 +91,8 @@ class _ConfirmPinToSendMoneyDialPadState
                     Text(
                       "Hey,",
                       style: TextStyle(
-                        fontSize: value25,
+                        fontSize: heightValue35,
                       ),
-                    ),
-                    SizedBox(
-                      width: value10,
-                    ),
-                    Text(
-                      user.fullname,
-                      style: heading5GreyScale900,
                     ),
                     SizedBox(
                       width: value10,
@@ -112,12 +104,19 @@ class _ConfirmPinToSendMoneyDialPadState
                     )
                   ],
                 ),
+                Text(
+                  user.fullname,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: heightValue35,
+                  ),
+                ),
                 SizedBox(
                   height: heightValue20,
                 ),
                 Text(
                   "Enter your 4 digit pin to complete",
-                  style: TextStyle(fontSize: value20),
+                  style: TextStyle(fontSize: heightValue25),
                 ),
                 SizedBox(
                   height: heightValue30,
@@ -177,15 +176,24 @@ class _ConfirmPinToSendMoneyDialPadState
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    NumberDialPad(onTap: () {}, numberText: ''),
-                    NumberDialPad(onTap: () => addDigit(0), numberText: '0'),
+                    NumberDialPad(
+                      onTap: () {},
+                      numberText: '',
+                    ),
+                    NumberDialPad(
+                      onTap: () => addDigit(0),
+                      numberText: '0',
+                    ),
                     TextButton(
                       //height: double.maxFinite,
                       onPressed: () {
                         backspace();
                       },
-                      child: Icon(Icons.backspace_outlined,
-                          color: Colors.black.withBlue(40), size: 30),
+                      child: Icon(
+                        Icons.backspace_outlined,
+                        color: Colors.black.withBlue(40),
+                        size: heightValue30,
+                      ),
                     ),
                   ],
                 ),
@@ -201,15 +209,20 @@ class _ConfirmPinToSendMoneyDialPadState
                                 height: value100,
                                 width: value100,
                               ),
-                              title: Text("Caution",
-                                  style: TextStyle(
-                                      fontSize: value18,
-                                      fontWeight: FontWeight.bold)),
+                              title: Text(
+                                "Caution",
+                                style: TextStyle(
+                                  fontSize: heightValue20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                               content: Text(
                                 "Are you sure you want to cancel the transaction",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 13, color: Colors.grey[600]),
+                                  fontSize: heightValue15,
+                                  color: Colors.grey[600],
+                                ),
                               ),
                               actions: <Widget>[
                                 CustomButton(
@@ -238,7 +251,7 @@ class _ConfirmPinToSendMoneyDialPadState
                   child: Text(
                     "Cancel",
                     style: TextStyle(
-                      fontSize: value30,
+                      fontSize: heightValue30,
                       fontWeight: FontWeight.bold,
                       color: Colors.red,
                     ),

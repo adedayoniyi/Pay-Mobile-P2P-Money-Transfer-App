@@ -59,20 +59,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text(
                             "Login and start transfering",
                             style: TextStyle(
-                              fontSize: value35,
+                              fontSize: heightValue35,
                               fontWeight: FontWeight.w900,
                               height: 1.5,
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 260, top: 30),
-                          child: Image.asset(
-                            'assets/images/send_icon.png',
-                            color: defaultAppColor,
-                            height: 65,
-                          ),
-                        )
                       ],
                     ),
                     formUI()
@@ -101,11 +93,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                       Navigator.pushNamed(context, SignUpScreen.route);
                     },
-                    child: const Text(
+                    child: Text(
                       "Create new account",
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                          fontWeight: FontWeight.bold, fontSize: heightValue17),
                     ),
                   )
                 ],

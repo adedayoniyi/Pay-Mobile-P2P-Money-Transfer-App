@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/constants/textstyle_constants.dart';
 
 class TransactionsCard extends StatelessWidget {
   final String transactionTypeImage;
@@ -26,7 +25,7 @@ class TransactionsCard extends StatelessWidget {
         height: heightValue80,
         width: screenWidth,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(value20),
+          borderRadius: BorderRadius.circular(heightValue20),
           color: whiteColor,
         ),
         child: Padding(
@@ -36,8 +35,8 @@ class TransactionsCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: value35,
-                width: value35,
+                height: heightValue35,
+                width: heightValue35,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(value35),
                   color: scaffoldBackgroundColor,
@@ -45,7 +44,7 @@ class TransactionsCard extends StatelessWidget {
                 child: Center(
                   child: Image.asset(
                     transactionTypeImage,
-                    height: value25,
+                    height: heightValue25,
                   ),
                 ),
               ),
@@ -58,10 +57,16 @@ class TransactionsCard extends StatelessWidget {
                     children: [
                       Text(
                         transactionType,
-                        style: textMediumBoldGreyScale900,
+                        style: TextStyle(
+                          fontSize: heightValue20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Text(
                         trnxSummary,
+                        style: TextStyle(
+                          fontSize: heightValue17,
+                        ),
                         overflow: TextOverflow.ellipsis,
                       )
                     ],
@@ -69,7 +74,7 @@ class TransactionsCard extends StatelessWidget {
                 ),
               ),
               Text(
-                "₦$amount",
+                "₦${amountFormatter.format(amount)}",
                 style: TextStyle(
                   color: amountColorBasedOnTransactionType,
                   fontSize: value18,

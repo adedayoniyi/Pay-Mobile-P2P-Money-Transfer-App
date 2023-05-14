@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/constants/textstyle_constants.dart';
+import 'package:money_transfer_app/features/home/screens/comming_soon_screen.dart';
 import 'package:money_transfer_app/features/profile/screens/change_pin_screen.dart';
 import 'package:money_transfer_app/features/profile/services/profile_services.dart';
 import 'package:money_transfer_app/features/profile/widgets/profile_card.dart';
@@ -47,15 +47,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Text(
               user.fullname,
-              style: heading5GreyScale900,
+              style: TextStyle(
+                fontSize: heightValue25,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             Text(
               user.email,
-              style: textRegularMedium,
+              style: TextStyle(
+                fontSize: heightValue18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             Text(
               "@${user.username}",
-              style: textRegularMedium,
+              style: TextStyle(fontSize: heightValue20),
             ),
             SizedBox(
               height: heightValue20,
@@ -64,7 +70,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               iconImage: "assets/icons/profile_icon.png",
               profileOperation: "Edit Profile",
               profileOperationDescription: "Personal info, name, etc",
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, CommingSoonScreen.route);
+              },
             ),
             SizedBox(
               height: heightValue20,
@@ -97,13 +105,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           title: Text("Caution",
                               style: TextStyle(
-                                  fontSize: value18,
-                                  fontWeight: FontWeight.bold)),
+                                fontSize: value18,
+                                fontWeight: FontWeight.bold,
+                              )),
                           content: Text(
                             "Are you sure you want to logout",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 13, color: Colors.grey[600]),
+                              fontSize: heightValue15,
+                              color: Colors.grey[600],
+                            ),
                           ),
                           actions: <Widget>[
                             CustomButton(

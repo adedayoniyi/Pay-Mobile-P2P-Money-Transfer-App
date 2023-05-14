@@ -17,7 +17,7 @@ class NumberDialPad extends StatelessWidget {
       child: Text(
         numberText,
         style: TextStyle(
-          fontSize: value35,
+          fontSize: heightValue45,
           fontWeight: FontWeight.bold,
         ),
       ),

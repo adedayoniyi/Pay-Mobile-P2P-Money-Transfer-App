@@ -18,17 +18,17 @@ class PaymentContainers extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: value55,
-        width: value55,
+        height: heightValue60,
+        width: heightValue60,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(value15),
+          borderRadius: BorderRadius.circular(heightValue15),
           color: color,
         ),
         child: Center(
           child: Image.asset(
             icon,
             color: whiteColor,
-            height: value30,
+            height: heightValue30,
           ),
         ),
       ),

@@ -86,20 +86,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: Text(
                             "Signup and start transfering",
                             style: TextStyle(
-                              fontSize: value35,
+                              fontSize: heightValue37,
                               fontWeight: FontWeight.w900,
                               height: 1.5,
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 260, top: 30),
-                          child: Image.asset(
-                            'assets/images/send_icon.png',
-                            color: defaultAppColor,
-                            height: 65,
-                          ),
-                        )
                       ],
                     ),
                     formUI()
@@ -126,10 +118,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     onPressed: () {
                       Navigator.pushNamed(context, LoginScreen.route);
                     },
-                    child: const Text(
+                    child: Text(
                       "Already have an account?",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        fontSize: heightValue17,
                       ),
                     ),
                   )

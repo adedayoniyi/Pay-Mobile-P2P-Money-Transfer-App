@@ -7,8 +7,10 @@ import 'package:money_transfer_app/features/home/screens/home_screen.dart';
 import 'package:money_transfer_app/features/home/screens/send_money_screen.dart';
 import 'package:money_transfer_app/features/onboarding/screens/onboarding_screen.dart';
 import 'package:money_transfer_app/features/profile/screens/change_pin_screen.dart';
-import 'package:money_transfer_app/features/transactions/screens/transactions_screen.dart';
+import 'package:money_transfer_app/features/transactions/screens/all_transactions_screen.dart';
+import 'package:money_transfer_app/features/transactions/screens/transaction_details_screen.dart';
 import 'package:money_transfer_app/main.dart';
+import 'package:money_transfer_app/models/transactions.dart';
 import 'package:money_transfer_app/widgets/main_app.dart';
 
 Route<dynamic> appRoutes(RouteSettings routeSettings) {
@@ -112,6 +114,17 @@ Route<dynamic> appRoutes(RouteSettings routeSettings) {
                   .animate(animation),
           child: child,
         ),
+        settings: routeSettings,
+      );
+    case TransactionDetailsScreen.route:
+      var transactions = routeSettings.arguments as Transactions;
+      return PageRouteBuilder(
+        pageBuilder: (_, __, ___) => TransactionDetailsScreen(
+          transactions: transactions,
+        ),
+        transitionDuration: const Duration(seconds: 1),
+        transitionsBuilder: (_, a, __, c) =>
+            FadeTransition(opacity: a, child: c),
         settings: routeSettings,
       );
     default:

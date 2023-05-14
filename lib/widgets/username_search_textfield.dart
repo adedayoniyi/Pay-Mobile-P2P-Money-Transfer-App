@@ -33,8 +33,8 @@ class UserNameTextField extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
             labelText!,
-            style: const TextStyle(
-              fontSize: 14,
+            style: TextStyle(
+              fontSize: heightValue15,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -42,6 +42,7 @@ class UserNameTextField extends StatelessWidget {
         TextFormField(
           obscureText: obscureText,
           controller: controller,
+          style: TextStyle(fontSize: heightValue20),
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderSide: const BorderSide(

@@ -19,8 +19,8 @@ class Transactions {
     required this.reference,
     required this.balanceBefore,
     required this.balanceAfter,
-    required this.summary,
-    required this.trnxSummary,
+    required this.description,
+    required this.fullNameTransactionEntity,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -32,8 +32,8 @@ class Transactions {
   String reference;
   int balanceBefore;
   int balanceAfter;
-  String summary;
-  String trnxSummary;
+  String fullNameTransactionEntity;
+  String description;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -45,8 +45,8 @@ class Transactions {
         reference: json["reference"],
         balanceBefore: json["balanceBefore"],
         balanceAfter: json["balanceAfter"],
-        summary: json["summary"],
-        trnxSummary: json["trnxSummary"],
+        fullNameTransactionEntity: json["fullNameTransactionEntity"],
+        description: json["description"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
       );
@@ -59,8 +59,8 @@ class Transactions {
         "reference": reference,
         "balanceBefore": balanceBefore,
         "balanceAfter": balanceAfter,
-        "summary": summary,
-        "trnxSummary": trnxSummary,
+        "fullNameTransactionEntity": fullNameTransactionEntity,
+        "description": description,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
       };

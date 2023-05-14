@@ -28,15 +28,21 @@ class AlertMessage extends StatelessWidget {
         surfaceTintColor: whiteColor,
         icon: Image.asset(
           alertImage,
-          height: value100,
-          width: value100,
+          height: heightValue100,
+          width: heightValue100,
         ),
         title: Text(title,
-            style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+            style: TextStyle(
+              fontSize: value18,
+              fontWeight: FontWeight.bold,
+            )),
         content: Text(
           message,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+          style: TextStyle(
+            fontSize: heightValue15,
+            color: Colors.grey[600],
+          ),
         ),
         actions: <Widget>[
           CustomButton(

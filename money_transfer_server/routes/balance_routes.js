@@ -1,6 +1,6 @@
 const express = require("express");
-const auth = require("../middlewares/auth");
-const User = require("../models/user");
+const auth = require("../middlewares/auth_middleware");
+const User = require("../models/user_model");
 
 const balanceRouter = express.Router();
 

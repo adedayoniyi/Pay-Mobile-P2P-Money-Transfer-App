@@ -2,73 +2,92 @@ const express = require("express");
 const transactionRouter = express.Router();
 const mongoose = require("mongoose");
 const { v4 } = require("uuid");
-const Transactions = require("../models/transaction");
+const Transactions = require("../models/transaction_model");
 const { creditAccount, debitAccount } = require("../utils/transactions");
-const User = require("../models/user");
-const auth = require("../middlewares/auth");
+const User = require("../models/user_model");
+const auth = require("../middlewares/auth_middleware");
+const Notifications = require("../models/notifications_model");
 
 transactionRouter.post("/api/transactions/transfer", auth, async (req, res) => {
   const session = await mongoose.startSession();
   session.startTransaction();
   try {
-    const { toUsername, fromUsername, amount, summary } = req.body;
+    // Get the request body data
+    const { recipientsUsername, sendersUsername, amount, description } =
+      req.body;
+    // Generate a reference number
     const reference = v4();
-    if (!toUsername && !fromUsername && !amount && !summary) {
+    if (!recipientsUsername || !sendersUsername || !amount || !description) {
+      await session.endSession();
       return res.status(409).json({
-        status: false,
-        message:
-          "Please provide the following details: toUsername,fromUsername, amount, summary",
+        message: `Please provide the following details: ${recipientsUsername},${sendersUsername}, ${amount}, ${description}`,
       });
     }
-
     const transferResult = await Promise.all([
       debitAccount({
         amount,
-        username: fromUsername,
-        purpose: "transfer",
+        username: sendersUsername,
+        purpose: "Transfer",
         reference,
-        summary,
-        trnxSummary: `TRFR TO:${toUsername}. TRNX REF:${reference}`,
+        description,
         session,
+        fullNameTransactionEntity: recipientsUsername,
       }),
       creditAccount({
         amount,
-        username: toUsername,
-        purpose: "transfer",
+        username: recipientsUsername,
+        purpose: "Transfer",
         reference,
-        summary,
-        trnxSummary: `TRFR FROM:${fromUsername}. TRNX REF:${reference}`,
+        description,
         session,
+        fullNameTransactionEntity: sendersUsername,
       }),
     ]);
 
+    // Filter out any failed operations
     const failedTxns = transferResult.filter(
       (result) => result.status !== true
     );
     if (failedTxns.length) {
       const errors = failedTxns.map((a) => a.message);
       await session.abortTransaction();
+      await session.endSession();
       return res.status(409).json({
-        status: false,
         message: errors,
       });
     }
 
+    // If everything is successful, commit the transaction and end the session
     await session.commitTransaction();
-    session.endSession();
+    await session.endSession();
+
+    // Find the latest transaction for the recipient and create a notification for it
+    const transactions = await Transactions.find({
+      username: recipientsUsername,
+      trnxType: "Credit",
+    })
+      .sort({ createdAt: -1 })
+      .limit(1);
+
+    let notifications = await Notifications.create({
+      username: transactions[0].username,
+      trnxType: transactions[0].trnxType,
+      amount: transactions[0].amount,
+      sendersName: transactions[0].fullNameTransactionEntity,
+    });
+    notifications = await notifications.save();
 
     return res.status(201).json({
-      status: true,
       message: "Transfer successful",
       transferResult,
     });
   } catch (err) {
+    // If there is any error, abort the transaction, end the session and send an error response
     await session.abortTransaction();
-    session.endSession();
+    await session.endSession();
 
     return res.status(500).json({
-      status: false,
-      message: `Unable to find perform transfer. Please try again. \n Error:${err}`,
+      message: `Unable to perform transfer. Please try again. \n Error:${err}`,
     });
   }
 });
@@ -93,7 +112,7 @@ transactionRouter.get(
 transactionRouter.post("/api/fundWallet/:username", auth, async (req, res) => {
   try {
     const { username } = req.params;
-    /*please note if this will be used with the futter app,
+    /*please note if this will be used with the flutter app,
     only integers are allowed, no decimals allowed or an error will be thrown*/
     const { amount } = req.body;
     const user = await User.findOne({ username });

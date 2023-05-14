@@ -2,8 +2,8 @@ const express = require("express");
 const authRouter = express.Router();
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const User = require("../models/user");
-const auth = require("../middlewares/auth");
+const User = require("../models/user_model");
+const auth = require("../middlewares/auth_middleware");
 
 authRouter.post("/api/createUser", async (req, res) => {
   try {
@@ -66,18 +66,20 @@ authRouter.post("/api/login", async (req, res) => {
   }
 });
 
-authRouter.post("/tokenIsValid", auth, async (req, res) => {
-  try {
-    const token = req.header("x-auth-token");
-    if (!token) return res.json(false);
-    const verified = jwt.verify(token, process.env.TOKEN_STRING);
-    if (!verified) return res.json(false);
-    const user = await User.findById(verified.id);
-    if (!user) return res.json(false);
-    return res.json(true);
-  } catch (e) {
-    res.status(500).json({ message: e.message });
+authRouter.post("/checkToken", auth, async (req, res) => {
+  const token = req.header("x-auth-token");
+  if (token) {
+    try {
+      const { id } = jwt.verify(token, process.env.TOKEN_STRING);
+      const user = await User.findById(id);
+      if (user) {
+        return res.json(true);
+      }
+    } catch (e) {
+      res.status(500).json({ message: e.message });
+    }
   }
+  return res.json(false);
 });
 
 authRouter.get("/", auth, async (req, res) => {

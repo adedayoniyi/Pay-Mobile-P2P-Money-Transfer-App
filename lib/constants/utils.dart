@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:money_transfer_app/constants/global_constants.dart';
 import 'package:money_transfer_app/widgets/alert_message.dart';
@@ -46,11 +48,12 @@ void showTimeOutError(
   );
 }
 
-void showNoInternetError(
-    {required BuildContext context,
-    required String title,
-    required String message,
-    required VoidCallback onTap}) {
+void showNoInternetError({
+  required BuildContext context,
+  required String title,
+  required String message,
+  required VoidCallback onTap,
+}) {
   showDialog(
     context: context,
     builder: (context) => AlertMessage(
@@ -66,18 +69,23 @@ void showNoInternetError(
 void showDialogLoader(BuildContext context) {
   showDialog(
     context: context,
-    builder: (context) => AlertDialog(
-      backgroundColor: Colors.transparent,
-      surfaceTintColor: Colors.transparent,
-      shadowColor: Colors.transparent,
-      elevation: 0,
-      content: Center(
-        child: Container(
-          height: 80,
-          width: 80,
-          decoration: const BoxDecoration(color: whiteColor),
-          child: const Center(
-            child: CircularProgressIndicator(),
+    builder: (context) => WillPopScope(
+      onWillPop: () async => false,
+      child: Center(
+        child: AlertDialog(
+          backgroundColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          elevation: 0,
+          content: Center(
+            child: Container(
+              height: 80,
+              width: 80,
+              decoration: const BoxDecoration(color: whiteColor),
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
           ),
         ),
       ),
@@ -93,39 +101,70 @@ void showMaterialBanner({
   required String description,
   required String amount,
   required Color amountColor,
+  String prefix = "",
+  String shortDesc = '',
+  bool isFromTo = true,
 }) {
   ScaffoldMessenger.of(context).showMaterialBanner(
     MaterialBanner(
       shadowColor: Colors.transparent,
-
       elevation: 10,
-
-      content: Column(
-        children: [
-          Text(description),
-          Text(
-            amount,
-            style: TextStyle(
-              color: amountColor,
-              fontSize: value24,
-              fontWeight: FontWeight.bold,
+      content: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset(
+                  image,
+                  height: heightValue100,
+                ),
+                Column(
+                  children: [
+                    Text(
+                      description,
+                      style: TextStyle(
+                        fontSize: heightValue28,
+                        color: defaultAppColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          prefix,
+                          style: TextStyle(
+                            fontSize: heightValue20,
+                          ),
+                        ),
+                        Text(
+                          shortDesc,
+                          style: TextStyle(
+                            fontSize: heightValue20,
+                            fontWeight:
+                                isFromTo ? FontWeight.bold : FontWeight.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Text(
+                  "$amount",
+                  style: TextStyle(
+                    color: amountColor,
+                    fontSize: heightValue25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-          )
-        ],
+          ],
+        ),
       ),
-      leadingPadding: EdgeInsets.zero,
-      leading: Image.asset(
-        image,
-        height: value80,
-      ),
-      backgroundColor: whiteColor,
-      //padding: const EdgeInsets.all(16),
-      contentTextStyle: const TextStyle(
-        fontSize: 18,
-        color: Colors.black,
-        fontWeight: FontWeight.bold,
-      ),
-      actions: [TextButton(onPressed: () {}, child: Text(""))],
+      backgroundColor: Colors.white.withOpacity(0.7),
+      actions: [Text("")],
     ),
   );
 }

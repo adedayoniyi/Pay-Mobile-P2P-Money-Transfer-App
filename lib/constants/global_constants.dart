@@ -1,16 +1,19 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:money_transfer_app/constants/color_constants.dart';
 
 const String uri = "https://transfer-dayo-niyi.onrender.com";
 const defaultAppColor = Color(0xFF000000);
 const whiteColor = Color(0xFFFFFFFF);
 const secondaryAppColor = Color(0xFFF8BB18);
-const scaffoldBackgroundColor = greyScale100;
+const scaffoldBackgroundColor = greyScale150;
+var amountFormatter = NumberFormat.decimalPattern('en_US');
 
 var screenHeight = window.physicalSize.height / window.devicePixelRatio;
 var screenWidth = window.physicalSize.width / window.devicePixelRatio;
+var isTablet = (window.physicalSize.width / window.devicePixelRatio) > 600;
 
 /*This is the default screen width that is used to obtain the values below
 =>428
@@ -22,6 +25,7 @@ These are dynamic width values that change if the screen width changes
 This is very important for adapting to screen sizes*/
 
 //This is mostly used for width value and font sizes
+//428
 final value3 = screenWidth / 142.66;
 final value5 = screenWidth / 85.6;
 final value10 = screenWidth / 42.8;
@@ -53,15 +57,29 @@ final value165 = screenWidth / 2.59;
 final value200 = screenWidth / 2.14;
 
 //This is mostly used for height values
+//926
 final heightValue3 = screenHeight / 308.666;
 final heightValue5 = screenHeight / 185.2;
 final heightValue10 = screenHeight / 92.6;
+final heightValue13 = screenHeight / 71.23;
 final heightValue15 = screenHeight / 61.73;
+final heightValue17 = screenHeight / 54.47;
+final heightValue18 = screenHeight / 51.44;
+final heightValue19 = screenHeight / 48.73;
 final heightValue20 = screenHeight / 46.3;
+final heightValue24 = screenHeight / 38.58;
+final heightValue25 = screenHeight / 37.04;
+final heightValue27 = screenHeight / 34.29;
+final heightValue28 = screenHeight / 33.07;
 final heightValue30 = screenHeight / 30.86;
 final heightValue35 = screenHeight / 26.45;
+final heightValue36 = screenHeight / 25.72;
+final heightValue37 = screenHeight / 25.02;
+final heightValue38 = screenHeight / 24.36;
 final heightValue40 = screenHeight / 23.15;
+final heightValue45 = screenHeight / 20.57;
 final heightValue50 = screenHeight / 18.52;
+final heightValue55 = screenHeight / 16.83;
 final heightValue60 = screenHeight / 15.43;
 final heightValue65 = screenHeight / 14.24;
 final heightValue67 = screenHeight / 13.82;
@@ -69,14 +87,20 @@ final heightValue70 = screenHeight / 13.22;
 final heightValue80 = screenHeight / 11.575;
 final heightValue90 = screenHeight / 10.28;
 final heightValue100 = screenHeight / 9.26;
+final heightValue110 = screenHeight / 8.41;
 final heightValue120 = screenHeight / 7.71;
 final heightValue130 = screenHeight / 7.12;
+final heightValue140 = screenHeight / 6.61;
 final heightValue150 = screenHeight / 6.17;
 final heightValue160 = screenHeight / 5.78;
 final heightValue165 = screenHeight / 5.61;
 final heightValue180 = screenHeight / 5.14;
 final heightValue200 = screenHeight / 4.63;
 final heightValue220 = screenHeight / 4.20;
+final heightValue224 = screenHeight / 4.13;
+final heightValue225 = screenHeight / 4.11;
+final heightValue228 = screenHeight / 4.06;
+final heightValue230 = screenHeight / 4.03;
 final heightValue240 = screenHeight / 3.85;
 final heightValue250 = screenHeight / 3.704;
 final heightValue255 = screenHeight / 3.63;

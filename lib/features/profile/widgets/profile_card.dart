@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/constants/textstyle_constants.dart';
 
 class ProfileCard extends StatelessWidget {
   final String iconImage;
@@ -24,7 +23,7 @@ class ProfileCard extends StatelessWidget {
         height: heightValue100,
         width: screenWidth,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(value20),
+          borderRadius: BorderRadius.circular(heightValue20),
           color: whiteColor,
         ),
         child: Padding(
@@ -34,8 +33,8 @@ class ProfileCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: value55,
-                width: value55,
+                height: heightValue55,
+                width: heightValue55,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(value10),
                   color: scaffoldBackgroundColor,
@@ -43,27 +42,31 @@ class ProfileCard extends StatelessWidget {
                 child: Center(
                   child: Image.asset(
                     iconImage,
-                    height: value25,
+                    height: heightValue25,
                   ),
                 ),
               ),
-              Flexible(
-                child: Padding(
-                  padding: EdgeInsets.only(left: value20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        profileOperation,
-                        style: textMediumBoldGreyScale900,
+              Padding(
+                padding: EdgeInsets.only(left: value20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      profileOperation,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: heightValue25,
                       ),
-                      Text(
-                        profileOperationDescription,
-                        overflow: TextOverflow.ellipsis,
-                      )
-                    ],
-                  ),
+                    ),
+                    Text(
+                      profileOperationDescription,
+                      style: TextStyle(
+                        fontSize: heightValue15,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    )
+                  ],
                 ),
               ),
               const Icon(Icons.arrow_forward)

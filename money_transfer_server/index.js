@@ -2,15 +2,17 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 dotenv.config();
-const authRouter = require("./routes/auth");
-const balanceRouter = require("./routes/balance");
-const transactionRouter = require("./routes/transactions");
+const authRouter = require("./routes/auth_routes");
+const balanceRouter = require("./routes/balance_routes");
+const transactionRouter = require("./routes/transactions_route");
+const notificationsRouter = require("./routes/notifications_routes");
 
 const app = express();
 app.use(express.json());
 app.use(authRouter);
 app.use(transactionRouter);
 app.use(balanceRouter);
+app.use(notificationsRouter);
 
 mongoose
   .connect(process.env.DATABASE_URL, {

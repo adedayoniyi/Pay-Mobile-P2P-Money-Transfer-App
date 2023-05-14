@@ -34,7 +34,7 @@ class TransactionServices {
       ).timeout(const Duration(seconds: 25));
       //Navigator.of(context, rootNavigator: true).pop('dialog');
 
-      httpErrorHandler(
+      statusCodeHandler(
           context: context,
           response: res,
           onSuccess: () {

@@ -6,7 +6,7 @@ import 'package:money_transfer_app/constants/color_constants.dart';
 import 'package:money_transfer_app/constants/global_constants.dart';
 import 'package:money_transfer_app/features/home/screens/home_screen.dart';
 import 'package:money_transfer_app/features/profile/screens/profile_screen.dart';
-import 'package:money_transfer_app/features/transactions/screens/transactions_screen.dart';
+import 'package:money_transfer_app/features/transactions/screens/all_transactions_screen.dart';
 
 class MainApp extends StatefulWidget {
   static const String route = '/main-app';
@@ -56,27 +56,27 @@ class _MainAppState extends State<MainApp> {
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(
-          bottom: heightValue30,
+          bottom: heightValue25,
           left: value20,
           right: value20,
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(value25),
+          borderRadius: BorderRadius.circular(heightValue20),
           child: BottomNavigationBar(
             elevation: 0,
             currentIndex: widget.currentPage,
             selectedItemColor: Colors.white,
             unselectedItemColor: greyScale500,
             backgroundColor: defaultAppColor,
-            iconSize: value30,
+            iconSize: heightValue35,
             onTap: updatePage,
             items: [
               BottomNavigationBarItem(
                 icon: Padding(
-                  padding: EdgeInsets.only(top: value15),
+                  padding: EdgeInsets.only(top: heightValue15),
                   child: Image.asset(
                     "assets/icons/home_icon.png",
-                    height: value30,
+                    height: heightValue35,
                     color: widget.currentPage == 0 ? whiteColor : greyScale600,
                   ),
                 ),
@@ -84,10 +84,10 @@ class _MainAppState extends State<MainApp> {
               ),
               BottomNavigationBarItem(
                 icon: Padding(
-                  padding: EdgeInsets.only(top: value15),
+                  padding: EdgeInsets.only(top: heightValue15),
                   child: Image.asset(
                     "assets/icons/transactions_icon.png",
-                    height: value35,
+                    height: heightValue35,
                     color: widget.currentPage == 1 ? whiteColor : greyScale600,
                   ),
                 ),
@@ -95,10 +95,10 @@ class _MainAppState extends State<MainApp> {
               ),
               BottomNavigationBarItem(
                 icon: Padding(
-                  padding: EdgeInsets.only(top: value15),
+                  padding: EdgeInsets.only(top: heightValue15),
                   child: Image.asset(
                     "assets/icons/profile_icon.png",
-                    height: value30,
+                    height: heightValue35,
                     color: widget.currentPage == 2 ? whiteColor : greyScale600,
                   ),
                 ),

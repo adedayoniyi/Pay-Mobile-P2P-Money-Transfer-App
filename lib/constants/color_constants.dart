@@ -11,10 +11,6 @@ const greyScale500 = Color(0xFF9E9E9E);
 const greyScale400 = Color(0xFFBDBDBD);
 const greyScale300 = Color(0xFFE0E0E0);
 const greyScale200 = Color(0xFFEEEEEE);
+const greyScale150 = Color(0xFFF2F2F2);
 const greyScale100 = Color(0xFFF5F5F5);
 const greyScale50 = Color(0xFFFAFAFA);
-
-const alertAndStatusInfo = Color(0xFF2F80ED);
-const alertAndStatusSuccess = Color(0xFF33B469);
-const alertAndStatusWarning = Color(0xFFEBBC2E);
-const alertAndStatusError = Color(0xFFED3A3A);

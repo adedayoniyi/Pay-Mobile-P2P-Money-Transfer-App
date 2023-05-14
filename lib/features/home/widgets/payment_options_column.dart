@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/constants/textstyle_constants.dart';
 import 'package:money_transfer_app/features/home/screens/comming_soon_screen.dart';
 import 'package:money_transfer_app/features/home/screens/fund_wallet_screen.dart';
 import 'package:money_transfer_app/features/home/screens/send_money_screen.dart';
@@ -29,7 +28,11 @@ class PaymentOptionsColumn extends StatelessWidget {
                   ),
                   Text(
                     "Fund",
-                    style: textRegularMedium,
+                    style: TextStyle(
+                      color: defaultAppColor,
+                      fontSize: heightValue17,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 ],
               ),
@@ -47,7 +50,11 @@ class PaymentOptionsColumn extends StatelessWidget {
                   ),
                   Text(
                     "Transfer",
-                    style: textRegularMedium,
+                    style: TextStyle(
+                      color: defaultAppColor,
+                      fontSize: heightValue17,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 ],
               ),
@@ -65,7 +72,11 @@ class PaymentOptionsColumn extends StatelessWidget {
                   ),
                   Text(
                     "Airtime",
-                    style: textRegularMedium,
+                    style: TextStyle(
+                      color: defaultAppColor,
+                      fontSize: heightValue17,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 ],
               ),
@@ -83,7 +94,11 @@ class PaymentOptionsColumn extends StatelessWidget {
                   ),
                   Text(
                     "Voucher",
-                    style: textRegularMedium,
+                    style: TextStyle(
+                      color: defaultAppColor,
+                      fontSize: heightValue17,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 ],
               ),
@@ -109,7 +124,11 @@ class PaymentOptionsColumn extends StatelessWidget {
                   ),
                   Text(
                     "Electricity",
-                    style: textRegularMedium,
+                    style: TextStyle(
+                      color: defaultAppColor,
+                      fontSize: heightValue17,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 ],
               ),
@@ -127,7 +146,11 @@ class PaymentOptionsColumn extends StatelessWidget {
                   ),
                   Text(
                     "Internet",
-                    style: textRegularMedium,
+                    style: TextStyle(
+                      color: defaultAppColor,
+                      fontSize: heightValue17,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 ],
               ),
@@ -145,7 +168,11 @@ class PaymentOptionsColumn extends StatelessWidget {
                   ),
                   Text(
                     "Bills",
-                    style: textRegularMedium,
+                    style: TextStyle(
+                      color: defaultAppColor,
+                      fontSize: heightValue17,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 ],
               ),
@@ -163,7 +190,11 @@ class PaymentOptionsColumn extends StatelessWidget {
                   ),
                   Text(
                     "More",
-                    style: textRegularMedium,
+                    style: TextStyle(
+                      color: defaultAppColor,
+                      fontSize: heightValue17,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
                 ],
               ),

@@ -28,7 +28,7 @@ class CustomButton extends StatelessWidget {
             buttonColor,
           ),
           fixedSize: MaterialStatePropertyAll(
-            Size(screenWidth, 50),
+            Size(screenWidth, heightValue50),
           ),
           shape: MaterialStatePropertyAll(
             RoundedRectangleBorder(
@@ -39,7 +39,7 @@ class CustomButton extends StatelessWidget {
         child: Text(
           buttonText,
           style: TextStyle(
-            fontSize: value14,
+            fontSize: heightValue17,
             color: buttonTextColor,
           ),
         ),

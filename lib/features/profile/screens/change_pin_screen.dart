@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/constants/textstyle_constants.dart';
 import 'package:money_transfer_app/features/profile/services/profile_services.dart';
 import 'package:money_transfer_app/providers/user_provider.dart';
 import 'package:money_transfer_app/widgets/number_dial_pad.dart';
@@ -97,37 +96,44 @@ class _ChangeLoginPinScreenState extends State<ChangeLoginPinScreen> {
                 ),
                 Image.asset(
                   "assets/images/full_logo.png",
-                  height: value110,
+                  height: heightValue110,
                 ),
                 SizedBox(
                   height: heightValue20,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       "Welcome, ",
                       style: TextStyle(
-                        fontSize: value25,
+                        fontSize: heightValue30,
                       ),
                     ),
-                    Text(
-                      user.fullname,
-                      style: heading5GreyScale900,
-                    ),
+                    Icon(
+                      Icons.waving_hand,
+                      color: Colors.amber,
+                      size: heightValue25,
+                    )
                   ],
                 ),
+                Text(
+                  user.fullname,
+                  style: TextStyle(
+                    fontSize: heightValue35,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 SizedBox(
-                  height: heightValue20,
+                  height: heightValue10,
                 ),
                 oldPin.length > 3
                     ? Text(
                         "Enter your new pin",
-                        style: heading5GreyScale900,
+                        style: TextStyle(fontSize: heightValue25),
                       )
                     : Text(
                         "Enter your old pin",
-                        style: heading5GreyScale900,
+                        style: TextStyle(fontSize: heightValue25),
                       ),
                 SizedBox(
                   height: heightValue30,
@@ -261,7 +267,7 @@ class _ChangeLoginPinScreenState extends State<ChangeLoginPinScreen> {
                             child: Text(
                               "Cancel",
                               style: TextStyle(
-                                fontSize: value30,
+                                fontSize: heightValue30,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.red,
                               ),
@@ -339,7 +345,7 @@ class _ChangeLoginPinScreenState extends State<ChangeLoginPinScreen> {
                             child: Text(
                               "Cancel",
                               style: TextStyle(
-                                fontSize: value30,
+                                fontSize: heightValue30,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.red,
                               ),

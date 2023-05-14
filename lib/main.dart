@@ -21,7 +21,7 @@ import 'package:money_transfer_app/widgets/custom_button.dart';
 import 'package:money_transfer_app/widgets/main_app.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
       create: (context) => UserProvider(),
@@ -45,12 +45,12 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _future = getUserData(context);
+    _future = obtainTokenAndUserData(context);
     checkInternetConnection();
   }
 
-  getUserData(BuildContext context) async {
-    await authService.getUserData(context: context);
+  obtainTokenAndUserData(BuildContext context) async {
+    await authService.obtainTokenAndUserData(context);
   }
 
   checkInternetConnection() async {
@@ -117,7 +117,7 @@ class _MyAppState extends State<MyApp> {
                                       buttonTextColor: whiteColor,
                                       onTap: () {
                                         checkInternetConnection();
-                                        getUserData(context);
+                                        obtainTokenAndUserData(context);
                                         if (check == true) {
                                           Navigator.pushNamedAndRemoveUntil(
                                             context,
@@ -170,11 +170,17 @@ class _MyAppState extends State<MyApp> {
                   SizedBox(
                     height: heightValue10,
                   ),
-                  const Text("Initializing..."),
+                  Text(
+                    "Initializing...",
+                    style: TextStyle(fontSize: heightValue17),
+                  ),
                   SizedBox(
                     height: heightValue10,
                   ),
-                  const Text("Please ensure you are connected to the internet")
+                  Text(
+                    "Please ensure you are connected to the internet",
+                    style: TextStyle(fontSize: heightValue17),
+                  )
                 ],
               ),
             ),

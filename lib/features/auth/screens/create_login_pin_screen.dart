@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/constants/textstyle_constants.dart';
 import 'package:money_transfer_app/features/auth/services/auth_service.dart';
 import 'package:money_transfer_app/providers/user_provider.dart';
 import 'package:money_transfer_app/widgets/number_dial_pad.dart';
@@ -36,7 +35,7 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
   }
 
   getUserData() async {
-    await authService.getUserData(context: context);
+    await authService.obtainTokenAndUserData(context);
   }
 
   addDigit(int digit) {
@@ -102,7 +101,7 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                 ),
                 Image.asset(
                   "assets/images/full_logo.png",
-                  height: value110,
+                  height: heightValue110,
                 ),
                 SizedBox(
                   height: heightValue20,
@@ -113,12 +112,15 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                     Text(
                       "Welcome, ",
                       style: TextStyle(
-                        fontSize: value25,
+                        fontSize: heightValue25,
                       ),
                     ),
                     Text(
                       user.fullname,
-                      style: heading5GreyScale900,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: heightValue25,
+                      ),
                     ),
                   ],
                 ),
@@ -128,11 +130,11 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                 pin.length > 3
                     ? Text(
                         "Confirm your 4 digit pin",
-                        style: heading5GreyScale900,
+                        style: TextStyle(fontSize: heightValue20),
                       )
                     : Text(
                         "Create a 4 digit pin for your account",
-                        style: heading5GreyScale900,
+                        style: TextStyle(fontSize: heightValue25),
                       ),
                 SizedBox(
                   height: heightValue30,
@@ -260,7 +262,7 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                             child: Text(
                               "Cancel",
                               style: TextStyle(
-                                fontSize: value30,
+                                fontSize: heightValue30,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.red,
                               ),
@@ -338,7 +340,7 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                             child: Text(
                               "Cancel",
                               style: TextStyle(
-                                fontSize: value30,
+                                fontSize: heightValue30,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.red,
                               ),

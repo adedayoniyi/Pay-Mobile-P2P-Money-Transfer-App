@@ -47,7 +47,6 @@ class HomeService {
           message: "Connection time out. Try again",
           onTap: () {
             Navigator.pop(context);
-            Navigator.of(context, rootNavigator: true).pop('dialog');
           });
     } on SocketException catch (e) {
       showNoInternetError(
@@ -115,19 +114,19 @@ class HomeService {
 
   void transferMoney({
     required BuildContext context,
-    required String fromUsername,
-    required String toUsername,
+    required String sendersUsername,
+    required String recipientsUsername,
     required int amount,
-    required String summary,
+    required String description,
   }) async {
     final userToken =
         Provider.of<UserProvider>(context, listen: false).user.token;
     try {
       Transfer transfer = Transfer(
-        fromUsername: fromUsername,
-        toUsername: toUsername,
+        sendersUsername: sendersUsername,
+        recipientsUsername: recipientsUsername,
         amount: amount,
-        summary: summary,
+        description: description,
       );
       showDialogLoader(context);
 
@@ -144,14 +143,15 @@ class HomeService {
 
       Navigator.of(context, rootNavigator: true).pop('dialog');
 
-      httpErrorHandler(
+      statusCodeHandler(
           context: context,
           response: res,
           onSuccess: () {
             showAlertMessage(
                 context: context,
                 title: "Transfer successful",
-                message: "You have successfully sent ₦$amount to $toUsername",
+                message:
+                    "You have successfully sent ₦$amount to $recipientsUsername",
                 onTap: () {
                   Navigator.of(context, rootNavigator: true).pop('dialog');
                   showMaterialBanner(
@@ -160,6 +160,8 @@ class HomeService {
                     description: "Transfer successful",
                     amount: "-₦$amount",
                     amountColor: Colors.red,
+                    shortDesc: "@$recipientsUsername",
+                    prefix: "To ",
                   );
                   Navigator.pushNamedAndRemoveUntil(
                       context, MainApp.route, (route) => false,
@@ -208,7 +210,7 @@ class HomeService {
 
       //Navigator.of(context, rootNavigator: true).pop('dialog');
 
-      httpErrorHandler(
+      statusCodeHandler(
           context: context,
           response: res,
           onSuccess: () {
@@ -279,7 +281,7 @@ class HomeService {
 
       Navigator.of(context, rootNavigator: true).pop('dialog');
 
-      httpErrorHandler(
+      statusCodeHandler(
           context: context,
           response: res,
           onSuccess: () {
@@ -333,16 +335,18 @@ class HomeService {
 
       Navigator.of(context, rootNavigator: true).pop('dialog');
 
-      httpErrorHandler(
+      statusCodeHandler(
           context: context,
           response: res,
           onSuccess: () {
             showMaterialBanner(
               context: context,
               image: "assets/images/full_logo.png",
-              description: "Account credited successfully",
+              description: "Credit Successful",
               amount: "₦$amount",
               amountColor: Colors.green,
+              shortDesc: "Added ₦$amount to your balance",
+              isFromTo: false,
             );
             Navigator.pushNamedAndRemoveUntil(
               context,
@@ -371,6 +375,70 @@ class HomeService {
           });
     } on Error catch (e) {
       print('General Error: $e');
+    }
+  }
+
+  void creditNotification({
+    required BuildContext context,
+    required VoidCallback onSuccess,
+  }) async {
+    final user = Provider.of<UserProvider>(context, listen: false).user;
+    try {
+      http.Response res = await http.get(
+          Uri.parse("$uri/api/credit-notification/${user.username}"),
+          headers: <String, String>{
+            "Content-Type": "application/json; charset=UTF-8",
+            'x-auth-token': user.token,
+          }).timeout(const Duration(seconds: 25));
+
+      statusCodeHandler(
+          context: context,
+          response: res,
+          onSuccess: () {
+            if (jsonDecode(res.body) == null) {
+              print("No Notifications");
+            } else {
+              showMaterialBanner(
+                context: context,
+                image: "assets/images/full_logo.png",
+                description: "Credit Successful",
+                amount: "+ ₦${jsonDecode(res.body)["amount"]}",
+                amountColor: Colors.green,
+                shortDesc: "${jsonDecode(res.body)["sendersName"]}",
+                prefix: "From ",
+              );
+              onSuccess();
+            }
+          });
+    } catch (e) {
+      print("Notification Error:$e");
+    }
+  }
+
+  void deleteNotification({
+    required BuildContext context,
+  }) async {
+    final user = Provider.of<UserProvider>(context, listen: false).user;
+    try {
+      http.Response res = await http
+          .post(Uri.parse("$uri/api/deleteNotification"),
+              headers: <String, String>{
+                "Content-Type": "application/json; charset=UTF-8",
+                'x-auth-token': user.token,
+              },
+              body: jsonEncode({
+                "username": user.username,
+              }))
+          .timeout(const Duration(seconds: 25));
+
+      statusCodeHandler(
+          context: context,
+          response: res,
+          onSuccess: () {
+            print("Notification deletion successful");
+          });
+    } catch (e) {
+      print("General Error:$e");
     }
   }
 }

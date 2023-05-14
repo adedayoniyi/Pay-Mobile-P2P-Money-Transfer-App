@@ -48,7 +48,7 @@ class AuthService {
           .timeout(const Duration(seconds: 25));
       Navigator.of(context, rootNavigator: true).pop('dialog');
 
-      httpErrorHandler(
+      statusCodeHandler(
           context: context,
           response: res,
           onSuccess: () {
@@ -153,7 +153,7 @@ class AuthService {
 
       Navigator.of(context, rootNavigator: true).pop('dialog');
 
-      httpErrorHandler(
+      statusCodeHandler(
           context: context,
           response: res,
           onSuccess: () async {
@@ -188,42 +188,45 @@ class AuthService {
     }
   }
 
-  Future getUserData({
-    required BuildContext context,
-  }) async {
+  Future obtainTokenAndUserData(
+    BuildContext context,
+  ) async {
     try {
       //showDialogLoader(context);
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('x-auth-token');
+      String? authToken = prefs.getString('x-auth-token');
 
-      if (token == null) {
+      if (authToken == null) {
         prefs.setString('x-auth-token', '');
       }
 
-      var tokenRes = await http.post(Uri.parse('$uri/tokenIsValid'),
+      var returnedTokenResponse = await http.post(Uri.parse('$uri/checkToken'),
           headers: <String, String>{
             "Content-Type": "application/json; charset=UTF-8",
-            'x-auth-token': token!
+            'x-auth-token': authToken!
           });
       //the response will supply us with true or false according to the tokenIsValid api
-      var response = jsonDecode(tokenRes.body);
+      var response = jsonDecode(returnedTokenResponse.body);
 
       if (response == true) {
         //get user data
 
-        http.Response userRes =
+        http.Response returnedUserResponse =
             await http.get(Uri.parse('$uri/'), headers: <String, String>{
           "Content-Type": "application/json; charset=UTF-8",
-          'x-auth-token': token,
+          'x-auth-token': authToken,
         });
 
-        var userProvider = Provider.of<UserProvider>(context, listen: false);
-        userProvider.setUser(userRes.body);
+        var userProvider = Provider.of<UserProvider>(
+          context,
+          listen: false,
+        );
+        userProvider.setUser(returnedUserResponse.body);
         //Navigator.of(context, rootNavigator: true).pop('dialog');
       }
       return response;
     } catch (e) {
-      showSnackBar(context, e.toString());
+      print(e);
     }
   }
 
@@ -253,7 +256,7 @@ class AuthService {
 
         Navigator.of(context, rootNavigator: true).pop('dialog');
 
-        httpErrorHandler(
+        statusCodeHandler(
             context: context,
             response: res,
             onSuccess: () {
@@ -323,7 +326,7 @@ class AuthService {
 
       Navigator.of(context, rootNavigator: true).pop('dialog');
 
-      httpErrorHandler(
+      statusCodeHandler(
           context: context,
           response: res,
           onSuccess: () {

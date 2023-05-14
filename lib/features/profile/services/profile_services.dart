@@ -54,7 +54,7 @@ class ProfileServices {
           .timeout(const Duration(seconds: 25));
 
       Navigator.of(context, rootNavigator: true).pop('dialog');
-      httpErrorHandler(
+      statusCodeHandler(
         context: context,
         response: res,
         onSuccess: () {
@@ -64,8 +64,11 @@ class ProfileServices {
               message: jsonDecode(res.body)["message"],
               onTap: () {
                 Navigator.pushNamedAndRemoveUntil(
-                    context, MainApp.route, (route) => false,
-                    arguments: 2);
+                  context,
+                  MainApp.route,
+                  (route) => false,
+                  arguments: 2,
+                );
               });
         },
       );

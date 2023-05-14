@@ -1,32 +1,32 @@
 import 'dart:convert';
 
 class Transfer {
-  final String fromUsername;
-  final String toUsername;
+  final String sendersUsername;
+  final String recipientsUsername;
   final int amount;
-  final String summary;
+  final String description;
   Transfer({
-    required this.fromUsername,
-    required this.toUsername,
+    required this.sendersUsername,
+    required this.recipientsUsername,
     required this.amount,
-    required this.summary,
+    required this.description,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'fromUsername': fromUsername,
-      'toUsername': toUsername,
+      'sendersUsername': sendersUsername,
+      'recipientsUsername': recipientsUsername,
       'amount': amount,
-      'summary': summary,
+      'description': description,
     };
   }
 
   factory Transfer.fromMap(Map<String, dynamic> map) {
     return Transfer(
-      fromUsername: map['fromUsername'] ?? '',
-      toUsername: map['toUsername'] ?? '',
+      sendersUsername: map['sendersUsername'] ?? '',
+      recipientsUsername: map['recipientsUsername'] ?? '',
       amount: map['amount']?.toInt() ?? 0,
-      summary: map['summary'] ?? '',
+      description: map['description'] ?? '',
     );
   }
 

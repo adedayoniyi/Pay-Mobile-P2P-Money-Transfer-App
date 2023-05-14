@@ -76,7 +76,7 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                 ),
                 Image.asset(
                   "assets/images/full_logo.png",
-                  height: value145,
+                  height: heightValue150,
                 ),
                 SizedBox(
                   height: heightValue20,
@@ -86,7 +86,7 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                     Text(
                       "Welcome back",
                       style: TextStyle(
-                        fontSize: value25,
+                        fontSize: heightValue30,
                       ),
                     ),
                     SizedBox(
@@ -105,7 +105,7 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                 Text(
                   user.fullname,
                   style: TextStyle(
-                    fontSize: value25,
+                    fontSize: heightValue35,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -114,7 +114,7 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                 ),
                 Text(
                   "Enter your 4 digit pin to proceed",
-                  style: TextStyle(fontSize: value20),
+                  style: TextStyle(fontSize: heightValue25),
                 ),
                 SizedBox(
                   height: heightValue30,
@@ -195,8 +195,8 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                               surfaceTintColor: whiteColor,
                               icon: Image.asset(
                                 "assets/icons/info-circle.png",
-                                height: value100,
-                                width: value100,
+                                height: heightValue100,
+                                width: heightValue100,
                               ),
                               title: Text("Caution",
                                   style: TextStyle(
@@ -206,7 +206,8 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                                 "Are you sure you want to logout",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 13, color: Colors.grey[600]),
+                                    fontSize: heightValue13,
+                                    color: Colors.grey[600]),
                               ),
                               actions: <Widget>[
                                 CustomButton(
@@ -234,7 +235,7 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                   child: Text(
                     "Sign Out",
                     style: TextStyle(
-                      fontSize: value30,
+                      fontSize: heightValue30,
                       fontWeight: FontWeight.bold,
                       color: Colors.red,
                     ),

@@ -17,11 +17,6 @@ const userSchema = new mongoose.Schema(
       required: true,
       type: String,
       trim: true,
-      validator: (value) => {
-        const re =
-          /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        return value.match(re);
-      },
     },
     password: {
       required: true,

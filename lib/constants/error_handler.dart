@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:money_transfer_app/constants/utils.dart';
 
-void httpErrorHandler({
+void statusCodeHandler({
   required BuildContext context,
   required http.Response response,
   required VoidCallback onSuccess,
@@ -25,7 +25,6 @@ void httpErrorHandler({
       break;
     case 500:
       showSnackBar(context, jsonDecode(response.body));
-
       break;
   }
 }

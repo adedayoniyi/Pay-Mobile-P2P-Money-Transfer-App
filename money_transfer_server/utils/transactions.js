@@ -1,16 +1,17 @@
-const Transactions = require("../models/transaction");
-const User = require("../models/user");
+const Transactions = require("../models/transaction_model");
+const User = require("../models/user_model");
 
 const creditAccount = async ({
   amount,
   username,
   purpose,
   reference,
-  summary,
-  trnxSummary,
+  description,
   session,
+  fullNameTransactionEntity,
 }) => {
   const user = await User.findOne({ username });
+
   if (!user) {
     return {
       status: false,
@@ -24,6 +25,9 @@ const creditAccount = async ({
     { $inc: { balance: amount } },
     { session }
   );
+  const sendersFullName = await User.findOne({
+    username: fullNameTransactionEntity,
+  });
   const transaction = await Transactions.create(
     [
       {
@@ -34,8 +38,8 @@ const creditAccount = async ({
         reference,
         balanceBefore: Number(user.balance),
         balanceAfter: Number(user.balance) + Number(amount),
-        summary,
-        trnxSummary,
+        description,
+        fullNameTransactionEntity: sendersFullName.fullname,
       },
     ],
     { session }
@@ -54,11 +58,12 @@ const debitAccount = async ({
   username,
   purpose,
   reference,
-  summary,
-  trnxSummary,
+  description,
   session,
+  fullNameTransactionEntity,
 }) => {
   const user = await User.findOne({ username });
+
   if (!user) {
     return {
       status: false,
@@ -80,6 +85,9 @@ const debitAccount = async ({
     { $inc: { balance: -amount } },
     { session }
   );
+  const recipientFullName = await User.findOne({
+    username: fullNameTransactionEntity,
+  });
   const transaction = await Transactions.create(
     [
       {
@@ -90,8 +98,8 @@ const debitAccount = async ({
         reference,
         balanceBefore: Number(user.balance),
         balanceAfter: Number(user.balance) - Number(amount),
-        summary,
-        trnxSummary,
+        description,
+        fullNameTransactionEntity: recipientFullName.fullname,
       },
     ],
     { session }

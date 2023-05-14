@@ -32,8 +32,8 @@ class GetTransferUsernameTextField extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
             labelText!,
-            style: const TextStyle(
-              fontSize: 14,
+            style: TextStyle(
+              fontSize: heightValue15,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -41,24 +41,25 @@ class GetTransferUsernameTextField extends StatelessWidget {
         TextFormField(
           obscureText: obscureText,
           controller: controller,
+          style: TextStyle(fontSize: heightValue20),
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderSide: const BorderSide(
                 color: Color.fromARGB(255, 212, 211, 211),
               ),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(heightValue10),
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(
                 color: Color.fromARGB(255, 212, 211, 211),
               ),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(heightValue10),
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(
                 color: defaultAppColor,
               ),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(heightValue10),
             ),
             hintText: hintText,
             prefixIcon: Padding(

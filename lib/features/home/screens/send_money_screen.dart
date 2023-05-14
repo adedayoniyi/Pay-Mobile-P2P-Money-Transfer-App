@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/constants/textstyle_constants.dart';
 import 'package:money_transfer_app/features/home/services/home_service.dart';
 import 'package:money_transfer_app/features/home/widgets/confirm_pin_to_send_money_dialpad.dart';
 import 'package:money_transfer_app/features/home/widgets/get_transfer_username_textfield.dart';
@@ -50,10 +49,10 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
     if (transferKey.currentState!.validate()) {
       homeService.transferMoney(
         context: context,
-        fromUsername: user.username,
-        toUsername: usernameController.text,
+        sendersUsername: user.username,
+        recipientsUsername: usernameController.text,
         amount: int.parse(amountController.text),
-        summary: summaryController.text,
+        description: summaryController.text,
       );
     }
   }
@@ -63,24 +62,36 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Icon(Icons.arrow_back),
-          ),
-          title: const Center(
-            child: Text("Send Money"),
-          ),
-        ),
+            leadingWidth: screenWidth,
+            scrolledUnderElevation: 5,
+            leading: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                BackButton(),
+                Center(
+                  child: Text(
+                    "Send Money",
+                    style: TextStyle(
+                      fontSize: heightValue24,
+                    ),
+                  ),
+                ),
+                BackButton(
+                  color: Colors.transparent,
+                )
+              ],
+            )),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: value20),
           child: SingleChildScrollView(
             child: Column(
               children: [
                 Text(
                   "Enter receipents username",
-                  style: heading5GreyScale900,
+                  style: TextStyle(
+                    fontSize: heightValue24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,8 +123,8 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
                                 getTransferUsername();
                               },
                               child: Container(
-                                height: 65,
-                                width: 65,
+                                height: heightValue65,
+                                width: heightValue65,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: defaultAppColor,
@@ -139,26 +150,29 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
                               padding: const EdgeInsets.only(top: 20),
                               child: Container(
                                 width: screenWidth,
-                                height: 70,
+                                height: heightValue70,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius:
+                                      BorderRadius.circular(heightValue10),
                                   border:
                                       Border.all(color: Colors.black, width: 1),
                                   color: Colors.grey[300],
                                 ),
                                 child: Row(
                                   children: [
-                                    const SizedBox(
-                                      width: 20,
+                                    SizedBox(
+                                      width: value20,
                                     ),
                                     CircleAvatar(
-                                      radius: 25,
+                                      radius: heightValue25,
                                       child: Center(
-                                        child: Text(successText![0]),
+                                        child: Text(
+                                          successText![0],
+                                        ),
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 45,
+                                    SizedBox(
+                                      width: value45,
                                     ),
                                     Column(
                                       mainAxisAlignment:
@@ -166,15 +180,15 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
                                       children: [
                                         Text(
                                           successText!,
-                                          style: const TextStyle(
-                                            fontSize: 17,
+                                          style: TextStyle(
+                                            fontSize: heightValue17,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
                                           "@${usernameController.text}",
-                                          style: const TextStyle(
-                                            fontSize: 15,
+                                          style: TextStyle(
+                                            fontSize: heightValue15,
                                           ),
                                         ),
                                       ],

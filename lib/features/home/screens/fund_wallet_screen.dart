@@ -4,7 +4,6 @@ You can implement an actual deposit feature if you want*/
 
 import 'package:flutter/material.dart';
 import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/constants/textstyle_constants.dart';
 import 'package:money_transfer_app/constants/utils.dart';
 import 'package:money_transfer_app/features/home/services/home_service.dart';
 import 'package:money_transfer_app/features/home/widgets/confirm_pin_to_send_money_dialpad.dart';
@@ -40,17 +39,34 @@ class _FundWalletScreenState extends State<FundWalletScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text("Add Money"),
-        ),
-      ),
+          leadingWidth: screenWidth,
+          leading: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              BackButton(),
+              Center(
+                child: Text(
+                  "Add Money",
+                  style: TextStyle(
+                    fontSize: heightValue24,
+                  ),
+                ),
+              ),
+              BackButton(
+                color: Colors.transparent,
+              )
+            ],
+          )),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: value20),
         child: Column(
           children: [
             Text(
               "Enter the amount you will like to add",
-              style: heading6GreyScale900,
+              style: TextStyle(
+                fontSize: heightValue24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(
               height: heightValue10,
@@ -60,7 +76,10 @@ class _FundWalletScreenState extends State<FundWalletScreen> {
               children: [
                 Text(
                   "Note: max = ",
-                  style: textRegularMedium,
+                  style: TextStyle(
+                    fontSize: heightValue20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   "₦5,000",

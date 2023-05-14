@@ -18,21 +18,21 @@ class PinInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      height: value60,
-      width: value60,
+      height: heightValue80,
+      width: heightValue80,
       margin: const EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
-        color: greyScale100,
+        color: greyScale200,
         shape: BoxShape.circle,
         border: Border.all(
-            color:
-                index == selectedIndex ? defaultAppColor : Colors.transparent,
-            width: 2),
+          color: index == selectedIndex ? defaultAppColor : Colors.transparent,
+          width: 2,
+        ),
       ),
       child: pin.length > index
           ? Container(
-              width: 15,
-              height: 15,
+              width: value15,
+              height: value15,
               decoration: BoxDecoration(
                 color: Colors.black.withBlue(40),
                 shape: BoxShape.circle,

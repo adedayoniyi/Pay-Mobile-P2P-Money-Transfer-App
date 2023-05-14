@@ -9,7 +9,7 @@ const transactionSchema = new mongoose.Schema(
     },
     purpose: {
       type: String,
-      enum: ["deposit", "transfer", "reversal", "withdrawal"],
+      enum: ["Transfer", "Deposit"],
       required: true,
     },
     amount: {
@@ -33,12 +33,15 @@ const transactionSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-
-    summary: {
+    fullNameTransactionEntity: {
       type: String,
-      required: true,
+      ref: "User",
     },
-    trnxSummary: {
+    // sendersName: {
+    //   type: String,
+    //   ref: "User",
+    // },
+    description: {
       type: String,
       required: true,
     },
