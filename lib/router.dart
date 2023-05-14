@@ -62,7 +62,7 @@ Route<dynamic> appRoutes(RouteSettings routeSettings) {
       );
     case OnBoardingScreen.route:
       return PageRouteBuilder(
-        pageBuilder: (_, __, ___) => const OnBoardingScreen(),
+        pageBuilder: (_, __, ___) => OnBoardingScreen(),
         transitionDuration: const Duration(seconds: 1),
         transitionsBuilder: (_, a, __, c) =>
             FadeTransition(opacity: a, child: c),

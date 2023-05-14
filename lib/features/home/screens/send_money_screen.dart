@@ -67,7 +67,7 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
             leading: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                BackButton(),
+                const BackButton(),
                 Center(
                   child: Text(
                     "Send Money",
@@ -76,7 +76,7 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
                     ),
                   ),
                 ),
-                BackButton(
+                const BackButton(
                   color: Colors.transparent,
                 )
               ],
@@ -150,7 +150,7 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
                               padding: const EdgeInsets.only(top: 20),
                               child: Container(
                                 width: screenWidth,
-                                height: heightValue70,
+                                height: heightValue80,
                                 decoration: BoxDecoration(
                                   borderRadius:
                                       BorderRadius.circular(heightValue10),

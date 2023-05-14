@@ -87,7 +87,7 @@ class _MyAppState extends State<MyApp> {
                         : MainApp(
                             currentPage: 0,
                           )
-                    : const OnBoardingScreen()
+                    : OnBoardingScreen()
                 : Scaffold(
                     body: SafeArea(
                       child: Stack(
