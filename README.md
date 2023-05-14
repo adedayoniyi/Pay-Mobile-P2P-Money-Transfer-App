@@ -3,13 +3,13 @@
 
 # Features
 #### 1. Pin feature used for authorizing transactions and user login
-<img src="/assets/images/confirm_pin_showcase.png" alt="In app image 1" title="In app image 1" width="330" height="700">
+<img src="/assets/images/confirm_pin_showcase.png" alt="In app image 1" title="In app image 1" width="260" height="563">
 
 ##### 2. Custom in-app notifications
-<img src="/assets/images/transfer_nitification_image.png" alt="In app image 2" title="In app image 2" width="330" height="700">
+<img src="/assets/images/transfer_nitification_image.png" alt="In app image 2" title="In app image 2" width="260" height="563">
 
 ##### 3. Error messages included
-<img src="/assets/images/error_message_showcase.png" alt="In app image 3" title="In app image 3" width="330" height="700">
+<img src="/assets/images/error_message_showcase.png" alt="In app image 3" title="In app image 3" width="260" height="563">
 
 ### Note: The server running this app has already been deployed to render.com, which means you can immediately clone this repo, run it and start using it (i.e The backend is already connected).
 #### After cloning don't forget to run:
