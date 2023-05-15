@@ -345,7 +345,7 @@ class HomeService {
               description: "Credit Successful",
               amount: "₦$amount",
               amountColor: Colors.green,
-              shortDesc: "Added ₦$amount to your balance",
+              shortDesc: "Added ₦$amount to balance",
               isFromTo: false,
             );
             Navigator.pushNamedAndRemoveUntil(
@@ -402,7 +402,7 @@ class HomeService {
                 context: context,
                 image: "assets/images/full_logo.png",
                 description: "Credit Successful",
-                amount: "+ ₦${jsonDecode(res.body)["amount"]}",
+                amount: "+₦${jsonDecode(res.body)["amount"]}",
                 amountColor: Colors.green,
                 shortDesc: "${jsonDecode(res.body)["sendersName"]}",
                 prefix: "From ",

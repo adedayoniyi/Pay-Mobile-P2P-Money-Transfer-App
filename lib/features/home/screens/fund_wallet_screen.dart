@@ -4,13 +4,11 @@ You can implement an actual deposit feature if you want*/
 
 import 'package:flutter/material.dart';
 import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/constants/utils.dart';
 import 'package:money_transfer_app/features/home/services/home_service.dart';
 import 'package:money_transfer_app/features/home/widgets/confirm_pin_to_send_money_dialpad.dart';
 import 'package:money_transfer_app/providers/user_provider.dart';
 import 'package:money_transfer_app/widgets/amount_text_field.dart';
 import 'package:money_transfer_app/widgets/custom_button.dart';
-import 'package:money_transfer_app/widgets/custom_textfield.dart';
 import 'package:provider/provider.dart';
 
 class FundWalletScreen extends StatefulWidget {
@@ -43,7 +41,7 @@ class _FundWalletScreenState extends State<FundWalletScreen> {
           leading: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              BackButton(),
+              const BackButton(),
               Center(
                 child: Text(
                   "Add Money",
@@ -52,7 +50,7 @@ class _FundWalletScreenState extends State<FundWalletScreen> {
                   ),
                 ),
               ),
-              BackButton(
+              const BackButton(
                 color: Colors.transparent,
               )
             ],
@@ -110,6 +108,9 @@ class _FundWalletScreenState extends State<FundWalletScreen> {
                   enableDrag: false,
                   isDismissible: false,
                   isScrollControlled: true,
+                  constraints: BoxConstraints.loose(
+                    Size(screenWidth, screenHeight),
+                  ),
                   builder: (context) => ConfirmPinToSendMoneyDialPad(
                     onSuccess: () {
                       fundAccontWallet();

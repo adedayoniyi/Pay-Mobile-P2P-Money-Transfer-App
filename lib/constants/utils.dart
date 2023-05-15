@@ -125,23 +125,25 @@ void showMaterialBanner({
                     Text(
                       description,
                       style: TextStyle(
-                        fontSize: heightValue28,
+                        fontSize: heightValue23,
                         color: defaultAppColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           prefix,
                           style: TextStyle(
-                            fontSize: heightValue20,
+                            fontSize: heightValue18,
                           ),
                         ),
                         Text(
                           shortDesc,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: heightValue20,
+                            fontSize: heightValue18,
                             fontWeight:
                                 isFromTo ? FontWeight.bold : FontWeight.normal,
                           ),
@@ -154,7 +156,7 @@ void showMaterialBanner({
                   "$amount",
                   style: TextStyle(
                     color: amountColor,
-                    fontSize: heightValue25,
+                    fontSize: heightValue24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

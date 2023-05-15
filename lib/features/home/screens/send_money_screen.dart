@@ -220,6 +220,8 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
                                 enableDrag: false,
                                 isDismissible: false,
                                 isScrollControlled: true,
+                                constraints: BoxConstraints.loose(
+                                    Size(screenWidth, screenHeight)),
                                 builder: (context) =>
                                     ConfirmPinToSendMoneyDialPad(
                                   onSuccess: () {

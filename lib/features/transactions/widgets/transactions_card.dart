@@ -77,7 +77,7 @@ class TransactionsCard extends StatelessWidget {
                 "₦${amountFormatter.format(amount)}",
                 style: TextStyle(
                   color: amountColorBasedOnTransactionType,
-                  fontSize: value18,
+                  fontSize: heightValue20,
                   fontWeight: FontWeight.w700,
                 ),
               )

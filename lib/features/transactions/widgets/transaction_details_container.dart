@@ -24,7 +24,7 @@ class TransactionDetailsContainer extends StatelessWidget {
       padding: EdgeInsets.only(bottom: heightValue15),
       child: Container(
         width: screenWidth,
-        height: heightValue90,
+        height: heightValue100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(heightValue10),
           color: greyScale100,
