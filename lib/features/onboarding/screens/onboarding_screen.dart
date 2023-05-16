@@ -7,7 +7,7 @@ import 'package:money_transfer_app/widgets/custom_button.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   static const String route = "/onboarding-screen";
-  OnBoardingScreen({super.key});
+  const OnBoardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

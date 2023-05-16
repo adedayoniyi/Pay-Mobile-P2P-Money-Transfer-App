@@ -95,7 +95,7 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                     Icon(
                       Icons.waving_hand,
                       color: Colors.amber,
-                      size: value30,
+                      size: heightValue30,
                     )
                   ],
                 ),
@@ -177,12 +177,20 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                     NumberDialPad(onTap: () {}, numberText: ''),
                     NumberDialPad(onTap: () => addDigit(0), numberText: '0'),
                     TextButton(
+                      style: ButtonStyle(
+                        fixedSize: MaterialStatePropertyAll(
+                          Size(heightValue75, heightValue75),
+                        ),
+                      ),
                       //height: double.maxFinite,
                       onPressed: () {
                         backspace();
                       },
-                      child: Icon(Icons.backspace_outlined,
-                          color: Colors.black.withBlue(40), size: 30),
+                      child: Icon(
+                        Icons.backspace_outlined,
+                        color: Colors.black.withBlue(40),
+                        size: heightValue30,
+                      ),
                     ),
                   ],
                 ),

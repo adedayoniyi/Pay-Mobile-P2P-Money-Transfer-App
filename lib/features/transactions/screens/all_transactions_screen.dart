@@ -5,6 +5,7 @@ import 'package:money_transfer_app/features/transactions/screens/transaction_det
 import 'package:money_transfer_app/features/transactions/services/transactions_services.dart';
 import 'package:money_transfer_app/features/transactions/widgets/transactions_card.dart';
 import 'package:money_transfer_app/models/transactions.dart';
+import 'package:money_transfer_app/widgets/circular_loader.dart';
 import 'package:money_transfer_app/widgets/custom_button.dart';
 
 class TransactionsScreen extends StatefulWidget {
@@ -44,12 +45,13 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
         elevation: 0,
         scrolledUnderElevation: 5,
         title: Center(
-            child: Text(
-          "Transactions",
-          style: TextStyle(
-            fontSize: heightValue25,
+          child: Text(
+            "Transactions",
+            style: TextStyle(
+              fontSize: heightValue25,
+            ),
           ),
-        )),
+        ),
       ),
       body: FutureBuilder(
         future: _future,
@@ -125,9 +127,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                     ),
                   );
           }
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          return const CircularLoader();
         },
       ),
     );

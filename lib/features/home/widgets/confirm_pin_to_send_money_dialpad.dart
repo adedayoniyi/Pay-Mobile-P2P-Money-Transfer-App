@@ -100,7 +100,7 @@ class _ConfirmPinToSendMoneyDialPadState
                     Icon(
                       Icons.waving_hand,
                       color: Colors.amber,
-                      size: value30,
+                      size: heightValue35,
                     )
                   ],
                 ),
@@ -185,13 +185,17 @@ class _ConfirmPinToSendMoneyDialPadState
                       numberText: '0',
                     ),
                     TextButton(
-                      //height: double.maxFinite,
+                      style: ButtonStyle(
+                        fixedSize: MaterialStatePropertyAll(
+                          Size(heightValue75, heightValue75),
+                        ),
+                      ),
                       onPressed: () {
                         backspace();
                       },
                       child: Icon(
                         Icons.backspace_outlined,
-                        color: Colors.black.withBlue(40),
+                        color: defaultAppColor,
                         size: heightValue30,
                       ),
                     ),

@@ -5,7 +5,6 @@ import 'package:money_transfer_app/features/home/screens/comming_soon_screen.dar
 import 'package:money_transfer_app/features/transactions/widgets/transaction_details_container.dart';
 
 import 'package:money_transfer_app/models/transactions.dart';
-import 'package:money_transfer_app/widgets/custom_button.dart';
 
 class TransactionDetailsScreen extends StatelessWidget {
   static const String route = "/transaction-details";

@@ -20,7 +20,7 @@ class PinInputField extends StatelessWidget {
       alignment: Alignment.center,
       height: heightValue80,
       width: heightValue80,
-      margin: const EdgeInsets.only(right: 10),
+      margin: EdgeInsets.only(right: value10),
       decoration: BoxDecoration(
         color: greyScale200,
         shape: BoxShape.circle,
@@ -33,8 +33,8 @@ class PinInputField extends StatelessWidget {
           ? Container(
               width: value15,
               height: value15,
-              decoration: BoxDecoration(
-                color: Colors.black.withBlue(40),
+              decoration: const BoxDecoration(
+                color: defaultAppColor,
                 shape: BoxShape.circle,
               ),
             )

@@ -28,7 +28,7 @@ class PaymentContainers extends StatelessWidget {
           child: Image.asset(
             icon,
             color: whiteColor,
-            height: heightValue30,
+            height: heightValue33,
           ),
         ),
       ),

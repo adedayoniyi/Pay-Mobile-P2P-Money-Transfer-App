@@ -80,7 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ProfileCard(
               iconImage: "assets/icons/profile_icon.png",
               profileOperation: "Security",
-              profileOperationDescription: "Passwords, Change pin, etc",
+              profileOperationDescription: "Passwords, Change pin",
               onPressed: () {
                 Navigator.pushNamed(context, ChangeLoginPinScreen.route);
               },

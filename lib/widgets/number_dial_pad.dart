@@ -14,10 +14,15 @@ class NumberDialPad extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onTap,
+      style: ButtonStyle(
+        fixedSize: MaterialStatePropertyAll(
+          Size(heightValue75, heightValue75),
+        ),
+      ),
       child: Text(
         numberText,
         style: TextStyle(
-          fontSize: heightValue45,
+          fontSize: heightValue43,
           fontWeight: FontWeight.bold,
         ),
       ),

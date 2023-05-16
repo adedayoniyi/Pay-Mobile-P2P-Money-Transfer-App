@@ -6,10 +6,10 @@ import 'package:money_transfer_app/constants/global_constants.dart';
 class TransactionDetailsContainer extends StatelessWidget {
   final String label;
   final String content;
-  Color amountColor;
-  bool isRow;
-  bool isAmount;
-  TransactionDetailsContainer({
+  final Color amountColor;
+  final bool isRow;
+  final bool isAmount;
+  const TransactionDetailsContainer({
     Key? key,
     required this.label,
     required this.content,

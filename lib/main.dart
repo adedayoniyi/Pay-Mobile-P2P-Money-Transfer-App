@@ -15,9 +15,10 @@ import 'package:money_transfer_app/constants/utils.dart';
 import 'package:money_transfer_app/features/auth/screens/login_pin_screen.dart';
 import 'package:money_transfer_app/features/auth/services/auth_service.dart';
 import 'package:money_transfer_app/features/onboarding/screens/onboarding_screen.dart';
+import 'package:money_transfer_app/initialization_screen.dart';
+import 'package:money_transfer_app/no_internet_screen.dart';
 import 'package:money_transfer_app/providers/user_provider.dart';
 import 'package:money_transfer_app/router.dart';
-import 'package:money_transfer_app/widgets/custom_button.dart';
 import 'package:money_transfer_app/widgets/main_app.dart';
 import 'package:provider/provider.dart';
 
@@ -87,104 +88,26 @@ class _MyAppState extends State<MyApp> {
                         : MainApp(
                             currentPage: 0,
                           )
-                    : OnBoardingScreen()
-                : Scaffold(
-                    body: SafeArea(
-                      child: Stack(
-                        children: [
-                          Center(
-                            child: Padding(
-                              padding:
-                                  EdgeInsets.symmetric(horizontal: value30),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    "assets/images/no-internet.png",
-                                    height: heightValue150,
-                                    color: Colors.red,
-                                  ),
-                                  SizedBox(
-                                    height: heightValue20,
-                                  ),
-                                  const Text("Please connect to the internet"),
-                                  SizedBox(
-                                    height: heightValue50,
-                                  ),
-                                  CustomButton(
-                                      buttonText: "Try Again",
-                                      buttonColor: defaultAppColor,
-                                      buttonTextColor: whiteColor,
-                                      onTap: () {
-                                        checkInternetConnection();
-                                        obtainTokenAndUserData(context);
-                                        if (check == true) {
-                                          Navigator.pushNamedAndRemoveUntil(
-                                            context,
-                                            MyApp.route,
-                                            (route) => false,
-                                          );
-                                        } else {
-                                          showDialogLoader(context);
-                                          Future.delayed(
-                                              const Duration(seconds: 5), () {
-                                            Navigator.of(context).pop();
-                                          });
-                                        }
-                                      })
-                                ],
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Padding(
-                              padding: EdgeInsets.only(top: heightValue30),
-                              child: Column(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/full_logo.png",
-                                    height: value100,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
+                    : const OnBoardingScreen()
+                : NoInternetScreen(onTap: () {
+                    checkInternetConnection();
+                    obtainTokenAndUserData(context);
+                    if (check == true) {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        MyApp.route,
+                        (route) => false,
+                      );
+                    } else {
+                      showDialogLoader(context);
+                      Future.delayed(const Duration(seconds: 5), () {
+                        Navigator.of(context).pop();
+                      });
+                    }
+                  });
           } else {}
 
-          return Scaffold(
-            backgroundColor: scaffoldBackgroundColor,
-            body: SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Center(
-                    child: CircularProgressIndicator(
-                      color: defaultAppColor,
-                    ),
-                  ),
-                  SizedBox(
-                    height: heightValue10,
-                  ),
-                  Text(
-                    "Initializing...",
-                    style: TextStyle(fontSize: heightValue17),
-                  ),
-                  SizedBox(
-                    height: heightValue10,
-                  ),
-                  Text(
-                    "Please ensure you are connected to the internet",
-                    style: TextStyle(fontSize: heightValue17),
-                  )
-                ],
-              ),
-            ),
-          );
+          return const InitializationScreen();
         },
       ),
     );

@@ -91,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               RefreshIndicator(
+                displacement: 80,
                 onRefresh: () => getUserBalance(),
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),

@@ -252,11 +252,19 @@ class _ChangeLoginPinScreenState extends State<ChangeLoginPinScreen> {
                                 numberText: '0',
                               ),
                               TextButton(
+                                style: ButtonStyle(
+                                  fixedSize: MaterialStatePropertyAll(
+                                    Size(heightValue75, heightValue75),
+                                  ),
+                                ),
                                 onPressed: () {
                                   backspaceForConfirm();
                                 },
-                                child: Icon(Icons.backspace_outlined,
-                                    color: Colors.black.withBlue(40), size: 30),
+                                child: Icon(
+                                  Icons.backspace_outlined,
+                                  color: defaultAppColor,
+                                  size: heightValue30,
+                                ),
                               ),
                             ],
                           ),
@@ -326,11 +334,16 @@ class _ChangeLoginPinScreenState extends State<ChangeLoginPinScreen> {
                               NumberDialPad(
                                   onTap: () => addDigit(0), numberText: '0'),
                               TextButton(
+                                style: ButtonStyle(
+                                  fixedSize: MaterialStatePropertyAll(
+                                    Size(heightValue75, heightValue75),
+                                  ),
+                                ),
                                 onPressed: () => backspace(),
                                 child: Icon(
                                   Icons.backspace_outlined,
-                                  color: Colors.black.withBlue(40),
-                                  size: 30,
+                                  color: defaultAppColor,
+                                  size: heightValue30,
                                 ),
                               ),
                             ],

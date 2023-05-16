@@ -31,11 +31,13 @@ class AlertMessage extends StatelessWidget {
           height: heightValue100,
           width: heightValue100,
         ),
-        title: Text(title,
-            style: TextStyle(
-              fontSize: value18,
-              fontWeight: FontWeight.bold,
-            )),
+        title: Text(
+          title,
+          style: TextStyle(
+            fontSize: value18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         content: Text(
           message,
           textAlign: TextAlign.center,

@@ -37,24 +37,25 @@ class _FundWalletScreenState extends State<FundWalletScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          leadingWidth: screenWidth,
-          leading: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const BackButton(),
-              Center(
-                child: Text(
-                  "Add Money",
-                  style: TextStyle(
-                    fontSize: heightValue24,
-                  ),
+        leadingWidth: screenWidth,
+        leading: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const BackButton(),
+            Center(
+              child: Text(
+                "Add Money",
+                style: TextStyle(
+                  fontSize: heightValue24,
                 ),
               ),
-              const BackButton(
-                color: Colors.transparent,
-              )
-            ],
-          )),
+            ),
+            const BackButton(
+              color: Colors.transparent,
+            )
+          ],
+        ),
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: value20),
         child: Column(

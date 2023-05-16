@@ -86,14 +86,14 @@ class PaymentOptionsColumn extends StatelessWidget {
               child: Column(
                 children: [
                   PaymentContainers(
-                    icon: "assets/icons/vouchour_icon.png",
+                    icon: "assets/icons/budget_icon.png",
                     color: const Color(0xFF0F975E),
                     onTap: () {
                       Navigator.pushNamed(context, CommingSoonScreen.route);
                     },
                   ),
                   Text(
-                    "Voucher",
+                    "Budget",
                     style: TextStyle(
                       color: defaultAppColor,
                       fontSize: heightValue17,
@@ -116,7 +116,7 @@ class PaymentOptionsColumn extends StatelessWidget {
               child: Column(
                 children: [
                   PaymentContainers(
-                    icon: "assets/icons/add_icon.png",
+                    icon: "assets/icons/electricity_icon.png",
                     color: const Color(0xFF871482),
                     onTap: () {
                       Navigator.pushNamed(context, CommingSoonScreen.route);

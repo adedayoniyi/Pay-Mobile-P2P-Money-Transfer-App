@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:money_transfer_app/constants/global_constants.dart';
 import 'package:money_transfer_app/widgets/alert_message.dart';
+import 'package:money_transfer_app/widgets/circular_loader.dart';
 
 void showAlertMessage(
     {required BuildContext context,
@@ -79,12 +80,10 @@ void showDialogLoader(BuildContext context) {
           elevation: 0,
           content: Center(
             child: Container(
-              height: 80,
-              width: 80,
+              height: heightValue80,
+              width: heightValue80,
               decoration: const BoxDecoration(color: whiteColor),
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
+              child: const CircularLoader(),
             ),
           ),
         ),
@@ -153,7 +152,7 @@ void showMaterialBanner({
                   ],
                 ),
                 Text(
-                  "$amount",
+                  amount,
                   style: TextStyle(
                     color: amountColor,
                     fontSize: heightValue24,
@@ -166,7 +165,7 @@ void showMaterialBanner({
         ),
       ),
       backgroundColor: Colors.white.withOpacity(0.7),
-      actions: [Text("")],
+      actions: const [Text("")],
     ),
   );
 }

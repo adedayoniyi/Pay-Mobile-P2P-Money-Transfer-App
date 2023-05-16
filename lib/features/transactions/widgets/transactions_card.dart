@@ -73,13 +73,24 @@ class TransactionsCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Text(
-                "₦${amountFormatter.format(amount)}",
-                style: TextStyle(
-                  color: amountColorBasedOnTransactionType,
-                  fontSize: heightValue20,
-                  fontWeight: FontWeight.w700,
-                ),
+              Row(
+                children: [
+                  Text(
+                    "₦${amountFormatter.format(amount)}",
+                    style: TextStyle(
+                      color: amountColorBasedOnTransactionType,
+                      fontSize: heightValue20,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(
+                    width: value10,
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: heightValue20,
+                  )
+                ],
               )
             ],
           ),
