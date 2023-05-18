@@ -108,4 +108,4 @@ Pull requests are welcome. If you encounter any problem with the app or server, 
 
 ##### Tutorials on how to build a quality software like this will be out soon
 ## License
-This project is licensed under the MIT License - see the <a href="">LICENSE</a> file for details.
+This project is licensed under the MIT License - see the <a href="https://github.com/adedayoniyi/Pay-Mobile-P2P-Money-Transfer-App/blob/main/LICENSE.md">LICENSE</a> file for details.
