@@ -107,3 +107,5 @@ Pull requests are welcome. If you encounter any problem with the app or server, 
 ##### Note: As of now, no tests are available
 
 ##### Tutorials on how to build a quality software like this will be out soon
+## License
+This project is licensed under the MIT License - see the <a href="">LICENSE</a> file for details.
