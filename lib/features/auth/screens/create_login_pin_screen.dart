@@ -101,36 +101,46 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                 ),
                 Image.asset(
                   "assets/images/full_logo.png",
-                  height: heightValue110,
+                  height: heightValue150,
                 ),
                 SizedBox(
                   height: heightValue20,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       "Welcome, ",
                       style: TextStyle(
-                        fontSize: heightValue25,
+                        fontSize: heightValue30,
                       ),
                     ),
-                    Text(
-                      user.fullname,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: heightValue25,
-                      ),
+                    SizedBox(
+                      width: value20,
+                    ),
+                    Icon(
+                      Icons.waving_hand,
+                      color: Colors.amber,
+                      size: heightValue30,
                     ),
                   ],
                 ),
                 SizedBox(
-                  height: heightValue20,
+                  height: heightValue10,
+                ),
+                Text(
+                  user.fullname,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: heightValue35,
+                  ),
+                ),
+                SizedBox(
+                  height: heightValue10,
                 ),
                 pin.length > 3
                     ? Text(
                         "Confirm your 4 digit pin",
-                        style: TextStyle(fontSize: heightValue20),
+                        style: TextStyle(fontSize: heightValue25),
                       )
                     : Text(
                         "Create a 4 digit pin for your account",

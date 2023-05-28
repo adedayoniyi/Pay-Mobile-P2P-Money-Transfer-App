@@ -17,7 +17,7 @@ class TransactionsScreen extends StatefulWidget {
 }
 
 class _TransactionsScreenState extends State<TransactionsScreen> {
-  List<Transactions>? transactions;
+  List<Transactions> transactions = [];
   final TransactionServices transactionServices = TransactionServices();
   late Future _future;
 
@@ -57,7 +57,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
         future: _future,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return transactions == null
+            return transactions.isEmpty
                 ? Padding(
                     padding: EdgeInsets.symmetric(horizontal: value20),
                     child: Column(
@@ -66,9 +66,10 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                       children: [
                         Image.asset("assets/images/empty_list.png"),
                         Text(
-                          "Nothing to see here",
+                          "You've not made any transactions",
                           style: TextStyle(
                             fontSize: heightValue18,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         SizedBox(
@@ -97,26 +98,49 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                             displacement: 100,
                             onRefresh: () => getAllTransactions(),
                             child: ListView.builder(
-                              itemCount: transactions!.length,
+                              itemCount: transactions.length,
                               itemBuilder: (BuildContext context, int index) {
-                                final transactionData = transactions![index];
+                                final transactionData = transactions[index];
+                                List<String> getTrnxSummary(transactionData) {
+                                  if (transactionData.trnxType == "Credit") {
+                                    return [
+                                      "From ${transactionData.fullNameTransactionEntity} Reference:${transactionData.reference}",
+                                      "assets/icons/credit_icon.png"
+                                    ];
+                                  } else if (transactionData.trnxType ==
+                                      "Debit") {
+                                    return [
+                                      "To ${transactionData.fullNameTransactionEntity} Reference:${transactionData.reference}",
+                                      "assets/icons/debit_icon.png"
+                                    ];
+                                  } else if (transactionData.trnxType ==
+                                      "Wallet Funding") {
+                                    return [
+                                      "You Funded Your Wallet. Reference:${transactionData.reference}",
+                                      "assets/icons/add_icon.png"
+                                    ];
+                                  } else {
+                                    return ["Hello"];
+                                  }
+                                }
+
                                 return GestureDetector(
                                   onTap: () => Navigator.pushNamed(
-                                      context, TransactionDetailsScreen.route,
-                                      arguments: transactions![index]),
+                                    context,
+                                    TransactionDetailsScreen.route,
+                                    arguments: transactionData,
+                                  ),
                                   child: TransactionsCard(
                                     transactionTypeImage:
-                                        transactionData.trnxType == "Credit"
-                                            ? "assets/icons/credit_icon.png"
-                                            : "assets/icons/debit_icon.png",
+                                        getTrnxSummary(transactionData)[1],
                                     transactionType: transactionData.trnxType,
                                     trnxSummary:
-                                        "${transactionData.trnxType == "Credit" ? "From" : "To"} ${transactionData.fullNameTransactionEntity} Reference:${transactionData.reference}",
+                                        getTrnxSummary(transactionData)[0],
                                     amount: transactionData.amount,
                                     amountColorBasedOnTransactionType:
-                                        transactionData.trnxType == "Credit"
-                                            ? Colors.green
-                                            : Colors.red,
+                                        transactionData.trnxType == "Debit"
+                                            ? Colors.red
+                                            : Colors.green,
                                   ),
                                 );
                               },
@@ -126,7 +150,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                       ],
                     ),
                   );
-          }
+          } else {}
           return const CircularLoader();
         },
       ),

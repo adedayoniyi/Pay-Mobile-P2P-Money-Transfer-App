@@ -32,7 +32,7 @@ class HomeService {
             'x-auth-token': userToken,
           }).timeout(const Duration(seconds: 25));
 
-      print(res.statusCode);
+      //print(res.statusCode);
       switch (res.statusCode) {
         case 200:
           balance = jsonDecode(res.body)['message'];
@@ -42,22 +42,14 @@ class HomeService {
       }
     } on TimeoutException catch (e) {
       showTimeOutError(
-          context: context,
-          title: "Time Out",
-          message: "Connection time out. Try again",
-          onTap: () {
-            Navigator.pop(context);
-          });
+        context: context,
+      );
     } on SocketException catch (e) {
       showNoInternetError(
-          context: context,
-          title: "No Internet",
-          message: "Please connect to the internet",
-          onTap: () {
-            Navigator.pop(context);
-          });
+        context: context,
+      );
     } on Error catch (e) {
-      print('General Error: $e');
+      print('Balance Error: $e');
     }
     return balance;
   }
@@ -92,22 +84,14 @@ class HomeService {
       }
     } on TimeoutException catch (e) {
       showTimeOutError(
-          context: context,
-          title: "Time Out",
-          message: "Connection time out. Try again",
-          onTap: () {
-            Navigator.pop(context);
-          });
+        context: context,
+      );
     } on SocketException catch (e) {
       showNoInternetError(
-          context: context,
-          title: "No Internet",
-          message: "Please connect to the internet",
-          onTap: () {
-            Navigator.pop(context);
-          });
+        context: context,
+      );
     } on Error catch (e) {
-      print('General Error: $e');
+      print('Get Username Error: $e');
     }
     return successText;
   }
@@ -142,6 +126,7 @@ class HomeService {
           .timeout(const Duration(seconds: 25));
 
       Navigator.of(context, rootNavigator: true).pop('dialog');
+      print(res.statusCode);
 
       statusCodeHandler(
           context: context,
@@ -170,23 +155,16 @@ class HomeService {
           });
     } on TimeoutException catch (e) {
       showTimeOutError(
-          context: context,
-          title: "Time Out",
-          message: "Connection time out. Try again",
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.of(context, rootNavigator: true).pop('dialog');
-          });
+        context: context,
+        popDialogAndLoader: true,
+      );
     } on SocketException catch (e) {
       showNoInternetError(
-          context: context,
-          title: "No Internet",
-          message: "Please connect to the internet",
-          onTap: () {
-            Navigator.pop(context);
-          });
+        context: context,
+        popDialogAndLoader: true,
+      );
     } on Error catch (e) {
-      print('General Error: $e');
+      print('Transfer Error: $e');
     }
   }
 
@@ -219,25 +197,25 @@ class HomeService {
                 .toList();
           });
     } on TimeoutException catch (e) {
-      print("TIme out");
+      print("Time out");
       // showTimeOutError(
-      //     context: context,
-      //     title: "Time Out",
-      //     message: "Connection time out. Try again",
-      //     onTap: () {
-      //       Navigator.pop(context);
-      //     });
+      // context: context,
+      // title: "Time Out",
+      // message: "Connection time out. Try again",
+      // onTap: () {
+      // Navigator.pop(context);
+      // });
     } on SocketException catch (e) {
       print("No internet");
       // showNoInternetError(
-      //     context: context,
-      //     title: "No Internet",
-      //     message: "Please connect to the internet",
-      //     onTap: () {
-      //       Navigator.pop(context);
-      //     });
+      // context: context,
+      // title: "No Internet",
+      // message: "Please connect to the internet",
+      // onTap: () {
+      // Navigator.pop(context);
+      // });
     } on Error catch (e) {
-      print('General Error: $e');
+      print('Get All Transactions Error: $e');
     }
     return transactions;
   }
@@ -250,6 +228,12 @@ class HomeService {
           enableDrag: false,
           isDismissible: false,
           isScrollControlled: true,
+          constraints: BoxConstraints.loose(
+            Size(
+              screenWidth,
+              screenHeight,
+            ),
+          ),
           builder: (context) => const CreateLoginPinScreen(),
         );
       }
@@ -289,24 +273,16 @@ class HomeService {
           });
     } on TimeoutException catch (e) {
       showTimeOutError(
-          context: context,
-          title: "Time Out",
-          message: "Connection time out. Try again",
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
-          });
+        context: context,
+        popDialogAndLoader: true,
+      );
     } on SocketException catch (e) {
       showNoInternetError(
-          context: context,
-          title: "No Internet",
-          message: "Please connect to the internet",
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
-          });
+        context: context,
+        popDialogAndLoader: true,
+      );
     } on Error catch (e) {
-      print('General Error: $e');
+      print('Confirm Pin Before Transfer Error: $e');
     }
   }
 
@@ -339,6 +315,7 @@ class HomeService {
           context: context,
           response: res,
           onSuccess: () {
+            print(res.statusCode);
             showMaterialBanner(
               context: context,
               image: "assets/images/full_logo.png",
@@ -357,24 +334,16 @@ class HomeService {
           });
     } on TimeoutException catch (e) {
       showTimeOutError(
-          context: context,
-          title: "Time Out",
-          message: "Connection time out. Try again",
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
-          });
+        context: context,
+        popDialogAndLoader: true,
+      );
     } on SocketException catch (e) {
       showNoInternetError(
-          context: context,
-          title: "No Internet",
-          message: "Please connect to the internet",
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
-          });
+        context: context,
+        popDialogAndLoader: true,
+      );
     } on Error catch (e) {
-      print('General Error: $e');
+      print('Fund Wallet Error: $e');
     }
   }
 
@@ -438,7 +407,7 @@ class HomeService {
             print("Notification deletion successful");
           });
     } catch (e) {
-      print("General Error:$e");
+      print("Delete Notification Error:$e");
     }
   }
 }

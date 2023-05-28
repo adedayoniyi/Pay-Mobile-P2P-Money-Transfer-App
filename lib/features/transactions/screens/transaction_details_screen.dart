@@ -21,6 +21,27 @@ class TransactionDetailsScreen extends StatelessWidget {
     DateFormat formatTime = DateFormat('hh:mm a');
     String formattedDate = formatDate.format(date);
     String formattedTime = formatTime.format(date);
+    List<String> getTrnxSummary(transactionData) {
+      if (transactionData.trnxType == "Credit") {
+        return [
+          "From",
+          "assets/icons/credit_icon.png",
+        ];
+      } else if (transactionData.trnxType == "Debit") {
+        return [
+          "To",
+          "assets/icons/debit_icon.png",
+        ];
+      } else if (transactionData.trnxType == "Wallet Funding") {
+        return [
+          "Funded To",
+          "assets/icons/add_icon.png",
+        ];
+      } else {
+        return ["Hello"];
+      }
+    }
+
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -73,10 +94,11 @@ class TransactionDetailsScreen extends StatelessWidget {
                       ),
                       child: Center(
                         child: Image.asset(
-                          transactions.trnxType == "Credit"
-                              ? "assets/icons/credit_icon.png"
-                              : "assets/icons/debit_icon.png",
+                          getTrnxSummary(transactions)[1],
                           height: value25,
+                          color: transactions.trnxType == "Debit"
+                              ? Colors.red
+                              : Colors.green,
                         ),
                       ),
                     ),
@@ -129,13 +151,13 @@ class TransactionDetailsScreen extends StatelessWidget {
                   isAmount: true,
                   label: "Amount",
                   content:
-                      "${transactions.trnxType == "Credit" ? "+ " : "- "}₦${amountFormatter.format(transactions.amount)}",
-                  amountColor: transactions.trnxType == "Credit"
-                      ? Colors.green
-                      : Colors.red,
+                      "${transactions.trnxType == "Debit" ? "- " : "+ "}₦${amountFormatter.format(transactions.amount)}",
+                  amountColor: transactions.trnxType == "Debit"
+                      ? Colors.red
+                      : Colors.green,
                 ),
                 TransactionDetailsContainer(
-                  label: transactions.trnxType == "Credit" ? "From" : "To",
+                  label: getTrnxSummary(transactions)[0],
                   content: transactions.fullNameTransactionEntity,
                 ),
                 TransactionDetailsContainer(
@@ -150,7 +172,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                   label: "Payment Type",
                   content: transactions.purpose,
                 ),
-                TransactionDetailsContainer(
+                const TransactionDetailsContainer(
                   label: "Status",
                   content: "Successful",
                   isRow: true,

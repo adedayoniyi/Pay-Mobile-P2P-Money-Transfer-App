@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_transfer_app/constants/color_constants.dart';
 import 'package:money_transfer_app/constants/global_constants.dart';
+import 'package:money_transfer_app/constants/utils.dart';
 import 'package:money_transfer_app/features/auth/screens/login_screen.dart';
 import 'package:money_transfer_app/features/auth/screens/signup_screen.dart';
 import 'package:money_transfer_app/widgets/custom_button.dart';
@@ -35,7 +36,7 @@ class OnBoardingScreen extends StatelessWidget {
                               width: screenWidth,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(value45),
-                                color: greyScale300,
+                                color: const Color(0xFF2248A9),
                               ),
                             ),
                           ),
@@ -46,19 +47,41 @@ class OnBoardingScreen extends StatelessWidget {
                               width: screenWidth,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(value40),
-                                  color: greyScale400),
+                                  color: const Color(0xFFEBB850)),
                             ),
                           ),
-                          Container(
-                            height: heightValue240,
-                            width: screenWidth,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(value30),
-                              color: defaultAppColor,
-                            ),
-                            child: Image.asset(
-                              "assets/images/onBoardingImage.png",
-                            ),
+                          Stack(
+                            children: [
+                              Container(
+                                height: heightValue240,
+                                width: screenWidth,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(value30),
+                                  color: defaultAppColor,
+                                ),
+                                child: Image.asset(
+                                  "assets/images/onBoardingImage.png",
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(
+                                      heightValue30,
+                                    ),
+                                  ),
+                                  child: CustomPaint(
+                                    size: Size(
+                                      heightValue180,
+                                      (heightValue180 * 0.5567901611328125)
+                                          .toDouble(),
+                                    ),
+                                    painter: CurvedContainerPath(isFirst: true),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: heightValue100),

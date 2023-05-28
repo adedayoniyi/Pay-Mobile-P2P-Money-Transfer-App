@@ -14,8 +14,8 @@ void statusCodeHandler({
     case 200:
       onSuccess();
       break;
-    case 409:
     case 400:
+    case 409:
       showErrorMessage(
         context: context,
         title: "Error",

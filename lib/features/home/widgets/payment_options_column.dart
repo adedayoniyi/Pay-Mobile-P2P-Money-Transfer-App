@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:money_transfer_app/constants/global_constants.dart';
 import 'package:money_transfer_app/features/home/screens/comming_soon_screen.dart';
 import 'package:money_transfer_app/features/home/screens/fund_wallet_screen.dart';
@@ -6,7 +7,9 @@ import 'package:money_transfer_app/features/home/screens/send_money_screen.dart'
 import 'package:money_transfer_app/widgets/payment_containers.dart';
 
 class PaymentOptionsColumn extends StatelessWidget {
-  const PaymentOptionsColumn({super.key});
+  const PaymentOptionsColumn({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -139,13 +142,13 @@ class PaymentOptionsColumn extends StatelessWidget {
                 children: [
                   PaymentContainers(
                     icon: "assets/icons/wifi_icon.png",
-                    color: const Color(0xFF5337A5),
+                    color: const Color(0xFF13A958),
                     onTap: () {
                       Navigator.pushNamed(context, CommingSoonScreen.route);
                     },
                   ),
                   Text(
-                    "Internet",
+                    "Data",
                     style: TextStyle(
                       color: defaultAppColor,
                       fontSize: heightValue17,
@@ -183,7 +186,7 @@ class PaymentOptionsColumn extends StatelessWidget {
                 children: [
                   PaymentContainers(
                     icon: "assets/icons/more_icon.png",
-                    color: const Color(0xFF13A958),
+                    color: const Color(0xFF5337A5),
                     onTap: () {
                       Navigator.pushNamed(context, CommingSoonScreen.route);
                     },

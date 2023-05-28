@@ -11,7 +11,6 @@ authRouter.post("/api/createUser", async (req, res) => {
     const userExists = await User.findOne({ username });
     if (userExists) {
       return res.status(409).json({
-        status: false,
         message: "User already exists",
       });
     }
@@ -33,7 +32,6 @@ authRouter.post("/api/createUser", async (req, res) => {
     });
   } catch (e) {
     return res.status(500).json({
-      status: false,
       message: `Unable to create wallet. Please try again.\n Error:${e}`,
     });
   }

@@ -34,6 +34,12 @@ class _FundWalletScreenState extends State<FundWalletScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    amountController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

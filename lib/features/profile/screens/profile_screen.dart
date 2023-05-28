@@ -61,7 +61,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Text(
               "@${user.username}",
-              style: TextStyle(fontSize: heightValue20),
+              style: TextStyle(
+                fontSize: heightValue20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(
               height: heightValue20,
@@ -78,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: heightValue20,
             ),
             ProfileCard(
-              iconImage: "assets/icons/profile_icon.png",
+              iconImage: "assets/icons/settings_icon.png",
               profileOperation: "Security",
               profileOperationDescription: "Passwords, Change pin",
               onPressed: () {

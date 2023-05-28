@@ -58,6 +58,14 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    usernameController.dispose();
+    amountController.dispose();
+    summaryController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -99,7 +107,7 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
                     Row(
                       children: [
                         SizedBox(
-                          width: value200,
+                          width: value220,
                           child: GetTransferUsernameTextField(
                             labelText: "Username",
                             hintText: "username",
@@ -114,29 +122,30 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                            padding: EdgeInsets.only(
-                              top:
-                                  error == true ? heightValue20 : heightValue40,
-                            ),
-                            child: GestureDetector(
-                              onTap: () {
-                                getTransferUsername();
-                              },
-                              child: Container(
-                                height: heightValue65,
-                                width: heightValue65,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: defaultAppColor,
-                                ),
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.search,
-                                    color: Colors.white,
-                                  ),
+                          padding: EdgeInsets.only(
+                            top: error == true ? heightValue20 : heightValue40,
+                          ),
+                          child: GestureDetector(
+                            onTap: () {
+                              getTransferUsername();
+                            },
+                            child: Container(
+                              height: heightValue65,
+                              width: heightValue65,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: defaultAppColor,
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.search,
+                                  color: Colors.white,
+                                  size: heightValue27,
                                 ),
                               ),
-                            )),
+                            ),
+                          ),
+                        ),
                       ],
                     )
                   ],
@@ -147,54 +156,103 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: Container(
-                                width: screenWidth,
-                                height: heightValue80,
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(heightValue10),
-                                  border:
-                                      Border.all(color: Colors.black, width: 1),
-                                  color: Colors.grey[300],
-                                ),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: value20,
+                              padding: EdgeInsets.only(top: heightValue20),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    width: screenWidth,
+                                    height: heightValue80,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(heightValue20),
+                                      color: Colors.grey[300],
                                     ),
-                                    CircleAvatar(
-                                      radius: heightValue25,
-                                      child: Center(
-                                        child: Text(
-                                          successText![0],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: value45,
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                    child: Row(
                                       children: [
-                                        Text(
-                                          successText!,
-                                          style: TextStyle(
-                                            fontSize: heightValue17,
-                                            fontWeight: FontWeight.bold,
+                                        SizedBox(
+                                          width: value20,
+                                        ),
+                                        CircleAvatar(
+                                          radius: heightValue25,
+                                          child: Center(
+                                            child: Text(
+                                              successText![0],
+                                              style: TextStyle(
+                                                fontSize: heightValue20,
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                        Text(
-                                          "@${usernameController.text}",
-                                          style: TextStyle(
-                                            fontSize: heightValue15,
-                                          ),
+                                        SizedBox(
+                                          width: value25,
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              successText!,
+                                              style: TextStyle(
+                                                fontSize: heightValue23,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              "@${usernameController.text}",
+                                              style: TextStyle(
+                                                fontSize: heightValue18,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  Positioned(
+                                    bottom: 0,
+                                    right: 0,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(
+                                          heightValue20,
+                                        ),
+                                        topLeft: Radius.circular(
+                                          heightValue25,
+                                        ),
+                                      ),
+                                      child: Container(
+                                        height: heightValue25,
+                                        width: heightValue25,
+                                        decoration: const BoxDecoration(
+                                          color: Color(0xFFDFAD2C),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 0,
+                                    top: 0,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(
+                                          heightValue25,
+                                        ),
+                                        topLeft: Radius.circular(
+                                          heightValue20,
+                                        ),
+                                      ),
+                                      child: Container(
+                                        height: heightValue25,
+                                        width: heightValue25,
+                                        decoration: const BoxDecoration(
+                                          color: Color(0xFF5337A5),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
                             AmountTextField(
@@ -221,7 +279,11 @@ class _SendMoneyScreenState extends State<SendMoneyScreen> {
                                 isDismissible: false,
                                 isScrollControlled: true,
                                 constraints: BoxConstraints.loose(
-                                    Size(screenWidth, screenHeight)),
+                                  Size(
+                                    screenWidth,
+                                    screenHeight,
+                                  ),
+                                ),
                                 builder: (context) =>
                                     ConfirmPinToSendMoneyDialPad(
                                   onSuccess: () {

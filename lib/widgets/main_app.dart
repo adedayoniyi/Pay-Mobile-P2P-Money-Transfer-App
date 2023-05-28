@@ -76,7 +76,7 @@ class _MainAppState extends State<MainApp> {
                   padding: EdgeInsets.only(top: heightValue15),
                   child: Image.asset(
                     "assets/icons/home_icon.png",
-                    height: heightValue35,
+                    height: heightValue30,
                     color: widget.currentPage == 0 ? whiteColor : greyScale600,
                   ),
                 ),
@@ -98,7 +98,7 @@ class _MainAppState extends State<MainApp> {
                   padding: EdgeInsets.only(top: heightValue15),
                   child: Image.asset(
                     "assets/icons/profile_icon.png",
-                    height: heightValue35,
+                    height: heightValue33,
                     color: widget.currentPage == 2 ? whiteColor : greyScale600,
                   ),
                 ),

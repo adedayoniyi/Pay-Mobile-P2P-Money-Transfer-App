@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:money_transfer_app/constants/error_handler.dart';
 import 'package:money_transfer_app/constants/global_constants.dart';
 import 'package:money_transfer_app/constants/utils.dart';
 import 'package:money_transfer_app/models/transactions.dart';
@@ -34,32 +33,29 @@ class TransactionServices {
       ).timeout(const Duration(seconds: 25));
       //Navigator.of(context, rootNavigator: true).pop('dialog');
 
-      statusCodeHandler(
-          context: context,
-          response: res,
-          onSuccess: () {
-            transactions = (json.decode(res.body) as List)
-                .map((data) => Transactions.fromJson(data))
-                .toList();
-          });
+      switch (res.statusCode) {
+        case 200:
+          transactions = (json.decode(res.body) as List)
+              .map((data) => Transactions.fromJson(data))
+              .toList();
+          break;
+        case 404:
+          print("No transactions found!!");
+          transactions = [];
+          break;
+        case 500:
+          print("Get Transactions Error");
+      }
     } on TimeoutException catch (e) {
       showTimeOutError(
-          context: context,
-          title: "Time Out",
-          message: "Connection time out. Try again",
-          onTap: () {
-            Navigator.pop(context);
-          });
+        context: context,
+      );
     } on SocketException catch (e) {
       showNoInternetError(
-          context: context,
-          title: "No Internet",
-          message: "Please connect to the internet",
-          onTap: () {
-            Navigator.pop(context);
-          });
+        context: context,
+      );
     } on Error catch (e) {
-      print('General Error: $e');
+      print('Get All Transactions Error: $e');
     }
     return transactions;
   }

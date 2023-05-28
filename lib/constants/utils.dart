@@ -33,16 +33,37 @@ void showErrorMessage(
   );
 }
 
-void showTimeOutError(
-    {required BuildContext context,
-    required String title,
-    required String message,
-    required VoidCallback onTap}) {
+void showTimeOutError({
+  required BuildContext context,
+  bool popDialogAndLoader = false,
+}) {
   showDialog(
     context: context,
     builder: (context) => AlertMessage(
-      title: title,
-      message: message,
+      title: "Time Out",
+      message: "Connection time out. Try again",
+      onTap: () {
+        if (popDialogAndLoader == false) {
+          Navigator.pop(context);
+        } else {
+          Navigator.pop(context);
+          Navigator.of(context, rootNavigator: true).pop('dialog');
+        }
+      },
+      alertImage: "assets/icons/info-circle.png",
+    ),
+  );
+}
+
+void showSessionExpiredDialog({
+  required BuildContext context,
+  required VoidCallback onTap,
+}) {
+  showDialog(
+    context: context,
+    builder: (context) => AlertMessage(
+      title: "Time Out",
+      message: "Session expired. Please login again",
       onTap: onTap,
       alertImage: "assets/icons/info-circle.png",
     ),
@@ -51,16 +72,21 @@ void showTimeOutError(
 
 void showNoInternetError({
   required BuildContext context,
-  required String title,
-  required String message,
-  required VoidCallback onTap,
+  bool popDialogAndLoader = false,
 }) {
   showDialog(
     context: context,
     builder: (context) => AlertMessage(
-      title: title,
-      message: message,
-      onTap: onTap,
+      title: "No Internet",
+      message: "Please connect to the internet",
+      onTap: () {
+        if (popDialogAndLoader == false) {
+          Navigator.pop(context);
+        } else {
+          Navigator.pop(context);
+          Navigator.of(context, rootNavigator: true).pop('dialog');
+        }
+      },
       alertImage: "assets/images/no-internet.png",
       buttonColor: Colors.red,
     ),
@@ -168,4 +194,42 @@ void showMaterialBanner({
       actions: const [Text("")],
     ),
   );
+}
+
+class CurvedContainerPath extends CustomPainter {
+  final bool isFirst;
+  CurvedContainerPath({
+    required this.isFirst,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint0 = Paint()
+      ..color = isFirst ? const Color(0xFFEBB850) : const Color(0xFF2248A9)
+      ..style = PaintingStyle.fill
+      ..strokeWidth = 1;
+
+    Path path0 = Path();
+    path0.moveTo(size.width * 0.4167167, 0);
+    path0.lineTo(size.width, 0);
+    path0.quadraticBezierTo(size.width * 0.9995000, size.height * 0.3935055,
+        size.width, size.height * 0.6614251);
+    path0.cubicTo(
+        size.width * 0.8579167,
+        size.height * 0.2007339,
+        size.width * 0.6047750,
+        size.height * 0.5215759,
+        size.width * 0.4330167,
+        size.height * 0.1192999);
+    path0.quadraticBezierTo(size.width * 0.3838583, size.height * -0.0282123,
+        size.width * 0.4167167, 0);
+    path0.close();
+
+    canvas.drawPath(path0, paint0);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
 }

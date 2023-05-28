@@ -28,14 +28,24 @@ flutter pub get
 
 ```json
 {
-"username":"dayo",
-"email":"testemail@mail.com",
-"pin":"7272"
+"username":"lere",
+"pin":"7171",
+"password":"test123",
 }
 {
-"username":"lere",
-"email":"testemail2@mail.com",
-"pin":"7171"
+"username":"johndoe",
+"pin":"7171",
+"password":"test123",
+}
+{
+"username":"alice",
+"pin":"7070",
+"password":"test123",
+}
+{
+"username":"bob",
+"pin":"7474",
+"password":"test123",
 }
 ```
 

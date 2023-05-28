@@ -1,4 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:money_transfer_app/features/home/widgets/clip_path_bottom_right_for_balance_card.dart';
+import 'package:money_transfer_app/features/home/widgets/clip_path_top_right_for_balance_card.dart';
+import 'package:provider/provider.dart';
+
 import 'package:money_transfer_app/constants/color_constants.dart';
 import 'package:money_transfer_app/constants/global_constants.dart';
 import 'package:money_transfer_app/features/auth/services/auth_service.dart';
@@ -9,8 +15,8 @@ import 'package:money_transfer_app/features/transactions/screens/transaction_det
 import 'package:money_transfer_app/features/transactions/widgets/transactions_card.dart';
 import 'package:money_transfer_app/models/transactions.dart';
 import 'package:money_transfer_app/providers/user_provider.dart';
+import 'package:money_transfer_app/widgets/circular_loader.dart';
 import 'package:money_transfer_app/widgets/custom_button.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String route = '/home-screens';
@@ -25,8 +31,11 @@ class _HomeScreenState extends State<HomeScreen> {
   final AuthService authService = AuthService();
   int? balance = 0;
   String naira = '';
-  List<Transactions>? transactions;
+  List<Transactions> transactions = [];
   late Future _future;
+  Stream _myStream = const Stream.empty();
+  late StreamSubscription _sub = _myStream.listen((event) {});
+  final ScrollController scrollController = ScrollController();
 
   getUserBalance() async {
     getCreditNotifications();
@@ -36,14 +45,19 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       username: user.username,
     );
-    setState(() {});
+
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   getAllTransactions() async {
     transactions = await homeService.getAllTransactions(
       context: context,
     );
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void checkIfUserHasPin() {
@@ -58,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
     homeService.creditNotification(
         context: context,
         onSuccess: () {
-          Future.delayed(const Duration(seconds: 7), () {
+          Future.delayed(const Duration(seconds: 6), () {
             deleteNotification();
             ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
           });
@@ -72,12 +86,41 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _future = getUserBalance();
+    Future.delayed(const Duration(seconds: 5), () {
+      _myStream = Stream.periodic(const Duration(seconds: 10), (count) {
+        getUserBalance();
+      });
+      _sub = _myStream.listen((event) {});
+    });
+
+    Future.delayed(const Duration(seconds: 160), () {
+      _sub.cancel();
+      print("Stream Cancled");
+    });
+
+    getUserBalance();
     checkIfUserHasPin();
     obtainTokenAndUserData();
+    _future = getAllTransactions();
     Future.delayed(const Duration(seconds: 5), () {
       ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
     });
+    scrollController.addListener(() {
+      if (scrollController.position.isScrollingNotifier.value) {
+        print('User is scrolling');
+        _myStream = Stream.periodic(const Duration(seconds: 10), (count) {
+          getUserBalance();
+        });
+        _sub = _myStream.listen((event) {});
+      } else {}
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _sub.cancel();
+    scrollController.dispose();
   }
 
   @override
@@ -101,104 +144,134 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         height: heightValue15,
                       ),
-                      Container(
-                        height: heightValue230,
-                        width: screenWidth,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(heightValue30),
-                          color: defaultAppColor,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(value10),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Flexible(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
+                      Stack(
+                        children: [
+                          Container(
+                            height: heightValue230,
+                            width: screenWidth,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.circular(heightValue30),
+                              color: defaultAppColor,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(value10),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Flexible(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          CircleAvatar(
-                                            radius: value25,
-                                            backgroundColor: whiteColor,
-                                            child: Center(
-                                                child: Text(
-                                              user.fullname[0],
-                                              style: TextStyle(
-                                                color: defaultAppColor,
-                                                fontSize: value18,
-                                              ),
-                                            )),
-                                          ),
-                                          SizedBox(
-                                            width: value10,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                          Row(
                                             children: [
-                                              Text(
-                                                "Hi, ${user.fullname}",
-                                                style: TextStyle(
-                                                  color: whiteColor,
-                                                  fontSize: heightValue20,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                              CircleAvatar(
+                                                radius: value25,
+                                                backgroundColor: whiteColor,
+                                                child: Center(
+                                                    child: Text(
+                                                  user.fullname[0],
+                                                  style: TextStyle(
+                                                    color: defaultAppColor,
+                                                    fontSize: heightValue25,
+                                                  ),
+                                                )),
                                               ),
-                                              Text(
-                                                "@ ${user.username}",
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                  color: whiteColor,
-                                                  fontSize: heightValue18,
-                                                ),
+                                              SizedBox(
+                                                width: value10,
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "Hi, ${user.fullname}",
+                                                    style: TextStyle(
+                                                      color: whiteColor,
+                                                      fontSize: heightValue20,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "@ ${user.username}",
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      color: whiteColor,
+                                                      fontSize: heightValue18,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
+                                          Image.asset(
+                                            "assets/icons/notification.png",
+                                            height: heightValue30,
+                                            color: whiteColor,
+                                          )
                                         ],
                                       ),
-                                      Image.asset(
-                                        "assets/icons/notification.png",
-                                        height: heightValue30,
-                                        color: whiteColor,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: heightValue10,
-                                ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Total Balance",
-                                        style: TextStyle(
-                                          color: greyScale400,
-                                          fontSize: heightValue25,
-                                        ),
+                                    ),
+                                    SizedBox(
+                                      height: heightValue10,
+                                    ),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Total Balance",
+                                            style: TextStyle(
+                                              color: greyScale400,
+                                              fontSize: heightValue25,
+                                            ),
+                                          ),
+                                          Text(
+                                            "₦ ${amountFormatter.format(balance)}",
+                                            style: TextStyle(
+                                              color: whiteColor,
+                                              fontSize: heightValue50,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        "₦ ${amountFormatter.format(balance)}",
-                                        style: TextStyle(
-                                          color: whiteColor,
-                                          fontSize: heightValue50,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
+                          const ClipPathTopRightForBalanceCard(),
+                          const ClipPathBottomRightForBalanceCard(),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(
+                                  heightValue30,
+                                ),
+                                topLeft: Radius.circular(
+                                  heightValue50,
+                                ),
+                              ),
+                              child: Container(
+                                height: heightValue50,
+                                width: heightValue50,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFFA9224A),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                       SizedBox(
                         height: heightValue20,
@@ -210,8 +283,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         "Transactions",
                         style: TextStyle(
-                            fontSize: heightValue35,
-                            fontWeight: FontWeight.bold),
+                          fontSize: heightValue35,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
@@ -221,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 future: _future,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
-                    return transactions == null
+                    return transactions.isEmpty
                         ? Expanded(
                             child: SingleChildScrollView(
                               child: Column(
@@ -229,29 +303,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SizedBox(
-                                    height: heightValue20,
+                                    height: heightValue10,
                                   ),
                                   Image.asset(
                                     "assets/images/empty_list.png",
-                                    height: heightValue200,
+                                    height: heightValue150,
                                   ),
                                   Text(
-                                    "Nothing to see here",
+                                    "You've not made any transactions",
                                     style: TextStyle(
                                       fontSize: heightValue18,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   SizedBox(
-                                    height: heightValue40,
+                                    height: heightValue10,
                                   ),
-                                  CustomButton(
-                                    buttonText: "Transfer Now",
-                                    buttonColor: defaultAppColor,
-                                    buttonTextColor: whiteColor,
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, SendMoneyScreen.route);
-                                    },
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: value60),
+                                    child: CustomButton(
+                                      buttonText: "Transfer Now",
+                                      buttonColor: defaultAppColor,
+                                      buttonTextColor: whiteColor,
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          SendMoneyScreen.route,
+                                        );
+                                      },
+                                    ),
                                   )
                                 ],
                               ),
@@ -261,9 +342,34 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: RefreshIndicator(
                               onRefresh: () => getAllTransactions(),
                               child: ListView.builder(
-                                itemCount: transactions!.length,
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                controller: scrollController,
+                                itemCount: transactions.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  final transactionData = transactions![index];
+                                  final transactionData = transactions[index];
+                                  List<String> getTrnxSummary(transactionData) {
+                                    if (transactionData.trnxType == "Credit") {
+                                      return [
+                                        "From ${transactionData.fullNameTransactionEntity} Reference:${transactionData.reference}",
+                                        "assets/icons/credit_icon.png"
+                                      ];
+                                    } else if (transactionData.trnxType ==
+                                        "Debit") {
+                                      return [
+                                        "To ${transactionData.fullNameTransactionEntity} Reference:${transactionData.reference}",
+                                        "assets/icons/debit_icon.png"
+                                      ];
+                                    } else if (transactionData.trnxType ==
+                                        "Wallet Funding") {
+                                      return [
+                                        "You Funded Your Wallet. Reference:${transactionData.reference}",
+                                        "assets/icons/add_icon.png"
+                                      ];
+                                    } else {
+                                      return ["Hello"];
+                                    }
+                                  }
+
                                   return GestureDetector(
                                     onTap: () => Navigator.pushNamed(
                                       context,
@@ -272,17 +378,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     child: TransactionsCard(
                                       transactionTypeImage:
-                                          transactionData.trnxType == "Credit"
-                                              ? "assets/icons/credit_icon.png"
-                                              : "assets/icons/debit_icon.png",
+                                          getTrnxSummary(transactionData)[1],
                                       transactionType: transactionData.trnxType,
                                       trnxSummary:
-                                          "${transactionData.trnxType == "Credit" ? "From" : "To"} ${transactionData.fullNameTransactionEntity} Reference:${transactionData.reference}",
+                                          getTrnxSummary(transactionData)[0],
                                       amount: transactionData.amount,
                                       amountColorBasedOnTransactionType:
-                                          transactionData.trnxType == "Credit"
-                                              ? Colors.green
-                                              : Colors.red,
+                                          transactionData.trnxType == "Debit"
+                                              ? Colors.red
+                                              : Colors.green,
                                     ),
                                   );
                                 },
@@ -290,10 +394,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           );
                   }
-                  return const Expanded(
-                      child: Center(child: CircularProgressIndicator()));
+                  return const Expanded(child: CircularLoader());
                 },
-              ),
+              )
             ],
           ),
         ),

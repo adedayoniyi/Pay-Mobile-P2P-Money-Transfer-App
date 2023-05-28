@@ -62,24 +62,16 @@ class AuthService {
           });
     } on TimeoutException catch (e) {
       showTimeOutError(
-          context: context,
-          title: "Time Out",
-          message: "Connection time out. Try again",
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.of(context, rootNavigator: true).pop('dialog');
-          });
+        context: context,
+        popDialogAndLoader: true,
+      );
     } on SocketException catch (e) {
       showNoInternetError(
-          context: context,
-          title: "No Internet",
-          message: "Please connect to the internet",
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.of(context, rootNavigator: true).pop('dialog');
-          });
+        context: context,
+        popDialogAndLoader: true,
+      );
     } on Error catch (e) {
-      print('General Error: $e');
+      print('Transfer Error: $e');
     }
   }
 
@@ -111,22 +103,14 @@ class AuthService {
       }
     } on TimeoutException catch (e) {
       showTimeOutError(
-          context: context,
-          title: "Time Out",
-          message: "Connection time out. Try again",
-          onTap: () {
-            Navigator.pop(context);
-          });
+        context: context,
+      );
     } on SocketException catch (e) {
       showNoInternetError(
-          context: context,
-          title: "No Internet",
-          message: "Please connect to the internet",
-          onTap: () {
-            Navigator.pop(context);
-          });
+        context: context,
+      );
     } on Error catch (e) {
-      print('General Error: $e');
+      print('Transfer Error: $e');
     }
     return errorText;
   }
@@ -167,24 +151,16 @@ class AuthService {
           });
     } on TimeoutException catch (e) {
       showTimeOutError(
-          context: context,
-          title: "Time Out",
-          message: "Connection time out. Try again",
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.of(context, rootNavigator: true).pop('dialog');
-          });
+        context: context,
+        popDialogAndLoader: true,
+      );
     } on SocketException catch (e) {
       showNoInternetError(
-          context: context,
-          title: "No Internet",
-          message: "Please connect to the internet",
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.of(context, rootNavigator: true).pop('dialog');
-          });
+        context: context,
+        popDialogAndLoader: true,
+      );
     } on Error catch (e) {
-      print('General Error: $e');
+      print('Transfer Error: $e');
     }
   }
 
@@ -222,6 +198,8 @@ class AuthService {
           listen: false,
         );
         userProvider.setUser(returnedUserResponse.body);
+        print(returnedUserResponse.body);
+        print(response);
         //Navigator.of(context, rootNavigator: true).pop('dialog');
       }
       return response;
@@ -281,24 +259,16 @@ class AuthService {
       }
     } on TimeoutException catch (e) {
       showTimeOutError(
-          context: context,
-          title: "Time Out",
-          message: "Connection time out. Try again",
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.of(context, rootNavigator: true).pop('dialog');
-          });
+        context: context,
+        popDialogAndLoader: true,
+      );
     } on SocketException catch (e) {
       showNoInternetError(
-          context: context,
-          title: "No Internet",
-          message: "Please connect to the internet",
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.of(context, rootNavigator: true).pop('dialog');
-          });
+        context: context,
+        popDialogAndLoader: true,
+      );
     } on Error catch (e) {
-      print('General Error: $e');
+      print('Transfer Error: $e');
     }
   }
 
@@ -336,24 +306,16 @@ class AuthService {
           });
     } on TimeoutException catch (e) {
       showTimeOutError(
-          context: context,
-          title: "Time Out",
-          message: "Connection time out. Try again",
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
-          });
+        context: context,
+        popDialogAndLoader: true,
+      );
     } on SocketException catch (e) {
       showNoInternetError(
-          context: context,
-          title: "No Internet",
-          message: "Please connect to the internet",
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
-          });
+        context: context,
+        popDialogAndLoader: true,
+      );
     } on Error catch (e) {
-      print('General Error: $e');
+      print('Transfer Error: $e');
     }
   }
 }

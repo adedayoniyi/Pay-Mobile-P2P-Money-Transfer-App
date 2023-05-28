@@ -74,23 +74,16 @@ class ProfileServices {
       );
     } on TimeoutException catch (e) {
       showTimeOutError(
-          context: context,
-          title: "Time Out",
-          message: "Connection time out. Try again",
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.of(context, rootNavigator: true).pop('dialog');
-          });
+        context: context,
+        popDialogAndLoader: true,
+      );
     } on SocketException catch (e) {
       showNoInternetError(
-          context: context,
-          title: "No Internet",
-          message: "Please connect to the internet",
-          onTap: () {
-            Navigator.pop(context);
-          });
+        context: context,
+        popDialogAndLoader: true,
+      );
     } on Error catch (e) {
-      print('General Error: $e');
+      print('Change Pin Error Error: $e');
     }
   }
 }

@@ -4,6 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:money_transfer_app/constants/color_constants.dart';
 
+class GlobalConstants extends StatefulWidget {
+  const GlobalConstants({super.key});
+
+  @override
+  State<GlobalConstants> createState() => _GlobalConstantsState();
+}
+
+class _GlobalConstantsState extends State<GlobalConstants> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
 const String uri = "https://transfer-dayo-niyi.onrender.com";
 const defaultAppColor = Color(0xFF000000);
 const whiteColor = Color(0xFFFFFFFF);
@@ -11,9 +25,14 @@ const secondaryAppColor = Color(0xFFF8BB18);
 const scaffoldBackgroundColor = greyScale150;
 var amountFormatter = NumberFormat.decimalPattern('en_US');
 
-var screenHeight = window.physicalSize.height / window.devicePixelRatio;
-var screenWidth = window.physicalSize.width / window.devicePixelRatio;
-var isTablet = (window.physicalSize.width / window.devicePixelRatio) > 600;
+var platformDispatcher = PlatformDispatcher.instance;
+var screenHeight = platformDispatcher.views.first.physicalSize.height /
+    platformDispatcher.views.first.devicePixelRatio;
+var screenWidth = platformDispatcher.views.first.physicalSize.width /
+    platformDispatcher.views.first.devicePixelRatio;
+var isTablet = (platformDispatcher.views.first.physicalSize.width /
+        platformDispatcher.views.first.devicePixelRatio) >
+    600;
 
 /*This is the default screen width that is used to obtain the values below
 =>428
@@ -55,6 +74,7 @@ final value130 = screenWidth / 3.29;
 final value145 = screenWidth / 2.95;
 final value165 = screenWidth / 2.59;
 final value200 = screenWidth / 2.14;
+final value220 = screenWidth / 1.94;
 
 //This is mostly used for height values
 //926
