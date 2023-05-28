@@ -6,7 +6,7 @@
 
 #### 1. Pin feature used for authorizing transactions and user login
 
-<img src="/assets/images/confirm_pin_showcase.png" alt="In app image 1" title="In app image 1" width="260" height="563">
+<img src="/assets/images/confirm_pin_showcase_image.png" alt="In app image 1" title="In app image 1" width="260" height="563">
 
 ##### 2. Custom in-app notifications
 
