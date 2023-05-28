@@ -16,13 +16,20 @@
 
 <img src="/assets/images/error_message_showcase.png" alt="In app image 3" title="In app image 3" width="260" height="563">
 
-### Note: The server running this app has already been deployed to render.com, which means you can immediately clone this repo, run it and start using it (i.e The backend is already connected).
+### Note: The server running this app has already been deployed to render.com, which means you can immediately clone this repo, run it and start using it (i.e The backend is already connected). Since every username on the app is unique, transfers are performed with usernames. Just enter the ```@username``` of the user and you can easily transfer funds
 
 #### After cloning don't forget to run:
 
 ```bash
 flutter pub get
 ```
+#### Packages Used
+1. <a href="https://pub.dev/packages?q=provider">provider</a>
+2. <a href="https://pub.dev/packages/shared_preferences">shared_preferences</a>
+3. <a href="https://pub.dev/packages/http">http</a>
+4. <a href="https://pub.dev/packages/intl">intl</a>
+5. <a href="https://pub.dev/packages/internet_connection_checker">internet_connrction_checker</a>
+6. <a href="https://pub.dev/packages/flutter_native_splash">flutter_native_splash</a>
 
 #### Here are some test login details if you don't want to create an account
 
@@ -110,3 +117,5 @@ Pull requests are welcome. If you encounter any problem with the app or server, 
 ##### Note: As of now, no tests are available
 
 ##### Tutorials on how to build a quality software like this will be out soon
+## License
+This project is licensed under the MIT License - see the <a href="https://github.com/adedayoniyi/Pay-Mobile-P2P-Money-Transfer-App/blob/main/LICENSE.md">LICENSE</a> file for details.
