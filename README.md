@@ -2,7 +2,7 @@
 
 <img src="/assets/images/Pay Mobile advert.png" alt="Pay Mobile" title="Pay Mobile">
 
-# Features
+# Features (Don't forget to give it a star :star:)
 
 #### 1. Pin feature used for authorizing transactions and user login
 
