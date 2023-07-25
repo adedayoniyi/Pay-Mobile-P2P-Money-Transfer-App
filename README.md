@@ -4,6 +4,8 @@
 
 # Features (Don't forget to give it a star 🌟)
 
+## You can perform some actions with the <a href="https://github.com/adedayoniyi/Pay-Mobile-Web-Admin"> Pay Mobile Web Admin </a>
+
 #### 1. Pin feature used for authorizing transactions and user login
 
 <img src="assets/images/pin_feature_showcase.png" alt="In app image 1" title="In app image 1" width="260" height="563">
@@ -39,6 +41,8 @@
 <img src="assets/images/forgort_password_showcase.png" alt="In app image 1" title="Forgort password Image" width="260" height="563">
 
 ### QUICK START ⚡
+
+#### Visit:<a href=" https://github.com/adedayoniyi/Pay-Mobile-Full-Stack"> Pay Mobile Full Stack </a> to access the full stack code of the software (i.e the Back End and the Web Admin Front End)
 
 ### Note: The server running this app has already been deployed to render.com, which means you can immediately clone this repo, run it and start using it (i.e The backend is already connected).
 
