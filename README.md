@@ -2,9 +2,7 @@
 
 <img src="assets/images/pay_mobile_advert.png" alt="Pay Mobile" title="Pay Mobile">
 
-![GitHub repo size](https://img.shields.io/github/repo-size/adedayoniyi/Pay-Mobile-P2P-Money-Transfer-App)
-
-# Main Features
+# Features (Don't forget to give it a star 🌟)
 
 #### 1. Pin feature used for authorizing transactions and user login
 
