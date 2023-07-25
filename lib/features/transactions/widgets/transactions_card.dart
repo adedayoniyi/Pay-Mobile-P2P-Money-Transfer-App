@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
 
-import 'package:money_transfer_app/constants/global_constants.dart';
+import 'package:flutter/material.dart';
+import 'package:pay_mobile_app/core/utils/color_constants.dart';
+
+import 'package:pay_mobile_app/core/utils/global_constants.dart';
+import 'package:pay_mobile_app/core/utils/assets.dart';
 
 class TransactionsCard extends StatelessWidget {
   final String transactionTypeImage;
@@ -23,12 +26,30 @@ class TransactionsCard extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Stack(
         children: [
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(
+                  heightValue20,
+                ),
+                topLeft: Radius.circular(
+                  heightValue25,
+                ),
+              ),
+              child: Image.asset(
+                gradientCircle,
+                height: heightValue30,
+              ),
+            ),
+          ),
           Container(
             height: heightValue80,
             width: screenWidth,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(heightValue20),
-              color: whiteColor,
+              color: greyScale850,
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: value20),
@@ -37,17 +58,17 @@ class TransactionsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    height: heightValue35,
-                    width: heightValue35,
+                    height: heightValue50,
+                    width: heightValue50,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(value35),
+                      borderRadius: BorderRadius.circular(heightValue15),
                       color: scaffoldBackgroundColor,
                     ),
                     child: Center(
                       child: Image.asset(
                         transactionTypeImage,
                         height: heightValue20,
-                        color: amountColorBasedOnTransactionType,
+                        color: primaryAppColor,
                       ),
                     ),
                   ),
@@ -99,27 +120,7 @@ class TransactionsCard extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(
-                  heightValue20,
-                ),
-                topLeft: Radius.circular(
-                  heightValue25,
-                ),
-              ),
-              child: Container(
-                height: heightValue25,
-                width: heightValue25,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFDFAD2C),
-                ),
-              ),
-            ),
-          ),
+
           // Positioned(
           //   left: 0,
           //   top: 0,

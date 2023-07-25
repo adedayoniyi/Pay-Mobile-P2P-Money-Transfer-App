@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:money_transfer_app/constants/color_constants.dart';
+import 'package:pay_mobile_app/core/utils/color_constants.dart';
 
-import 'package:money_transfer_app/constants/global_constants.dart';
+import 'package:pay_mobile_app/core/utils/global_constants.dart';
 
 class TransactionDetailsContainer extends StatelessWidget {
   final String label;
@@ -27,7 +27,7 @@ class TransactionDetailsContainer extends StatelessWidget {
         height: heightValue100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(heightValue10),
-          color: greyScale100,
+          color: greyScale850,
         ),
         child: Padding(
           padding: EdgeInsets.only(left: value10),
@@ -56,7 +56,7 @@ class TransactionDetailsContainer extends StatelessWidget {
                           content,
                           style: TextStyle(
                             fontSize: heightValue24,
-                            color: amountColor,
+                            color: primaryAppColor,
                           ),
                         ),
                       ],
@@ -65,7 +65,7 @@ class TransactionDetailsContainer extends StatelessWidget {
                       content,
                       style: TextStyle(
                         fontSize: heightValue24,
-                        color: amountColor,
+                        color: primaryAppColor,
                         fontWeight:
                             isAmount ? FontWeight.bold : FontWeight.normal,
                       ),

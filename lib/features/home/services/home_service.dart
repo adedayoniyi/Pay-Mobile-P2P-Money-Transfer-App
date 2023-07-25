@@ -6,14 +6,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:money_transfer_app/constants/error_handler.dart';
-import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/constants/utils.dart';
-import 'package:money_transfer_app/features/auth/screens/create_login_pin_screen.dart';
-import 'package:money_transfer_app/models/transactions.dart';
-import 'package:money_transfer_app/models/transfer.dart';
-import 'package:money_transfer_app/providers/user_provider.dart';
-import 'package:money_transfer_app/widgets/main_app.dart';
+import 'package:pay_mobile_app/core/error/error_handler.dart';
+import 'package:pay_mobile_app/core/utils/assets.dart';
+import 'package:pay_mobile_app/core/utils/global_constants.dart';
+import 'package:pay_mobile_app/core/utils/utils.dart';
+import 'package:pay_mobile_app/features/auth/screens/create_login_pin_screen.dart';
+import 'package:pay_mobile_app/features/transactions/models/transactions.dart';
+import 'package:pay_mobile_app/features/transactions/models/transfer.dart';
+import 'package:pay_mobile_app/features/auth/providers/user_provider.dart';
+import 'package:pay_mobile_app/widgets/main_app.dart';
 import 'package:provider/provider.dart';
 
 class HomeService {
@@ -139,15 +140,15 @@ class HomeService {
                     "You have successfully sent ₦$amount to $recipientsUsername",
                 onTap: () {
                   Navigator.of(context, rootNavigator: true).pop('dialog');
-                  showMaterialBanner(
-                    context: context,
-                    image: "assets/images/full_logo.png",
-                    description: "Transfer successful",
-                    amount: "-₦$amount",
-                    amountColor: Colors.red,
-                    shortDesc: "@$recipientsUsername",
-                    prefix: "To ",
-                  );
+                  // showMaterialBanner(
+                  //   context: context,
+                  //   image: "assets/images/full_logo.png",
+                  //   description: "Transfer successful",
+                  //   amount: "-₦$amount",
+                  //   amountColor: Colors.red,
+                  //   shortDesc: "@$recipientsUsername",
+                  //   prefix: "To ",
+                  // );
                   Navigator.pushNamedAndRemoveUntil(
                       context, MainApp.route, (route) => false,
                       arguments: 0);
@@ -318,7 +319,7 @@ class HomeService {
             print(res.statusCode);
             showMaterialBanner(
               context: context,
-              image: "assets/images/full_logo.png",
+              image: notificationsLogo,
               description: "Credit Successful",
               amount: "₦$amount",
               amountColor: Colors.green,

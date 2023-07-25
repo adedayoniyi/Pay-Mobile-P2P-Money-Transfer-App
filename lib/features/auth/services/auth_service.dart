@@ -4,15 +4,18 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:money_transfer_app/constants/error_handler.dart';
-import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/constants/utils.dart';
-import 'package:money_transfer_app/features/auth/screens/login_screen.dart';
-import 'package:money_transfer_app/models/user.dart';
+import 'package:pay_mobile_app/config/routes/custom_push_navigators.dart';
+import 'package:pay_mobile_app/core/error/error_handler.dart';
+import 'package:pay_mobile_app/core/utils/global_constants.dart';
+import 'package:pay_mobile_app/core/utils/utils.dart';
+import 'package:pay_mobile_app/features/auth/screens/login_screen.dart';
+import 'package:pay_mobile_app/features/auth/models/user.dart';
 import 'package:http/http.dart' as http;
-import 'package:money_transfer_app/providers/user_provider.dart';
-import 'package:money_transfer_app/widgets/main_app.dart';
+import 'package:pay_mobile_app/features/auth/providers/auth_provider.dart';
+import 'package:pay_mobile_app/features/auth/providers/user_provider.dart';
+import 'package:pay_mobile_app/widgets/main_app.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,6 +26,7 @@ class AuthService {
     required String username,
     required String email,
     required String password,
+    required VoidCallback onSignUpSuccess,
   }) async {
     try {
       User user = User(
@@ -34,6 +38,7 @@ class AuthService {
         type: '',
         id: '',
         pin: '',
+        isVerified: false,
       );
       showDialogLoader(context);
 
@@ -52,13 +57,7 @@ class AuthService {
           context: context,
           response: res,
           onSuccess: () {
-            showAlertMessage(
-                context: context,
-                title: "Success",
-                message: "Account created successfully",
-                onTap: () {
-                  Navigator.pushNamed(context, LoginScreen.route);
-                });
+            onSignUpSuccess();
           });
     } on TimeoutException catch (e) {
       showTimeOutError(
@@ -72,6 +71,101 @@ class AuthService {
       );
     } on Error catch (e) {
       print('Transfer Error: $e');
+    }
+  }
+
+  void sendOtp({
+    required BuildContext context,
+    required String email,
+    required String sendPurpose,
+    required VoidCallback onTapDialogButton,
+  }) async {
+    try {
+      showDialogLoader(context);
+
+      http.Response res = await http
+          .post(Uri.parse("$uri/api/sendOtp/$sendPurpose"),
+              headers: <String, String>{
+                "Content-Type": "application/json; charset=UTF-8",
+              },
+              body: jsonEncode({
+                "email": email,
+              }))
+          .timeout(const Duration(seconds: 25));
+      Navigator.of(context, rootNavigator: true).pop('dialog');
+      print(res.statusCode);
+      statusCodeHandler(
+        context: context,
+        response: res,
+        onSuccess: () {
+          showAlertMessage(
+            context: context,
+            title: "Verify Account",
+            message: "Please Check Mail For OTP Code",
+            onTap: onTapDialogButton,
+          );
+        },
+      );
+    } on TimeoutException catch (e) {
+      showTimeOutError(
+        context: context,
+        popDialogAndLoader: true,
+      );
+    } on SocketException catch (e) {
+      showNoInternetError(
+        context: context,
+        popDialogAndLoader: true,
+      );
+    } on Error catch (e) {
+      print('Send Otp Error: $e');
+    }
+  }
+
+  void verifyOtp({
+    required BuildContext context,
+    required String email,
+    required String otpCode,
+    required VoidCallback onSuccessButtonTap,
+  }) async {
+    try {
+      showDialogLoader(context);
+
+      http.Response res = await http
+          .post(Uri.parse("$uri/api/verifyOtp"),
+              headers: <String, String>{
+                "Content-Type": "application/json; charset=UTF-8",
+              },
+              body: jsonEncode({
+                "email": email,
+                "otpCode": otpCode,
+              }))
+          .timeout(const Duration(seconds: 25));
+      Navigator.of(context, rootNavigator: true).pop('dialog');
+
+      statusCodeHandler(
+        context: context,
+        response: res,
+        onSuccess: () {
+          showAlertMessage(
+            context: context,
+            title: "Verification Confirmed",
+            message: jsonDecode(res.body)['message'],
+            onTap: onSuccessButtonTap,
+          );
+        },
+      );
+    } on TimeoutException catch (e) {
+      showTimeOutError(
+        context: context,
+        popDialogAndLoader: true,
+      );
+    } on SocketException catch (e) {
+      showNoInternetError(
+        context: context,
+        popDialogAndLoader: true,
+      );
+    } on Error catch (e) {
+      print('Verification Error: $e');
     }
   }
 
@@ -110,7 +204,7 @@ class AuthService {
         context: context,
       );
     } on Error catch (e) {
-      print('Transfer Error: $e');
+      print('Check Available Username Error: $e');
     }
     return errorText;
   }
@@ -119,9 +213,15 @@ class AuthService {
     required BuildContext context,
     required String username,
     required String password,
+    required VoidCallback onLoginSuccess,
   }) async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     try {
       showDialogLoader(context);
+      await FirebaseMessaging.instance.getToken().then((token) {
+        authProvider.setDeviceToken(token);
+        print("My token is ${authProvider.deviceToken}");
+      });
       http.Response res = await http
           .post(
             Uri.parse('$uri/api/login'),
@@ -131,6 +231,7 @@ class AuthService {
             body: jsonEncode({
               'username': username,
               'password': password,
+              'deviceToken': authProvider.deviceToken,
             }),
           )
           .timeout(const Duration(seconds: 25));
@@ -145,9 +246,7 @@ class AuthService {
             Provider.of<UserProvider>(context, listen: false).setUser(res.body);
             await prefs.setString(
                 'x-auth-token', jsonDecode(res.body)['token']);
-            Navigator.pushNamedAndRemoveUntil(
-                context, MainApp.route, (route) => false,
-                arguments: 0);
+            onLoginSuccess();
           });
     } on TimeoutException catch (e) {
       showTimeOutError(
@@ -160,7 +259,7 @@ class AuthService {
         popDialogAndLoader: true,
       );
     } on Error catch (e) {
-      print('Transfer Error: $e');
+      print('Login Error: $e');
     }
   }
 
@@ -205,6 +304,58 @@ class AuthService {
       return response;
     } catch (e) {
       print(e);
+    }
+  }
+
+  void createNewPassword({
+    required BuildContext context,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    try {
+      showDialogLoader(context);
+
+      http.Response res = await http
+          .post(
+              Uri.parse("$uri/api/changePassword/${authProvider.emailAddress}"),
+              headers: <String, String>{
+                "Content-Type": "application/json; charset=UTF-8",
+              },
+              body: jsonEncode({
+                "password": password,
+                "confirmPassword": confirmPassword,
+              }))
+          .timeout(const Duration(seconds: 25));
+      Navigator.of(context, rootNavigator: true).pop('dialog');
+
+      statusCodeHandler(
+        context: context,
+        response: res,
+        onSuccess: () {
+          showAlertMessage(
+            context: context,
+            title: "Success",
+            message: "Password Changed Successfully",
+            onTap: () => namedNav(
+              context,
+              LoginScreen.route,
+            ),
+          );
+        },
+      );
+    } on TimeoutException catch (e) {
+      showTimeOutError(
+        context: context,
+        popDialogAndLoader: true,
+      );
+    } on SocketException catch (e) {
+      showNoInternetError(
+        context: context,
+        popDialogAndLoader: true,
+      );
+    } on Error catch (e) {
+      print('Create New Password Error: $e');
     }
   }
 
@@ -268,7 +419,7 @@ class AuthService {
         popDialogAndLoader: true,
       );
     } on Error catch (e) {
-      print('Transfer Error: $e');
+      print('Create Pin Error: $e');
     }
   }
 
@@ -315,7 +466,7 @@ class AuthService {
         popDialogAndLoader: true,
       );
     } on Error catch (e) {
-      print('Transfer Error: $e');
+      print('Pin Login Error: $e');
     }
   }
 }

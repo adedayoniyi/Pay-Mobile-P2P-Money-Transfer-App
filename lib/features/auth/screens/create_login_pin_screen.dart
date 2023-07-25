@@ -1,11 +1,14 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/features/auth/services/auth_service.dart';
-import 'package:money_transfer_app/providers/user_provider.dart';
-import 'package:money_transfer_app/widgets/number_dial_pad.dart';
-import 'package:money_transfer_app/widgets/pin_input_field.dart';
+import 'package:pay_mobile_app/core/utils/assets.dart';
+import 'package:pay_mobile_app/core/utils/global_constants.dart';
+import 'package:pay_mobile_app/features/auth/services/auth_service.dart';
+import 'package:pay_mobile_app/features/auth/providers/user_provider.dart';
+import 'package:pay_mobile_app/widgets/height_space.dart';
+import 'package:pay_mobile_app/widgets/number_dial_pad.dart';
+import 'package:pay_mobile_app/widgets/pin_input_field.dart';
+import 'package:pay_mobile_app/widgets/width_space.dart';
 import 'package:provider/provider.dart';
 
 class CreateLoginPinScreen extends StatefulWidget {
@@ -100,12 +103,10 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                   height: heightValue50,
                 ),
                 Image.asset(
-                  "assets/images/full_logo.png",
-                  height: heightValue150,
+                  logo,
+                  height: heightValue65,
                 ),
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue25),
                 Row(
                   children: [
                     Text(
@@ -114,9 +115,7 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                         fontSize: heightValue30,
                       ),
                     ),
-                    SizedBox(
-                      width: value20,
-                    ),
+                    WidthSpace(value10),
                     Icon(
                       Icons.waving_hand,
                       color: Colors.amber,
@@ -124,9 +123,7 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: heightValue10,
-                ),
+                HeightSpace(heightValue10),
                 Text(
                   user.fullname,
                   style: TextStyle(
@@ -134,21 +131,17 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                     fontSize: heightValue35,
                   ),
                 ),
-                SizedBox(
-                  height: heightValue10,
-                ),
+                HeightSpace(heightValue10),
                 pin.length > 3
                     ? Text(
                         "Confirm your 4 digit pin",
-                        style: TextStyle(fontSize: heightValue25),
+                        style: TextStyle(fontSize: heightValue23),
                       )
                     : Text(
-                        "Create a 4 digit pin for your account",
-                        style: TextStyle(fontSize: heightValue25),
+                        "Create 4 digit pin for your account",
+                        style: TextStyle(fontSize: heightValue22),
                       ),
-                SizedBox(
-                  height: heightValue30,
-                ),
+                HeightSpace(heightValue30),
                 pin.length > 3
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -188,12 +181,11 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                               index: 3, selectedIndex: selectedindex, pin: pin),
                         ],
                       ),
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue20),
                 pin.length > 3
                     ? Column(
                         children: [
+                          HeightSpace(heightValue20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -208,9 +200,7 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                                   numberText: '3'),
                             ],
                           ),
-                          SizedBox(
-                            height: heightValue30,
-                          ),
+                          HeightSpace(heightValue20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -225,9 +215,7 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                                   numberText: '6'),
                             ],
                           ),
-                          SizedBox(
-                            height: heightValue30,
-                          ),
+                          HeightSpace(heightValue20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -242,15 +230,20 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                                   numberText: '9'),
                             ],
                           ),
-                          SizedBox(
-                            height: heightValue30,
-                          ),
+                          HeightSpace(heightValue20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              NumberDialPad(
-                                onTap: () {},
-                                numberText: '',
+                              TextButton(
+                                style: ButtonStyle(
+                                  fixedSize: MaterialStatePropertyAll(
+                                    Size(heightValue75, heightValue75),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  backspaceForConfirm();
+                                },
+                                child: const Icon(null),
                               ),
                               NumberDialPad(
                                 onTap: () => addDigitForConfirm(0),
@@ -267,12 +260,13 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                                 },
                                 child: Icon(
                                   Icons.backspace_outlined,
-                                  color: defaultAppColor,
+                                  color: Colors.red,
                                   size: heightValue30,
                                 ),
                               ),
                             ],
                           ),
+                          HeightSpace(heightValue10),
                           TextButton(
                             onPressed: () {
                               Navigator.pop(context);
@@ -290,6 +284,7 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                       )
                     : Column(
                         children: [
+                          HeightSpace(heightValue20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -301,9 +296,7 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                                   onTap: () => addDigit(3), numberText: '3'),
                             ],
                           ),
-                          SizedBox(
-                            height: heightValue20,
-                          ),
+                          HeightSpace(heightValue20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -315,9 +308,7 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                                   onTap: () => addDigit(6), numberText: '6'),
                             ],
                           ),
-                          SizedBox(
-                            height: heightValue20,
-                          ),
+                          HeightSpace(heightValue20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -329,13 +320,19 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                                   onTap: () => addDigit(9), numberText: '9'),
                             ],
                           ),
-                          SizedBox(
-                            height: heightValue20,
-                          ),
+                          HeightSpace(heightValue20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              NumberDialPad(onTap: () {}, numberText: ''),
+                              TextButton(
+                                style: ButtonStyle(
+                                  fixedSize: MaterialStatePropertyAll(
+                                    Size(heightValue75, heightValue75),
+                                  ),
+                                ),
+                                onPressed: () => backspace(),
+                                child: const Icon(null),
+                              ),
                               NumberDialPad(
                                   onTap: () => addDigit(0), numberText: '0'),
                               TextButton(
@@ -347,15 +344,13 @@ class _CreateLoginPinScreenState extends State<CreateLoginPinScreen> {
                                 onPressed: () => backspace(),
                                 child: Icon(
                                   Icons.backspace_outlined,
-                                  color: defaultAppColor,
+                                  color: Colors.red,
                                   size: heightValue30,
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: heightValue15,
-                          ),
+                          HeightSpace(heightValue25),
                           TextButton(
                             onPressed: () {
                               Navigator.pop(context);

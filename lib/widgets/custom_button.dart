@@ -1,19 +1,22 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
-import 'package:money_transfer_app/constants/global_constants.dart';
+import 'package:pay_mobile_app/core/utils/color_constants.dart';
+import 'package:pay_mobile_app/core/utils/global_constants.dart';
 
 class CustomButton extends StatelessWidget {
   final String buttonText;
-  Color buttonColor;
-  Color buttonTextColor;
+  final Color buttonColor;
+  final Color buttonTextColor;
   final VoidCallback onTap;
-  CustomButton({
+  final double borderRadius;
+  final Color? borderSideColor;
+  const CustomButton({
     Key? key,
     required this.buttonText,
-    required this.buttonColor,
+    this.buttonColor = primaryAppColor,
     required this.buttonTextColor,
     required this.onTap,
+    this.borderRadius = 10,
+    this.borderSideColor = transparentColor,
   }) : super(key: key);
 
   @override
@@ -21,6 +24,7 @@ class CustomButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onTap,
       style: ButtonStyle(
+          splashFactory: InkSplash.splashFactory,
           overlayColor: MaterialStatePropertyAll(
             whiteColor.withOpacity(0.2),
           ),
@@ -28,19 +32,24 @@ class CustomButton extends StatelessWidget {
             buttonColor,
           ),
           fixedSize: MaterialStatePropertyAll(
-            Size(screenWidth, heightValue50),
+            Size(screenWidth, heightValue60),
           ),
           shape: MaterialStatePropertyAll(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(borderRadius),
+              side: BorderSide(
+                color: borderSideColor!,
+                width: 1,
+              ),
             ),
           )),
       child: Center(
         child: Text(
           buttonText,
           style: TextStyle(
-            fontSize: heightValue17,
+            fontSize: heightValue19,
             color: buttonTextColor,
+            fontWeight: FontWeight.w900,
           ),
         ),
       ),

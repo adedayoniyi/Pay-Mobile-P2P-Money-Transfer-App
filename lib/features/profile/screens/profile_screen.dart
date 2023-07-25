@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/features/home/screens/comming_soon_screen.dart';
-import 'package:money_transfer_app/features/profile/screens/change_pin_screen.dart';
-import 'package:money_transfer_app/features/profile/services/profile_services.dart';
-import 'package:money_transfer_app/features/profile/widgets/profile_card.dart';
-import 'package:money_transfer_app/providers/user_provider.dart';
-import 'package:money_transfer_app/widgets/custom_button.dart';
+import 'package:pay_mobile_app/core/utils/color_constants.dart';
+import 'package:pay_mobile_app/core/utils/global_constants.dart';
+import 'package:pay_mobile_app/core/utils/assets.dart';
+import 'package:pay_mobile_app/features/home/screens/comming_soon_screen.dart';
+import 'package:pay_mobile_app/features/profile/screens/change_pin_screen.dart';
+import 'package:pay_mobile_app/features/profile/services/profile_services.dart';
+import 'package:pay_mobile_app/features/profile/widgets/profile_card.dart';
+import 'package:pay_mobile_app/features/auth/providers/user_provider.dart';
+import 'package:pay_mobile_app/widgets/custom_button.dart';
+import 'package:pay_mobile_app/widgets/height_space.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -22,11 +25,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
     profileServices.logOut(context);
   }
 
+  void createChat() {
+    final userProvider = Provider.of<UserProvider>(context, listen: false).user;
+    print(userProvider.username);
+    profileServices.createChat(
+      context: context,
+      sender: userProvider.username,
+      chatName: "Pay Mobile Support",
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
-      backgroundColor: scaffoldBackgroundColor,
+      // backgroundColor: scaffoldBackgroundColor,
       body: SafeArea(
           child: Padding(
         padding: EdgeInsets.symmetric(horizontal: value20),
@@ -83,9 +96,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ProfileCard(
               iconImage: "assets/icons/settings_icon.png",
               profileOperation: "Security",
-              profileOperationDescription: "Passwords, Change pin",
+              profileOperationDescription: "Change Password, Pin",
               onPressed: () {
                 Navigator.pushNamed(context, ChangeLoginPinScreen.route);
+              },
+            ),
+            SizedBox(
+              height: heightValue20,
+            ),
+            ProfileCard(
+              iconImage: chatIcon,
+              profileOperation: "Contact Us",
+              profileOperationDescription: "Have a problem? Get in touch",
+              onPressed: () {
+                createChat();
+                //namedNav(context, ChatScreen.route);
               },
             ),
             SizedBox(
@@ -99,12 +124,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                          backgroundColor: whiteColor,
-                          surfaceTintColor: whiteColor,
+                          backgroundColor: greyScale850,
+                          surfaceTintColor: greyScale850,
                           icon: Image.asset(
-                            "assets/icons/info-circle.png",
+                            infoCircle,
                             height: value100,
                             width: value100,
+                            color: whiteColor,
                           ),
                           title: Text("Caution",
                               style: TextStyle(
@@ -125,23 +151,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               onTap: () {
                                 logOut();
                               },
-                              buttonColor: defaultAppColor,
-                              buttonTextColor: whiteColor,
+                              buttonColor: primaryAppColor,
+                              buttonTextColor: secondaryAppColor,
                             ),
-                            SizedBox(
-                              height: heightValue10,
-                            ),
+                            HeightSpace(heightValue10),
                             CustomButton(
                               buttonText: "Cancel",
                               onTap: () {
                                 Navigator.pop(context);
                               },
-                              buttonColor: defaultAppColor,
-                              buttonTextColor: whiteColor,
+                              buttonColor: primaryAppColor,
+                              buttonTextColor: secondaryAppColor,
                             )
                           ],
                         ));
               },
+            ),
+            HeightSpace(heightValue20),
+            Text(
+              "Version 2.0.0",
+              style: TextStyle(
+                fontSize: heightValue20,
+              ),
             ),
           ],
         ),

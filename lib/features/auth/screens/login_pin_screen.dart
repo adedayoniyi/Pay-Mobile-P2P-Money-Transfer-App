@@ -1,13 +1,18 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/features/auth/services/auth_service.dart';
-import 'package:money_transfer_app/features/profile/services/profile_services.dart';
-import 'package:money_transfer_app/providers/user_provider.dart';
-import 'package:money_transfer_app/widgets/custom_button.dart';
-import 'package:money_transfer_app/widgets/number_dial_pad.dart';
-import 'package:money_transfer_app/widgets/pin_input_field.dart';
+import 'package:pay_mobile_app/config/routes/custom_push_navigators.dart';
+import 'package:pay_mobile_app/core/utils/color_constants.dart';
+import 'package:pay_mobile_app/core/utils/global_constants.dart';
+import 'package:pay_mobile_app/core/utils/assets.dart';
+import 'package:pay_mobile_app/features/auth/screens/forgort_pin_screen.dart';
+import 'package:pay_mobile_app/features/auth/services/auth_service.dart';
+import 'package:pay_mobile_app/features/profile/services/profile_services.dart';
+import 'package:pay_mobile_app/features/auth/providers/user_provider.dart';
+import 'package:pay_mobile_app/widgets/custom_button.dart';
+import 'package:pay_mobile_app/widgets/height_space.dart';
+import 'package:pay_mobile_app/widgets/number_dial_pad.dart';
+import 'package:pay_mobile_app/widgets/pin_input_field.dart';
 import 'package:provider/provider.dart';
 
 class LoginPinScreen extends StatefulWidget {
@@ -71,16 +76,12 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue20),
                 Image.asset(
-                  "assets/images/full_logo.png",
-                  height: heightValue150,
+                  logo,
+                  height: heightValue80,
                 ),
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue20),
                 Row(
                   children: [
                     Text(
@@ -99,9 +100,7 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                     )
                   ],
                 ),
-                SizedBox(
-                  height: heightValue10,
-                ),
+                HeightSpace(heightValue10),
                 Text(
                   user.fullname,
                   style: TextStyle(
@@ -109,16 +108,12 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
-                  height: heightValue10,
-                ),
+                HeightSpace(heightValue10),
                 Text(
                   "Enter your 4 digit pin to proceed",
-                  style: TextStyle(fontSize: heightValue25),
+                  style: TextStyle(fontSize: heightValue23),
                 ),
-                SizedBox(
-                  height: heightValue30,
-                ),
+                HeightSpace(heightValue50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -135,9 +130,7 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                         index: 3, selectedIndex: selectedindex, pin: pin),
                   ],
                 ),
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -146,9 +139,7 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                     NumberDialPad(onTap: () => addDigit(3), numberText: '3'),
                   ],
                 ),
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -157,9 +148,7 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                     NumberDialPad(onTap: () => addDigit(6), numberText: '6'),
                   ],
                 ),
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -168,13 +157,66 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                     NumberDialPad(onTap: () => addDigit(9), numberText: '9'),
                   ],
                 ),
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    NumberDialPad(onTap: () {}, numberText: ''),
+                    IconButton(
+                      color: errorColor,
+                      iconSize: heightValue40,
+                      style: ButtonStyle(
+                          // backgroundColor:
+                          //     MaterialStatePropertyAll(primaryAppColor),
+                          fixedSize: MaterialStatePropertyAll(
+                              Size(heightValue75, heightValue75))),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  backgroundColor: greyScale850,
+                                  surfaceTintColor: greyScale850,
+                                  icon: Image.asset(
+                                    infoCircle,
+                                    height: heightValue100,
+                                    width: heightValue100,
+                                    color: whiteColor,
+                                  ),
+                                  title: Text("Caution",
+                                      style: TextStyle(
+                                          fontSize: value18,
+                                          fontWeight: FontWeight.bold)),
+                                  content: Text(
+                                    "Are you sure you want to logout",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: heightValue13,
+                                        color: Colors.grey[600]),
+                                  ),
+                                  actions: <Widget>[
+                                    CustomButton(
+                                      buttonText: "Yes",
+                                      onTap: () {
+                                        logOut();
+                                      },
+                                      buttonColor: primaryAppColor,
+                                      buttonTextColor: secondaryAppColor,
+                                    ),
+                                    HeightSpace(heightValue10),
+                                    CustomButton(
+                                      buttonText: "Cancel",
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      buttonColor: primaryAppColor,
+                                      buttonTextColor: secondaryAppColor,
+                                    )
+                                  ],
+                                ));
+                      },
+                      icon: const Icon(
+                        Icons.logout,
+                      ),
+                    ),
                     NumberDialPad(onTap: () => addDigit(0), numberText: '0'),
                     TextButton(
                       style: ButtonStyle(
@@ -188,7 +230,7 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                       },
                       child: Icon(
                         Icons.backspace_outlined,
-                        color: Colors.black.withBlue(40),
+                        color: Colors.red,
                         size: heightValue30,
                       ),
                     ),
@@ -196,52 +238,10 @@ class _LoginPinScreenState extends State<LoginPinScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                              backgroundColor: whiteColor,
-                              surfaceTintColor: whiteColor,
-                              icon: Image.asset(
-                                "assets/icons/info-circle.png",
-                                height: heightValue100,
-                                width: heightValue100,
-                              ),
-                              title: Text("Caution",
-                                  style: TextStyle(
-                                      fontSize: value18,
-                                      fontWeight: FontWeight.bold)),
-                              content: Text(
-                                "Are you sure you want to logout",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: heightValue13,
-                                    color: Colors.grey[600]),
-                              ),
-                              actions: <Widget>[
-                                CustomButton(
-                                  buttonText: "Yes",
-                                  onTap: () {
-                                    logOut();
-                                  },
-                                  buttonColor: defaultAppColor,
-                                  buttonTextColor: whiteColor,
-                                ),
-                                SizedBox(
-                                  height: heightValue10,
-                                ),
-                                CustomButton(
-                                  buttonText: "Cancel",
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  buttonColor: defaultAppColor,
-                                  buttonTextColor: whiteColor,
-                                )
-                              ],
-                            ));
+                    namedNav(context, ForgortPinScreen.route);
                   },
                   child: Text(
-                    "Sign Out",
+                    "Forgort Pin?",
                     style: TextStyle(
                       fontSize: heightValue30,
                       fontWeight: FontWeight.bold,

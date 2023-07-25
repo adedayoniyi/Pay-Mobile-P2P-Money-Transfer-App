@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/features/auth/screens/login_screen.dart';
-import 'package:money_transfer_app/features/auth/services/auth_service.dart';
-import 'package:money_transfer_app/widgets/custom_button.dart';
-import 'package:money_transfer_app/widgets/custom_textfield.dart';
-import 'package:money_transfer_app/widgets/username_search_textfield.dart';
+import 'package:pay_mobile_app/config/routes/custom_push_navigators.dart';
+import 'package:pay_mobile_app/core/utils/color_constants.dart';
+import 'package:pay_mobile_app/core/utils/global_constants.dart';
+import 'package:pay_mobile_app/core/utils/assets.dart';
+import 'package:pay_mobile_app/core/utils/validators.dart';
+import 'package:pay_mobile_app/features/auth/screens/login_screen.dart';
+import 'package:pay_mobile_app/features/auth/screens/signup_verification_screen.dart';
+import 'package:pay_mobile_app/features/auth/services/auth_service.dart';
+import 'package:pay_mobile_app/features/auth/providers/auth_provider.dart';
+import 'package:pay_mobile_app/widgets/custom_app_bar.dart';
+import 'package:pay_mobile_app/widgets/custom_button.dart';
+import 'package:pay_mobile_app/widgets/custom_textfield.dart';
+import 'package:pay_mobile_app/widgets/height_space.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const route = '/signup-screen';
@@ -19,9 +27,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
   bool obscureText = true;
+  bool obscureText2 = true;
+
   String? errorText;
   String? successMessage = '';
+  String misMatchPasswordErrorText = '';
 
   final AuthService authService = AuthService();
   final signUpFormKey = GlobalKey<FormState>();
@@ -35,15 +49,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
     passwordController.dispose();
   }
 
-  void createUser() {
+  void createUser() async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     if (signUpFormKey.currentState!.validate()) {
-      authService.signUpUser(
-        context: context,
-        fullname: fullnameController.text,
-        username: usernameController.text,
-        email: emailController.text,
-        password: passwordController.text,
-      );
+      if (passwordController.text == confirmPasswordController.text) {
+        authService.signUpUser(
+          context: context,
+          fullname: fullnameController.text,
+          username: usernameController.text,
+          email: emailController.text,
+          password: passwordController.text,
+          onSignUpSuccess: () async {
+            print("Sign Up Success");
+            authService.sendOtp(
+              context: context,
+              email: emailController.text,
+              sendPurpose: 'sign-up-verification',
+              onTapDialogButton: () => namedNav(
+                context,
+                SignUpVerificationScreen.route,
+              ),
+            );
+            authProvider.setUserEmail(emailController.text);
+          },
+        );
+      } else {
+        setState(() {
+          misMatchPasswordErrorText = "Passwords Do not Match";
+        });
+      }
     }
   }
 
@@ -67,69 +101,67 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Stack(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(right: value20),
-                          child: Text(
-                            "Signup and start transfering",
-                            style: TextStyle(
-                              fontSize: heightValue37,
-                              fontWeight: FontWeight.w900,
-                              height: 1.5,
-                            ),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: const CustomAppBar(image: logo),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: value20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      HeightSpace(heightValue10),
+                      Padding(
+                        padding: EdgeInsets.only(right: value20),
+                        child: Text(
+                          "Signup and start transfering",
+                          style: TextStyle(
+                            fontSize: heightValue37,
+                            fontWeight: FontWeight.w900,
+                            height: 1.5,
                           ),
                         ),
-                      ],
+                      ),
+                      formUI()
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: value20,
+                  right: value20,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CustomButton(
+                      buttonText: "Create account",
+                      buttonColor: primaryAppColor,
+                      buttonTextColor: scaffoldBackgroundColor,
+                      borderRadius: heightValue30,
+                      onTap: () => createUser(),
                     ),
-                    formUI()
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, LoginScreen.route);
+                      },
+                      child: Text(
+                        "Already have an account?",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: heightValue17,
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                bottom: 30,
-                left: 20,
-                right: 20,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  CustomButton(
-                    buttonText: "Create account",
-                    buttonColor: defaultAppColor,
-                    buttonTextColor: whiteColor,
-                    onTap: () => createUser(),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, LoginScreen.route);
-                    },
-                    child: Text(
-                      "Already have an account?",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: heightValue17,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -143,10 +175,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           Row(
             children: [
               Expanded(
-                child: UserNameTextField(
+                child: CustomTextField(
+                  willContainPrefix: true,
                   labelText: "Username",
-                  hintText: "username",
-                  prefixIcon: "@",
+                  hintText: "Username",
+                  prefixIcon: const Icon(Icons.alternate_email),
                   controller: usernameController,
                   errorText: errorText == "This username has been taken"
                       ? errorText
@@ -154,8 +187,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   successMessage: errorText == "This username has been taken"
                       ? ""
                       : successMessage,
-                  execute: () {
-                    getAvailableUsername();
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      getAvailableUsername();
+                    }
                   },
                 ),
               ),
@@ -165,36 +200,51 @@ class _SignUpScreenState extends State<SignUpScreen> {
             labelText: "Full Name",
             hintText: "Enter your full name",
             controller: fullnameController,
+            validator: validateName,
           ),
           CustomTextField(
             labelText: "Email",
             hintText: "Enter your email address",
             controller: emailController,
+            validator: validateEmail,
           ),
           CustomTextField(
             obscureText: obscureText,
             labelText: "Password",
             hintText: "Enter your password",
             controller: passwordController,
-            icon: obscureText
-                ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        obscureText = false;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.visibility_off,
-                    ))
-                : IconButton(
-                    onPressed: () {
-                      setState(() {
-                        obscureText = true;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.visibility,
-                    )),
+            errorText: misMatchPasswordErrorText.isNotEmpty
+                ? misMatchPasswordErrorText
+                : null,
+            icon: GestureDetector(
+              onTap: () {
+                setState(() {
+                  obscureText = !obscureText;
+                });
+              },
+              child: Icon(
+                obscureText ? Icons.visibility : Icons.visibility_off,
+              ),
+            ),
+          ),
+          CustomTextField(
+            errorText: misMatchPasswordErrorText.isNotEmpty
+                ? misMatchPasswordErrorText
+                : null,
+            obscureText: obscureText2,
+            labelText: "Confirm Password",
+            hintText: "Enter your password",
+            controller: confirmPasswordController,
+            icon: GestureDetector(
+              onTap: () {
+                setState(() {
+                  obscureText2 = !obscureText2;
+                });
+              },
+              child: Icon(
+                obscureText2 ? Icons.visibility : Icons.visibility_off,
+              ),
+            ),
           ),
           const SizedBox(
             height: 150,

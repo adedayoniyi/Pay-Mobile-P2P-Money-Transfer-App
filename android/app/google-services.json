@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "722376799583",
+    "project_id": "pay-mobile-ddab3",
+    "storage_bucket": "pay-mobile-ddab3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722376799583:android:43a63325c4852c6deef2ea",
+        "android_client_info": {
+          "package_name": "com.dayoniyi.peertopeermoneytransferapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "722376799583-rmsvi8ala4mbllt9s8m6i46ght3d35k2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyNchM2NEz-4cernri4WZLJq7PJdzYhhw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "722376799583-rmsvi8ala4mbllt9s8m6i46ght3d35k2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "722376799583-bcaotvdv59pdcjld239n4msn193j3t02.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dayoniyi.peertopeermoneytransferapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/features/home/screens/comming_soon_screen.dart';
-import 'package:money_transfer_app/features/transactions/widgets/transaction_details_container.dart';
+import 'package:pay_mobile_app/core/utils/assets.dart';
+import 'package:pay_mobile_app/core/utils/color_constants.dart';
+import 'package:pay_mobile_app/core/utils/global_constants.dart';
+import 'package:pay_mobile_app/features/home/screens/comming_soon_screen.dart';
+import 'package:pay_mobile_app/features/transactions/widgets/transaction_details_container.dart';
 
-import 'package:money_transfer_app/models/transactions.dart';
+import 'package:pay_mobile_app/features/transactions/models/transactions.dart';
+import 'package:pay_mobile_app/widgets/height_space.dart';
 
 class TransactionDetailsScreen extends StatelessWidget {
   static const String route = "/transaction-details";
@@ -43,7 +46,6 @@ class TransactionDetailsScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: whiteColor,
       appBar: AppBar(
         leadingWidth: screenWidth,
         scrolledUnderElevation: 5,
@@ -79,9 +81,7 @@ class TransactionDetailsScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
-                  height: heightValue10,
-                ),
+                HeightSpace(heightValue10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -90,7 +90,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                       width: value35,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(value35),
-                        color: scaffoldBackgroundColor,
+                        //color: scaffoldBackgroundColor,
                       ),
                       child: Center(
                         child: Image.asset(
@@ -114,9 +114,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -202,7 +200,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          "assets/icons/info-circle.png",
+                          infoCircle,
                           height: heightValue30,
                         ),
                         SizedBox(

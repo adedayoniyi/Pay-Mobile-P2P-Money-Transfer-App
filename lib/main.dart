@@ -7,27 +7,55 @@
 5. Refer to money_transfer_server to see the nodejs code controlling the backend
 */
 
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/constants/utils.dart';
-import 'package:money_transfer_app/features/auth/screens/login_pin_screen.dart';
-import 'package:money_transfer_app/features/auth/services/auth_service.dart';
-import 'package:money_transfer_app/features/onboarding/screens/onboarding_screen.dart';
-import 'package:money_transfer_app/initialization_screen.dart';
-import 'package:money_transfer_app/no_internet_screen.dart';
-import 'package:money_transfer_app/providers/user_provider.dart';
-import 'package:money_transfer_app/router.dart';
-import 'package:money_transfer_app/widgets/main_app.dart';
+import 'package:pay_mobile_app/config/routes/custom_push_navigators.dart';
+import 'package:pay_mobile_app/config/theme/theme_manager.dart';
+import 'package:pay_mobile_app/core/utils/utils.dart';
+import 'package:pay_mobile_app/core/utils/custom_notifications.dart';
+import 'package:pay_mobile_app/features/auth/screens/login_pin_screen.dart';
+import 'package:pay_mobile_app/features/auth/screens/login_screen.dart';
+import 'package:pay_mobile_app/features/auth/services/auth_service.dart';
+import 'package:pay_mobile_app/features/onboarding/screens/onboarding_screen.dart';
+import 'package:pay_mobile_app/features/profile/providers/chat_provider.dart';
+import 'package:pay_mobile_app/firebase_options.dart';
+import 'package:pay_mobile_app/initialization_screen.dart';
+import 'package:pay_mobile_app/no_internet_screen.dart';
+import 'package:pay_mobile_app/features/auth/providers/auth_provider.dart';
+import 'package:pay_mobile_app/features/auth/providers/user_provider.dart';
+import 'package:pay_mobile_app/config/routes/router.dart';
+import 'package:pay_mobile_app/widgets/main_app.dart';
 import 'package:provider/provider.dart';
 
-void main() async {
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(
-      create: (context) => UserProvider(),
-    )
-  ], child: const MyApp()));
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background message ${message.messageId}");
+}
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FirebaseMessaging.instance.getInitialMessage();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AuthProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ChatProvider(),
+        )
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -39,7 +67,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final ThemeManager themeManager = ThemeManager();
   final AuthService authService = AuthService();
+  final CustomNotifications customNotificatins = CustomNotifications();
   late Future _future;
   bool check = true;
 
@@ -48,6 +78,9 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     _future = obtainTokenAndUserData(context);
     checkInternetConnection();
+    customNotificatins.requestPermission();
+    customNotificatins.initInfo();
+    AwesomeNotifications().requestPermissionToSendNotifications();
   }
 
   obtainTokenAndUserData(BuildContext context) async {
@@ -67,14 +100,8 @@ class _MyAppState extends State<MyApp> {
     ]);
     final user = Provider.of<UserProvider>(context).user;
     return MaterialApp(
-      theme: ThemeData(
-        useMaterial3: true,
-        fontFamily: "SF Pro",
-        scaffoldBackgroundColor: whiteColor,
-        colorScheme: const ColorScheme.light(
-          primary: defaultAppColor,
-        ),
-      ),
+      theme: themeManager.darkTheme,
+      darkTheme: themeManager.darkTheme,
       debugShowCheckedModeBanner: false,
       onGenerateRoute: (settings) => appRoutes(settings),
       home: FutureBuilder(
@@ -82,13 +109,15 @@ class _MyAppState extends State<MyApp> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return check == true
-                ? user.token.isNotEmpty
-                    ? user.pin.isNotEmpty
-                        ? const LoginPinScreen()
-                        : MainApp(
-                            currentPage: 0,
-                          )
-                    : const OnBoardingScreen()
+                ? user.isVerified != false
+                    ? user.token.isNotEmpty
+                        ? user.pin.isNotEmpty
+                            ? const LoginPinScreen()
+                            : MainApp(
+                                currentPage: 0,
+                              )
+                        : const OnBoardingScreen()
+                    : const LoginScreen()
                 : NoInternetScreen(onTap: () {
                     checkInternetConnection();
                     obtainTokenAndUserData(context);
@@ -101,7 +130,7 @@ class _MyAppState extends State<MyApp> {
                     } else {
                       showDialogLoader(context);
                       Future.delayed(const Duration(seconds: 5), () {
-                        Navigator.of(context).pop();
+                        popNav(context);
                       });
                     }
                   });

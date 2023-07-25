@@ -1,17 +1,24 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
-import 'package:money_transfer_app/constants/global_constants.dart';
+import 'package:flutter/services.dart';
+import 'package:pay_mobile_app/core/utils/color_constants.dart';
+import 'package:pay_mobile_app/core/utils/global_constants.dart';
 
 class CustomTextField extends StatelessWidget {
-  String? labelText;
+  final String? labelText;
   final String hintText;
   final TextEditingController controller;
-  IconButton? icon;
-  bool obscureText;
-  int maxLines;
+  final Widget? icon;
+  final bool obscureText;
+  final int maxLines;
   final TextInputType keyboardType;
-  CustomTextField({
+  final String? errorText;
+  final void Function(String)? onChanged;
+  final String? successMessage;
+  final Icon? prefixIcon;
+  final bool willContainPrefix;
+  final List<TextInputFormatter>? inputFormatters;
+  final String? Function(String?)? validator;
+  const CustomTextField({
     Key? key,
     this.labelText = "",
     required this.hintText,
@@ -20,6 +27,13 @@ class CustomTextField extends StatelessWidget {
     this.obscureText = false,
     this.maxLines = 1,
     this.keyboardType = TextInputType.name,
+    this.validator,
+    this.errorText,
+    this.onChanged,
+    this.successMessage,
+    this.prefixIcon,
+    this.willContainPrefix = false,
+    this.inputFormatters,
   }) : super(key: key);
 
   @override
@@ -28,7 +42,7 @@ class CustomTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: EdgeInsets.only(bottom: heightValue5),
           child: Text(
             labelText!,
             style: TextStyle(
@@ -38,40 +52,50 @@ class CustomTextField extends StatelessWidget {
           ),
         ),
         TextFormField(
+          autofocus: true,
           keyboardType: keyboardType,
           obscureText: obscureText,
           controller: controller,
+          inputFormatters: inputFormatters,
           style: TextStyle(fontSize: heightValue20),
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderSide: const BorderSide(
-                color: Color.fromARGB(255, 212, 211, 211),
+                color: greyScale850,
+                width: 2,
               ),
-              borderRadius: BorderRadius.circular(heightValue10),
+              borderRadius: BorderRadius.circular(heightValue15),
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(
-                color: Color.fromARGB(255, 212, 211, 211),
+                color: greyScale850,
+                width: 2,
               ),
-              borderRadius: BorderRadius.circular(heightValue10),
+              borderRadius: BorderRadius.circular(heightValue15),
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(
-                color: defaultAppColor,
+                color: primaryAppColor,
+                width: 2,
               ),
-              borderRadius: BorderRadius.circular(heightValue10),
+              borderRadius: BorderRadius.circular(heightValue15),
             ),
             hintText: hintText,
             suffixIcon: icon,
+            errorText: errorText,
+            prefixIcon: prefixIcon,
+            filled: true,
+            fillColor: greyScale850,
+            contentPadding: EdgeInsets.all(heightValue20),
           ),
           maxLines: 1,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return hintText;
-            }
-            return null;
-          },
+          validator: validator,
+          onChanged: onChanged,
         ),
+        Text(
+          successMessage ?? "",
+          style: const TextStyle(color: Colors.green),
+        )
       ],
     );
   }

@@ -1,14 +1,18 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:pay_mobile_app/core/utils/assets.dart';
+import 'package:pay_mobile_app/core/utils/color_constants.dart';
+import 'package:pay_mobile_app/widgets/height_space.dart';
+import 'package:pay_mobile_app/widgets/width_space.dart';
 import 'package:provider/provider.dart';
 
-import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/features/home/services/home_service.dart';
-import 'package:money_transfer_app/providers/user_provider.dart';
-import 'package:money_transfer_app/widgets/custom_button.dart';
-import 'package:money_transfer_app/widgets/number_dial_pad.dart';
-import 'package:money_transfer_app/widgets/pin_input_field.dart';
+import 'package:pay_mobile_app/core/utils/global_constants.dart';
+import 'package:pay_mobile_app/features/home/services/home_service.dart';
+import 'package:pay_mobile_app/features/auth/providers/user_provider.dart';
+import 'package:pay_mobile_app/widgets/custom_button.dart';
+import 'package:pay_mobile_app/widgets/number_dial_pad.dart';
+import 'package:pay_mobile_app/widgets/pin_input_field.dart';
 
 class ConfirmPinToSendMoneyDialPad extends StatefulWidget {
   final VoidCallback onSuccess;
@@ -80,12 +84,10 @@ class _ConfirmPinToSendMoneyDialPadState
                   height: heightValue60,
                 ),
                 Image.asset(
-                  "assets/images/full_logo.png",
-                  height: heightValue130,
+                  logo,
+                  height: heightValue65,
                 ),
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue10),
                 Row(
                   children: [
                     Text(
@@ -94,9 +96,7 @@ class _ConfirmPinToSendMoneyDialPadState
                         fontSize: heightValue35,
                       ),
                     ),
-                    SizedBox(
-                      width: value10,
-                    ),
+                    WidthSpace(value10),
                     Icon(
                       Icons.waving_hand,
                       color: Colors.amber,
@@ -104,6 +104,7 @@ class _ConfirmPinToSendMoneyDialPadState
                     )
                   ],
                 ),
+                HeightSpace(heightValue10),
                 Text(
                   user.fullname,
                   style: TextStyle(
@@ -111,12 +112,10 @@ class _ConfirmPinToSendMoneyDialPadState
                     fontSize: heightValue35,
                   ),
                 ),
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue20),
                 Text(
                   "Enter your 4 digit pin to complete",
-                  style: TextStyle(fontSize: heightValue25),
+                  style: TextStyle(fontSize: heightValue22),
                 ),
                 SizedBox(
                   height: heightValue30,
@@ -137,9 +136,7 @@ class _ConfirmPinToSendMoneyDialPadState
                         index: 3, selectedIndex: selectedindex, pin: pin),
                   ],
                 ),
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -148,9 +145,7 @@ class _ConfirmPinToSendMoneyDialPadState
                     NumberDialPad(onTap: () => addDigit(3), numberText: '3'),
                   ],
                 ),
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -159,9 +154,7 @@ class _ConfirmPinToSendMoneyDialPadState
                     NumberDialPad(onTap: () => addDigit(6), numberText: '6'),
                   ],
                 ),
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -170,15 +163,20 @@ class _ConfirmPinToSendMoneyDialPadState
                     NumberDialPad(onTap: () => addDigit(9), numberText: '9'),
                   ],
                 ),
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    NumberDialPad(
-                      onTap: () {},
-                      numberText: '',
+                    TextButton(
+                      style: ButtonStyle(
+                        fixedSize: MaterialStatePropertyAll(
+                          Size(heightValue75, heightValue75),
+                        ),
+                      ),
+                      onPressed: () {
+                        backspace();
+                      },
+                      child: const Icon(null),
                     ),
                     NumberDialPad(
                       onTap: () => addDigit(0),
@@ -195,23 +193,25 @@ class _ConfirmPinToSendMoneyDialPadState
                       },
                       child: Icon(
                         Icons.backspace_outlined,
-                        color: defaultAppColor,
+                        color: Colors.red,
                         size: heightValue30,
                       ),
                     ),
                   ],
                 ),
+                HeightSpace(heightValue15),
                 TextButton(
                   onPressed: () {
                     showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                              backgroundColor: whiteColor,
-                              surfaceTintColor: whiteColor,
+                              backgroundColor: greyScale850,
+                              surfaceTintColor: greyScale850,
                               icon: Image.asset(
-                                "assets/icons/info-circle.png",
+                                infoCircle,
                                 height: value100,
                                 width: value100,
+                                color: whiteColor,
                               ),
                               title: Text(
                                 "Caution",
@@ -235,8 +235,8 @@ class _ConfirmPinToSendMoneyDialPadState
                                     Navigator.pop(context);
                                     Navigator.pop(context);
                                   },
-                                  buttonColor: defaultAppColor,
-                                  buttonTextColor: whiteColor,
+                                  buttonColor: primaryAppColor,
+                                  buttonTextColor: secondaryAppColor,
                                 ),
                                 SizedBox(
                                   height: heightValue10,
@@ -246,8 +246,8 @@ class _ConfirmPinToSendMoneyDialPadState
                                   onTap: () {
                                     Navigator.pop(context);
                                   },
-                                  buttonColor: defaultAppColor,
-                                  buttonTextColor: whiteColor,
+                                  buttonColor: primaryAppColor,
+                                  buttonTextColor: secondaryAppColor,
                                 )
                               ],
                             ));

@@ -1,4 +1,4 @@
-name: money_transfer_app
+name: pay_mobile_app
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -16,7 +16,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 2.0.0
 
 environment:
   sdk: ">=2.19.4 <3.0.0"
@@ -39,6 +39,11 @@ dependencies:
   http: ^0.13.5
   intl: ^0.18.0
   internet_connection_checker: ^1.0.0+1
+  firebase_core: ^2.14.0
+  firebase_messaging: ^14.6.4
+  cloud_firestore: ^4.8.2
+  socket_io_client: ^2.0.2
+  awesome_notifications: ^0.6.19
 
 dev_dependencies:
   flutter_test:
@@ -53,8 +58,8 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter_native_splash:
-  color: "#000000"
-  image: assets/images/inverted_logo.png
+  color: "#141318"
+  image: assets/images/main_logo.png
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -86,9 +91,13 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: SF Pro
+    - family: Comfortaa
       fonts:
-        - asset: assets/fonts/sf_pro_regular.ttf
+        - asset: assets/fonts/Comfortaa-Regular.ttf
+        - asset: assets/fonts/Comfortaa-Medium.ttf
+        - asset: assets/fonts/Comfortaa-SemiBold.ttf
+        - asset: assets/fonts/Comfortaa-Bold.ttf
+
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

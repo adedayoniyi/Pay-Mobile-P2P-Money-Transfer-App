@@ -1,22 +1,25 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:money_transfer_app/features/home/widgets/clip_path_bottom_right_for_balance_card.dart';
-import 'package:money_transfer_app/features/home/widgets/clip_path_top_right_for_balance_card.dart';
+import 'package:pay_mobile_app/config/routes/custom_push_navigators.dart';
+import 'package:pay_mobile_app/core/utils/assets.dart';
+import 'package:pay_mobile_app/features/home/screens/comming_soon_screen.dart';
+import 'package:pay_mobile_app/features/home/widgets/add_send_funds_container.dart';
+import 'package:pay_mobile_app/widgets/height_space.dart';
+import 'package:pay_mobile_app/features/home/widgets/payment_containers.dart';
 import 'package:provider/provider.dart';
 
-import 'package:money_transfer_app/constants/color_constants.dart';
-import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/features/auth/services/auth_service.dart';
-import 'package:money_transfer_app/features/home/screens/send_money_screen.dart';
-import 'package:money_transfer_app/features/home/services/home_service.dart';
-import 'package:money_transfer_app/features/home/widgets/payment_options_column.dart';
-import 'package:money_transfer_app/features/transactions/screens/transaction_details_screen.dart';
-import 'package:money_transfer_app/features/transactions/widgets/transactions_card.dart';
-import 'package:money_transfer_app/models/transactions.dart';
-import 'package:money_transfer_app/providers/user_provider.dart';
-import 'package:money_transfer_app/widgets/circular_loader.dart';
-import 'package:money_transfer_app/widgets/custom_button.dart';
+import 'package:pay_mobile_app/core/utils/color_constants.dart';
+import 'package:pay_mobile_app/core/utils/global_constants.dart';
+import 'package:pay_mobile_app/features/auth/services/auth_service.dart';
+import 'package:pay_mobile_app/features/home/screens/send_money_screen.dart';
+import 'package:pay_mobile_app/features/home/services/home_service.dart';
+import 'package:pay_mobile_app/features/transactions/screens/transaction_details_screen.dart';
+import 'package:pay_mobile_app/features/transactions/widgets/transactions_card.dart';
+import 'package:pay_mobile_app/features/transactions/models/transactions.dart';
+import 'package:pay_mobile_app/features/auth/providers/user_provider.dart';
+import 'package:pay_mobile_app/widgets/circular_loader.dart';
+import 'package:pay_mobile_app/widgets/custom_button.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String route = '/home-screens';
@@ -33,8 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
   String naira = '';
   List<Transactions> transactions = [];
   late Future _future;
-  Stream _myStream = const Stream.empty();
-  late StreamSubscription _sub = _myStream.listen((event) {});
   final ScrollController scrollController = ScrollController();
 
   getUserBalance() async {
@@ -86,17 +87,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 5), () {
-      _myStream = Stream.periodic(const Duration(seconds: 10), (count) {
-        getUserBalance();
-      });
-      _sub = _myStream.listen((event) {});
-    });
-
-    Future.delayed(const Duration(seconds: 160), () {
-      _sub.cancel();
-      print("Stream Cancled");
-    });
 
     getUserBalance();
     checkIfUserHasPin();
@@ -105,23 +95,30 @@ class _HomeScreenState extends State<HomeScreen> {
     Future.delayed(const Duration(seconds: 5), () {
       ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
     });
-    scrollController.addListener(() {
-      if (scrollController.position.isScrollingNotifier.value) {
-        print('User is scrolling');
-        _myStream = Stream.periodic(const Duration(seconds: 10), (count) {
-          getUserBalance();
-        });
-        _sub = _myStream.listen((event) {});
-      } else {}
-    });
   }
 
   @override
   void dispose() {
     super.dispose();
-    _sub.cancel();
     scrollController.dispose();
   }
+
+  List<String> paymentIcons = [
+    mobileIcon,
+    budgetIcon,
+    electricityIcon,
+    wifiIcon,
+    billsIcon,
+    moreIcon,
+  ];
+  List<String> paymentText = [
+    "Airtime",
+    "Budget",
+    "Electricity",
+    "Data",
+    "Bills",
+    "More",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -144,142 +141,137 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         height: heightValue15,
                       ),
-                      Stack(
+                      Column(
                         children: [
-                          Container(
-                            height: heightValue230,
-                            width: screenWidth,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(heightValue30),
-                              color: defaultAppColor,
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(value10),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Flexible(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              CircleAvatar(
-                                                radius: value25,
-                                                backgroundColor: whiteColor,
-                                                child: Center(
-                                                    child: Text(
-                                                  user.fullname[0],
-                                                  style: TextStyle(
-                                                    color: defaultAppColor,
-                                                    fontSize: heightValue25,
-                                                  ),
-                                                )),
-                                              ),
-                                              SizedBox(
-                                                width: value10,
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    "Hi, ${user.fullname}",
-                                                    style: TextStyle(
-                                                      color: whiteColor,
-                                                      fontSize: heightValue20,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    "@ ${user.username}",
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                      color: whiteColor,
-                                                      fontSize: heightValue18,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          Image.asset(
-                                            "assets/icons/notification.png",
-                                            height: heightValue30,
-                                            color: whiteColor,
-                                          )
-                                        ],
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: heightValue25,
+                                    // backgroundColor: whiteColor,
+                                    backgroundImage:
+                                        const AssetImage(gradientCircle),
+                                    child: Center(
+                                        child: Text(
+                                      user.fullname[0],
+                                      style: TextStyle(
+                                          color: secondaryAppColor,
+                                          fontSize: heightValue25,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
+                                  SizedBox(
+                                    width: value10,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Hi, ${user.fullname}",
+                                        style: TextStyle(
+                                          color: whiteColor,
+                                          fontSize: heightValue18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: heightValue10,
-                                    ),
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "Total Balance",
-                                            style: TextStyle(
-                                              color: greyScale400,
-                                              fontSize: heightValue25,
-                                            ),
-                                          ),
-                                          Text(
-                                            "₦ ${amountFormatter.format(balance)}",
-                                            style: TextStyle(
-                                              color: whiteColor,
-                                              fontSize: heightValue50,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
+                                      Text(
+                                        "@ ${user.username}",
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: whiteColor,
+                                          fontSize: heightValue15,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
+                                    ],
+                                  ),
+                                ],
                               ),
+                              Image.asset(
+                                "assets/icons/notification.png",
+                                height: heightValue30,
+                                color: whiteColor,
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: heightValue10,
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Total Balance",
+                                  style: TextStyle(
+                                    color: greyScale400,
+                                    fontSize: heightValue20,
+                                  ),
+                                ),
+                                Text(
+                                  "₦ ${amountFormatter.format(balance)}",
+                                  style: TextStyle(
+                                    color: whiteColor,
+                                    fontSize: heightValue50,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          const ClipPathTopRightForBalanceCard(),
-                          const ClipPathBottomRightForBalanceCard(),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(
-                                  heightValue30,
-                                ),
-                                topLeft: Radius.circular(
-                                  heightValue50,
-                                ),
-                              ),
-                              child: Container(
-                                height: heightValue50,
-                                width: heightValue50,
-                                decoration: const BoxDecoration(
-                                  color: Color(0xFFA9224A),
-                                ),
-                              ),
-                            ),
-                          )
                         ],
                       ),
-                      SizedBox(
-                        height: heightValue20,
+                      HeightSpace(heightValue10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          AddSendFundsContainers(
+                            text: "Add",
+                            icon: addIcon,
+                            onTap: () => namedNav(context, "/add-money"),
+                          ),
+                          AddSendFundsContainers(
+                            text: "Send",
+                            icon: sendIcon,
+                            onTap: () => namedNav(context, "/send-money"),
+                          ),
+                        ],
                       ),
-                      const PaymentOptionsColumn(),
-                      SizedBox(
-                        height: heightValue10,
+                      HeightSpace(heightValue20),
+                      const Divider(),
+                      HeightSpace(heightValue20),
+                      Text(
+                        "Quick Actions",
+                        style: TextStyle(
+                          fontSize: heightValue25,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
+                      HeightSpace(heightValue10),
+                      SizedBox(
+                        height: heightValue130,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: paymentIcons.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                              onTap: () => namedNav(
+                                context,
+                                CommingSoonScreen.route,
+                              ),
+                              child: PaymentContainers(
+                                icon: paymentIcons[index],
+                                color: whiteColor,
+                                text: paymentText[index],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      HeightSpace(heightValue20),
                       Text(
                         "Transactions",
                         style: TextStyle(
@@ -324,8 +316,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         horizontal: value60),
                                     child: CustomButton(
                                       buttonText: "Transfer Now",
-                                      buttonColor: defaultAppColor,
-                                      buttonTextColor: whiteColor,
+                                      buttonColor: primaryAppColor,
+                                      buttonTextColor: secondaryAppColor,
+                                      borderRadius: heightValue30,
                                       onTap: () {
                                         Navigator.pushNamed(
                                           context,

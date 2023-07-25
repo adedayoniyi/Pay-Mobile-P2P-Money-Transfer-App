@@ -1,11 +1,13 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/features/profile/services/profile_services.dart';
-import 'package:money_transfer_app/providers/user_provider.dart';
-import 'package:money_transfer_app/widgets/number_dial_pad.dart';
-import 'package:money_transfer_app/widgets/pin_input_field.dart';
+import 'package:pay_mobile_app/core/utils/global_constants.dart';
+import 'package:pay_mobile_app/core/utils/assets.dart';
+import 'package:pay_mobile_app/features/profile/services/profile_services.dart';
+import 'package:pay_mobile_app/features/auth/providers/user_provider.dart';
+import 'package:pay_mobile_app/widgets/height_space.dart';
+import 'package:pay_mobile_app/widgets/number_dial_pad.dart';
+import 'package:pay_mobile_app/widgets/pin_input_field.dart';
 import 'package:provider/provider.dart';
 
 class ChangeLoginPinScreen extends StatefulWidget {
@@ -95,12 +97,10 @@ class _ChangeLoginPinScreenState extends State<ChangeLoginPinScreen> {
                   height: heightValue50,
                 ),
                 Image.asset(
-                  "assets/images/full_logo.png",
+                  logo,
                   height: heightValue110,
                 ),
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue20),
                 Row(
                   children: [
                     Text(
@@ -123,9 +123,7 @@ class _ChangeLoginPinScreenState extends State<ChangeLoginPinScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
-                  height: heightValue10,
-                ),
+                HeightSpace(heightValue10),
                 oldPin.length > 3
                     ? Text(
                         "Enter your new pin",
@@ -183,9 +181,7 @@ class _ChangeLoginPinScreenState extends State<ChangeLoginPinScreen> {
                               pin: oldPin),
                         ],
                       ),
-                SizedBox(
-                  height: heightValue20,
-                ),
+                HeightSpace(heightValue35),
                 oldPin.length > 3
                     ? Column(
                         children: [
@@ -203,9 +199,7 @@ class _ChangeLoginPinScreenState extends State<ChangeLoginPinScreen> {
                                   numberText: '3'),
                             ],
                           ),
-                          SizedBox(
-                            height: heightValue30,
-                          ),
+                          HeightSpace(heightValue20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -220,9 +214,7 @@ class _ChangeLoginPinScreenState extends State<ChangeLoginPinScreen> {
                                   numberText: '6'),
                             ],
                           ),
-                          SizedBox(
-                            height: heightValue30,
-                          ),
+                          HeightSpace(heightValue20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -237,15 +229,18 @@ class _ChangeLoginPinScreenState extends State<ChangeLoginPinScreen> {
                                   numberText: '9'),
                             ],
                           ),
-                          SizedBox(
-                            height: heightValue30,
-                          ),
+                          HeightSpace(heightValue20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              NumberDialPad(
-                                onTap: () {},
-                                numberText: '',
+                              TextButton(
+                                style: ButtonStyle(
+                                  fixedSize: MaterialStatePropertyAll(
+                                    Size(heightValue75, heightValue75),
+                                  ),
+                                ),
+                                onPressed: () => backspace(),
+                                child: const Icon(null),
                               ),
                               NumberDialPad(
                                 onTap: () => addDigitForConfirm(0),
@@ -262,7 +257,7 @@ class _ChangeLoginPinScreenState extends State<ChangeLoginPinScreen> {
                                 },
                                 child: Icon(
                                   Icons.backspace_outlined,
-                                  color: defaultAppColor,
+                                  color: Colors.red,
                                   size: heightValue30,
                                 ),
                               ),
@@ -296,9 +291,7 @@ class _ChangeLoginPinScreenState extends State<ChangeLoginPinScreen> {
                                   onTap: () => addDigit(3), numberText: '3'),
                             ],
                           ),
-                          SizedBox(
-                            height: heightValue20,
-                          ),
+                          HeightSpace(heightValue20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -310,9 +303,7 @@ class _ChangeLoginPinScreenState extends State<ChangeLoginPinScreen> {
                                   onTap: () => addDigit(6), numberText: '6'),
                             ],
                           ),
-                          SizedBox(
-                            height: heightValue20,
-                          ),
+                          HeightSpace(heightValue20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -324,13 +315,19 @@ class _ChangeLoginPinScreenState extends State<ChangeLoginPinScreen> {
                                   onTap: () => addDigit(9), numberText: '9'),
                             ],
                           ),
-                          SizedBox(
-                            height: heightValue20,
-                          ),
+                          HeightSpace(heightValue20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              NumberDialPad(onTap: () {}, numberText: ''),
+                              TextButton(
+                                style: ButtonStyle(
+                                  fixedSize: MaterialStatePropertyAll(
+                                    Size(heightValue75, heightValue75),
+                                  ),
+                                ),
+                                onPressed: () => backspace(),
+                                child: const Icon(null),
+                              ),
                               NumberDialPad(
                                   onTap: () => addDigit(0), numberText: '0'),
                               TextButton(
@@ -342,15 +339,13 @@ class _ChangeLoginPinScreenState extends State<ChangeLoginPinScreen> {
                                 onPressed: () => backspace(),
                                 child: Icon(
                                   Icons.backspace_outlined,
-                                  color: defaultAppColor,
+                                  color: Colors.red,
                                   size: heightValue30,
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: heightValue15,
-                          ),
+                          HeightSpace(heightValue15),
                           TextButton(
                             onPressed: () {
                               Navigator.pop(context);

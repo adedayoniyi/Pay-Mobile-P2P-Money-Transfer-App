@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.money_transfer_app">
+    package="com.example.pay_mobile_app">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="Pay Mobile"
@@ -31,5 +31,10 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <receiver android:name="com.example.pay_mobile_app.AnotherBroadcastReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.pay_mobile_app.ACTION_BUTTON_CLICK" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

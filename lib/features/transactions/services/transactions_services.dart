@@ -5,11 +5,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:money_transfer_app/constants/global_constants.dart';
-import 'package:money_transfer_app/constants/utils.dart';
-import 'package:money_transfer_app/models/transactions.dart';
+import 'package:pay_mobile_app/core/utils/global_constants.dart';
+import 'package:pay_mobile_app/core/utils/utils.dart';
+import 'package:pay_mobile_app/features/transactions/models/transactions.dart';
 import 'package:http/http.dart' as http;
-import 'package:money_transfer_app/providers/user_provider.dart';
+import 'package:pay_mobile_app/features/auth/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class TransactionServices {
